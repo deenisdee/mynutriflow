@@ -1385,3 +1385,55 @@ function closeFAQ() {
 }
 
 document.getElementById('faq-btn').addEventListener('click', openFAQ);
+
+
+
+
+
+
+
+
+
+
+
+document
+  .getElementById("activate-premium")
+  .addEventListener("click", async () => {
+    const input = document.getElementById("premium-code");
+    const message = document.getElementById("premium-message");
+
+    const code = input.value.trim();
+    if (!code) {
+      message.textContent = "Digite um código.";
+      return;
+    }
+
+    message.textContent = "Validando código...";
+
+    try {
+      const res = await fetch("/api/redeem", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code })
+      });
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        message.textContent = data.error || "Código inválido.";
+        return;
+      }
+
+      // ✅ salva token
+      localStorage.setItem("premiumToken", data.token);
+
+      message.textContent = "Premium ativado com sucesso! 🎉";
+
+      // 🔓 aqui você chama sua função de liberar premium
+      if (typeof unlockPremium === "function") {
+        unlockPremium();
+      }
+    } catch (err) {
+      message.textContent = "Erro ao validar código.";
+    }
+  });
