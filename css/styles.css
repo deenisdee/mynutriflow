@@ -1702,12 +1702,10 @@ body.modal-open {
 }
 
 /* iPhone: reduzir ainda mais a altura para evitar “zoom” */
+
 @media (max-width: 480px) {
-  .slide-new img,
-  .carousel-slide img {
-    object-fit: contain;
-    background: #eee; /* evita fundo branco feio quando sobrar espaço */
+  .hero-slider-fullwidth {
+    height: 240px;
   }
 }
-
 
