@@ -1475,20 +1475,63 @@ document
 
 
 
-
-
-
-
-
-
-
-
-
-
 if (localStorage.getItem("premiumToken")) {
   if (typeof unlockPremium === "function") {
     unlockPremium();
   }
 }
 
+
+
+
+
+// ============================================
+// PRELOADER
+// ============================================
+window.addEventListener('load', function() {
+    // Aguardar todas as imagens carregarem
+    const images = document.querySelectorAll('img');
+    let loadedImages = 0;
+    const totalImages = images.length;
+    
+    if (totalImages === 0) {
+        hidePreloader();
+        return;
+    }
+    
+    images.forEach(img => {
+        if (img.complete) {
+            loadedImages++;
+            checkAllLoaded();
+        } else {
+            img.addEventListener('load', () => {
+                loadedImages++;
+                checkAllLoaded();
+            });
+            img.addEventListener('error', () => {
+                loadedImages++;
+                checkAllLoaded();
+            });
+        }
+    });
+    
+    function checkAllLoaded() {
+        if (loadedImages === totalImages) {
+            setTimeout(hidePreloader, 500);
+        }
+    }
+    
+    function hidePreloader() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('hidden');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        }
+    }
+    
+    // Timeout de segurança (5 segundos)
+    setTimeout(hidePreloader, 5000);
+});
 
