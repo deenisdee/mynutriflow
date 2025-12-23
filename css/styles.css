@@ -1657,33 +1657,7 @@ body.modal-open {
 
 
 .slide-overlay-new {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-    padding: 3rem 0;
-    color: white;
-}
-
-.slide-overlay-new .slide-title-new,
-.slide-overlay-new .slide-description-new {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-/* Mobile: voltar padding original */
-@media (max-width: 768px) {
-    .slide-overlay-new {
-        padding: 2rem 1.5rem;
-    }
-    
-    .slide-overlay-new .slide-title-new,
-    .slide-overlay-new .slide-description-new {
-        max-width: 100%;
-        padding: 0;
-    }
+    padding: 2rem 1.5rem;
 }
 
 
