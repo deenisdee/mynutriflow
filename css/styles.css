@@ -1727,7 +1727,7 @@ body.modal-open {
 /* iPhone: ajustes específicos */
 @media (max-width: 480px) {
   .hero-slider-fullwidth {
-    height: 260px;
+    height: 285px;
   }
   
   .slide-new {
