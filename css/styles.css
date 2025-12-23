@@ -1725,7 +1725,7 @@ body.modal-open {
 /* iPhone: ajustes específicos */
 @media (max-width: 480px) {
   .hero-slider-fullwidth {
-    height: 350px;
+    height: 280px;
   }
   
   .slide-new {
@@ -1742,7 +1742,7 @@ body.modal-open {
 @media (max-width: 480px) {
   .slide-new img {
     object-fit: cover;
-    transform: scale(1.5); /* 1.2 = 20% mais zoom */
+    transform: scale(1.3); /* 1.2 = 20% mais zoom */
     /* Pode testar: 1.1, 1.2, 1.3, etc */
   }
 }
