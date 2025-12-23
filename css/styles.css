@@ -1712,3 +1712,18 @@ body.modal-open {
   opacity: 0.85;
 }
 
+
+
+
+
+
+
+
+/* Esconde a barra de status redundante (se existir) */
+.status-bar,
+#status-bar,
+.top-status,
+#top-status {
+  display: none !important;
+}
+
