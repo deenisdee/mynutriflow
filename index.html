@@ -9,264 +9,105 @@
 
 <body>
 
-  <div id="app">
-    <!-- Header -->
-    <header id="header">
-      <div class="container">
-        <div class="header-content">
-          <a href="index.html" class="logo" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem;">
-            <div class="logo-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
-                <line x1="6" y1="17" x2="18" y2="17"/>
-              </svg>
-            </div>
-            <h1><span class="logo-my">My</span><span class="logo-nutri">nutri</span><span class="logo-flow">flow</span></h1>
-          </a>
+<div id="app">
 
-          <div class="search-container">
-            <input type="text" id="search-input" placeholder="Buscar receitas..." class="search-input" />
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
-          </div>
+  <!-- HEADER -->
+  <header id="header">
+    <div class="container">
+      <div class="header-content">
 
-          <div class="header-tools">
-            <!-- Botões das Ferramentas -->
-            <button id="calculator-btn" class="tool-btn tool-blue" title="Calculadora de Calorias">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
-                <line x1="8" y1="6" x2="16" y2="6"></line>
-                <line x1="8" y1="10" x2="16" y2="10"></line>
-                <line x1="8" y1="14" x2="16" y2="14"></line>
-                <line x1="8" y1="18" x2="12" y2="18"></line>
-              </svg>
-            </button>
+        <a href="index.html" class="logo">
+          <div class="logo-icon">🥗</div>
+          <h1><span class="logo-my">My</span><span class="logo-nutri">nutri</span><span class="logo-flow">flow</span></h1>
+        </a>
 
-            <button id="shopping-btn" class="tool-btn tool-purple" title="Lista de Compras">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span id="shopping-counter" class="tool-counter hidden">0</span>
-            </button>
-
-            <button id="planner-btn" class="tool-btn tool-orange" title="Planejador Semanal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-            </button>
-
-            <!-- BOTÃO FAQ -->
-            <button id="faq-btn" class="tool-btn tool-purple" title="Ajuda" style="width: 48px; height: 48px;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-            </button>
-          </div>
-
-          <div class="header-actions">
-            <div id="credits-badge" class="badge">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-              <span id="credits-text">0 créditos</span>
-            </div>
-
-            <button id="premium-btn" class="btn-premium">Ativar Premium</button>
-          </div>
+        <div class="search-container">
+          <input type="text" id="search-input" placeholder="Buscar receitas..." />
         </div>
-      </div>
-    </header>
 
-    <!-- SLIDER HERO FULL-WIDTH -->
-    <div class="hero-slider-fullwidth" id="heroSlider">
-      <div class="slider-track-new" id="sliderTrack"></div>
-      <button class="slider-arrow-new prev" onclick="changeSlideNew(-1)">‹</button>
-      <button class="slider-arrow-new next" onclick="changeSlideNew(1)">›</button>
-      <div class="slider-dots-new" id="sliderDots"></div>
-    </div>
-
-    <!-- CATEGORIAS -->
-    <div class="categories-new">
-      <div class="categories-grid-new" id="categoriesGrid"></div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="container">
-      <div id="recipe-detail" class="recipe-detail hidden"></div>
-      <div id="recipe-grid" class="recipe-grid"></div>
-    </main>
-
-    <!-- Modal Calculadora -->
-    <div id="calculator-modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-overlay" onclick="closeCalculator()"></div>
-      <div class="modal-content-large modal-surface">
-        <button class="modal-close" onclick="closeCalculator()" aria-label="Fechar modal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title">Calculadora de Calorias</h3>
-
-        <div class="calculator-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Peso (kg)</label>
-              <input type="number" id="calc-weight" placeholder="70" />
-            </div>
-            <div class="form-group">
-              <label>Altura (cm)</label>
-              <input type="number" id="calc-height" placeholder="170" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Idade</label>
-              <input type="number" id="calc-age" placeholder="25" />
-            </div>
-            <div class="form-group">
-              <label>Sexo</label>
-              <select id="calc-gender">
-                <option value="male">Masculino</option>
-                <option value="female">Feminino</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Nível de Atividade</label>
-            <select id="calc-activity">
-              <option value="sedentary">Sedentário (pouco ou nenhum exercício)</option>
-              <option value="light">Leve (exercício 1-3 dias/semana)</option>
-              <option value="moderate">Moderado (exercício 3-5 dias/semana)</option>
-              <option value="active">Ativo (exercício 6-7 dias/semana)</option>
-              <option value="veryActive">Muito Ativo (exercício intenso diário)</option>
-              <option value="veryActive">Muito Ativo (exercício intenso diário)</option>
-            </select>
-          </div>
-
-          <button onclick="calculateCalories()" class="btn-calculate">Calcular</button>
-          <div id="calc-results" class="calc-results hidden"></div>
+        <div class="header-tools">
+          <button id="calculator-btn" class="tool-btn">🧮</button>
+          <button id="shopping-btn" class="tool-btn">🛒</button>
+          <button id="planner-btn" class="tool-btn">📅</button>
+          <button id="faq-btn" class="tool-btn">❓</button>
         </div>
+
+        <div class="header-actions">
+          <div id="credits-badge" class="badge">3 créditos</div>
+          <button id="premium-btn" class="btn-premium">Ativar Premium</button>
+        </div>
+
       </div>
     </div>
+  </header>
 
-    <!-- Modal Lista de Compras -->
-    <div id="shopping-modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-overlay" onclick="closeShoppingList()"></div>
-      <div class="modal-content-medium modal-surface">
-        <button class="modal-close" onclick="closeShoppingList()" aria-label="Fechar modal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
+  <!-- CONTEÚDO -->
+  <main class="container">
+    <div id="recipe-detail" class="hidden"></div>
+    <div id="recipe-grid"></div>
+  </main>
 
-        <h3 class="modal-title">Lista de Compras</h3>
-        <div id="shopping-list-content"></div>
-      </div>
+</div>
+
+<!-- MODAL CALCULADORA -->
+<div id="calculator-modal" class="modal hidden">
+  <div class="modal-card md">
+    <div class="modal-header">
+      <h3 class="modal-title">Calculadora de Calorias</h3>
+      <button class="modal-x" onclick="closeCalculator()">✕</button>
     </div>
-
-    <!-- Modal Planejador Semanal -->
-    <div id="planner-modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-overlay" onclick="closeWeekPlanner()"></div>
-      <div class="modal-content-xlarge modal-surface">
-        <button class="modal-close" onclick="closeWeekPlanner()" aria-label="Fechar modal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title">Planejador Semanal</h3>
-        <div id="week-planner-content"></div>
-      </div>
-    </div>
-
-    <!-- PREMIUM MODAL (PADRÃO) -->
-    <div id="premium-modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-overlay" onclick="closePremiumModal()"></div>
-      <div class="modal-content-medium modal-surface" style="max-width: 520px;">
-        <button class="modal-close" onclick="closePremiumModal()" aria-label="Fechar modal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <div style="text-align: center; margin-bottom: 1rem;">
-          <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem;">
-            <svg data-fill="true" style="width: 30px; height: 30px; color: white;" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-            </svg>
-          </div>
-          <h2 style="font-size: 1.5rem; margin: 0 0 0.5rem 0; color: #1f2937;">Desbloqueie Seu Potencial!</h2>
-          <p id="modal-message" style="color: #6b7280; font-size: 0.95rem;">Acesso ilimitado a todas as receitas!</p>
-        </div>
-
-        <div id="credits-warning" class="modal-callout-warning" style="display:none;">
-          <p style="margin: 0; font-weight: 600; font-size: 0.875rem;">⚡ Seus 3 créditos acabaram!</p>
-        </div>
-
-        <div class="input-group" style="margin-bottom: 1rem;">
-          <label style="font-weight: 600; color: #374151; margin-bottom: 0.5rem; display: block; font-size: 0.95rem;">Já tem um código Premium?</label>
-          <input type="text" id="premium-code-input" placeholder="Digite seu código (ex: FIT-ABC-123-XYZ)" style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.75rem; font-size: 0.95rem;">
-        </div>
-
-        <div class="modal-actions" style="display: flex; gap: 0.75rem;">
-          <button id="modal-cancel" class="btn-secondary" style="flex: 1;">Agora Não</button>
-          <button id="modal-activate" class="btn-primary" style="flex: 2;">Ativar Premium</button>
-        </div>
-
-        <div style="padding-top: 1rem; border-top: 1px solid #e5e7eb; text-align: center; margin-top: 1rem;">
-          <p style="color: #6b7280; font-size: 0.8rem; margin: 0 0 0.625rem 0;">
-            Ainda não tem um código?
-          </p>
-          <div style="display: flex; gap: 0.625rem; justify-content: center; flex-wrap: wrap;">
-            <a href="https://wa.me/5511999999999?text=Quero%20virar%20Premium%20no%20MyNutriFlow!" target="_blank"
-               style="display: inline-flex; align-items: center; gap: 0.375rem; background: #25D366; color: white; padding: 0.5rem 1rem; border-radius: 0.75rem; text-decoration: none; font-weight: 600; font-size: 0.8rem;">
-              WhatsApp
-            </a>
-            <a href="https://instagram.com/mynutriflow" target="_blank"
-               style="display: inline-flex; align-items: center; gap: 0.375rem; background: #111; color: white; padding: 0.5rem 1rem; border-radius: 0.75rem; text-decoration: none; font-weight: 600; font-size: 0.8rem;">
-              Instagram
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FAQ MODAL -->
-    <div id="faq-modal" class="modal hidden" role="dialog" aria-modal="true">
-      <div class="modal-overlay" onclick="closeFAQ()"></div>
-      <div class="modal-content-large modal-surface">
-        <button class="modal-close" onclick="closeFAQ()" aria-label="Fechar modal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title">Central de Ajuda</h3>
-        <div id="faq-content"></div>
+    <div class="modal-body">
+      <div class="modal-scroll">
+        <!-- conteúdo da calculadora -->
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+<!-- MODAL LISTA DE COMPRAS -->
+<div id="shopping-modal" class="modal hidden">
+  <div class="modal-card md">
+    <div class="modal-header">
+      <h3 class="modal-title">Lista de Compras</h3>
+      <button class="modal-x" onclick="closeShoppingList()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-scroll" id="shopping-list-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FAQ -->
+<div id="faq-modal" class="modal hidden">
+  <div class="modal-card lg">
+    <div class="modal-header">
+      <h3 class="modal-title">Central de Ajuda</h3>
+      <button class="modal-x" onclick="closeFAQ()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-scroll" id="faq-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PREMIUM -->
+<div id="premium-modal" class="modal hidden">
+  <div class="modal-card sm">
+    <div class="modal-header">
+      <h3 class="modal-title">Desbloqueie Seu Potencial!</h3>
+      <button class="modal-x" onclick="closePremium()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-scroll">
+        <p>Acesso ilimitado a todas as receitas.</p>
+        <button class="btn-premium-full">Ativar Premium</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
 </body>
 </html>
