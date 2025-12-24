@@ -4,6 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mynutriflow - Receitas Fit Premium</title>
+
+  
+  <script>
+  // trava o header até o app.js assumir (evita "flash")
+  document.documentElement.classList.add('app-loading');
+
+  // pré-leitura síncrona do premium (antes do CSS pintar)
+  try {
+    if (localStorage.getItem('fit_premium') === 'true') {
+      document.documentElement.classList.add('boot-premium');
+    }
+  } catch (e) {}
+</script>
+  
+
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 
