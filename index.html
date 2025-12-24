@@ -17,7 +17,18 @@
     }
   } catch (e) {}
 </script>
-  
+
+
+
+  <script>
+  (function () {
+    try {
+      var isPremium = localStorage.getItem('fit_premium') === 'true';
+      if (isPremium) document.documentElement.classList.add('premium-preload');
+      document.documentElement.classList.add('booting'); // esconde header-actions até o JS liberar
+    } catch (e) {}
+  })();
+</script>
 
   <link rel="stylesheet" href="css/styles.css" />
 </head>
