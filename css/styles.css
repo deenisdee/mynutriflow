@@ -1021,3 +1021,10 @@ body.modal-open{ overflow:hidden; height:100vh; }
   height: 20px;
 }
 
+/* Evita a página "balançar" quando a scrollbar aparece/some */
+html { scrollbar-gutter: stable; }
+
+/* fallback para navegadores que não suportam scrollbar-gutter */
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; } /* sempre reserva o espaço do scroll */
+}
