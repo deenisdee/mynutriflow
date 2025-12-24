@@ -1053,5 +1053,45 @@ body.modal-open { overflow: hidden; height: 100vh; }
 /* Texto auxiliar (ex: "Ainda não tem um código?") */
 #premium-modal small,
 #premium-modal .helper-text {
-  font-weight: 0;
+  font-weight: 0!;
+}
+
+
+/* ============================================================
+   FIX FORTE — matar font-weight inline (700/800/900) nos MODAIS
+   Mantém hierarquia só onde interessa
+   ============================================================ */
+
+/* 1) Zera peso em TODO conteúdo de modal (inclusive inline style) */
+.modal .modal-content *,
+.modal .modal-content-medium *,
+.modal .modal-content-large *,
+.modal .modal-content-xlarge * {
+  font-weight: 400 !important;
+}
+
+/* 2) Mantém títulos com presença */
+.modal .modal-title,
+#premium-modal h2 {
+  font-weight: 600 !important;
+}
+
+/* 3) Botões um pouco mais firmes (sem “800”) */
+.modal button,
+.modal .btn-primary,
+.modal .btn-secondary {
+  font-weight: 500 !important;
+}
+
+/* 4) Label do Premium e campo do código com cara “normal” */
+#premium-modal label {
+  font-weight: 500 !important;
+}
+#premium-modal input {
+  font-weight: 400 !important;
+}
+
+/* 5) Se quiser manter só alguns destaques do FAQ em negrito leve */
+#faq-content strong {
+  font-weight: 600 !important;
 }
