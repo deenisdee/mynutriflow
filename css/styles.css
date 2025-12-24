@@ -1001,3 +1001,27 @@ html { scrollbar-gutter: stable; }
 html.app-loading.boot-premium #credits-badge {
   opacity: 1 !important; /* mostra o badge enquanto carrega */
 }
+
+
+/* ===== Anti-flash do Header (sem mostrar azul no refresh) ===== */
+
+/* Enquanto "booting", não mostra nada (mas mantém o espaço para não mexer layout) */
+html.booting #credits-badge,
+html.booting #premium-btn {
+  visibility: hidden;
+}
+
+/* Se já for premium no preload, já força o visual premium ANTES de carregar o JS */
+html.premium-preload #premium-btn {
+  display: none !important;
+}
+
+html.premium-preload #credits-badge {
+  visibility: visible;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+  color: #111827 !important;
+}
+
+html.premium-preload #credits-badge svg {
+  color: #111827 !important;
+}
