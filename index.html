@@ -8,7 +8,6 @@
 </head>
 
 <body>
-
   <div id="app">
     <!-- Header -->
     <header id="header">
@@ -33,7 +32,6 @@
           </div>
 
           <div class="header-tools">
-            <!-- Botões das Ferramentas -->
             <button id="calculator-btn" class="tool-btn tool-blue" title="Calculadora de Calorias">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <rect x="4" y="2" width="16" height="20" rx="2"></rect>
@@ -62,8 +60,7 @@
               </svg>
             </button>
 
-            <!-- BOTÃO FAQ -->
-            <button id="faq-btn" class="tool-btn tool-purple" title="Ajuda" style="width: 48px; height: 48px;">
+            <button id="faq-btn" class="tool-btn tool-purple" title="Ajuda">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"></circle>
                 <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
@@ -107,10 +104,10 @@
     </main>
 
     <!-- Modal Calculadora -->
-    <div id="calculator-modal" class="modal hidden">
+    <div id="calculator-modal" class="modal hidden" aria-hidden="true">
       <div class="modal-overlay"></div>
       <div class="modal-content-large">
-        <button class="modal-close" onclick="closeCalculator()">
+        <button class="modal-close" onclick="closeCalculator()" aria-label="Fechar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -163,10 +160,10 @@
     </div>
 
     <!-- Modal Lista de Compras -->
-    <div id="shopping-modal" class="modal hidden">
+    <div id="shopping-modal" class="modal hidden" aria-hidden="true">
       <div class="modal-overlay"></div>
       <div class="modal-content-medium">
-        <button class="modal-close" onclick="closeShoppingList()">
+        <button class="modal-close" onclick="closeShoppingList()" aria-label="Fechar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -179,10 +176,10 @@
     </div>
 
     <!-- Modal Planejador Semanal -->
-    <div id="planner-modal" class="modal hidden">
+    <div id="planner-modal" class="modal hidden" aria-hidden="true">
       <div class="modal-overlay"></div>
       <div class="modal-content-xlarge">
-        <button class="modal-close" onclick="closeWeekPlanner()">
+        <button class="modal-close" onclick="closeWeekPlanner()" aria-label="Fechar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -194,46 +191,57 @@
       </div>
     </div>
 
-    <!-- PREMIUM MODAL (ÚNICO) -->
-    <div id="premium-modal" class="modal hidden">
-      <div class="modal-content" style="max-width: 480px;">
-        <div style="text-align: center; margin-bottom: 1rem;">
-          <div style="background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem;">
-            <svg data-fill="true" style="width: 30px; height: 30px; color: white;" viewBox="0 0 24 24" fill="currentColor">
+    <!-- PREMIUM MODAL -->
+    <div id="premium-modal" class="modal hidden" aria-hidden="true">
+      <div class="modal-overlay"></div>
+      <div class="modal-content" style="max-width: 520px;">
+        <button class="modal-close" onclick="closePremiumModal()" aria-label="Fechar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="modal-hero">
+          <div class="modal-hero-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
             </svg>
           </div>
-          <h2 style="font-size: 1.5rem; margin: 0 0 0.5rem 0; color: #1f2937;">Desbloqueie Seu Potencial!</h2>
-          <p id="modal-message" style="color: #6b7280; font-size: 0.95rem;">Acesso ilimitado a todas as receitas!</p>
+          <h2 class="modal-hero-title">Desbloqueie Seu Potencial</h2>
+          <p id="modal-message" class="modal-hero-subtitle">Acesso ilimitado a todas as receitas!</p>
         </div>
 
-        <div id="credits-warning" style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 0.875rem; border-radius: 0.5rem; margin-bottom: 1rem; display: none;">
-          <p style="margin: 0; color: #92400e; font-weight: 600; font-size: 0.875rem;">
-            ⚡ Seus 3 créditos acabaram!
-          </p>
+        <div id="credits-warning" class="modal-warning hidden">
+          <p><strong>Seus 3 créditos acabaram.</strong> Ative o Premium para acesso ilimitado.</p>
         </div>
 
         <div class="input-group" style="margin-bottom: 1rem;">
-          <label style="font-weight: 600; color: #374151; margin-bottom: 0.5rem; display: block; font-size: 0.95rem;">Já tem um código Premium?</label>
-          <input type="text" id="premium-code-input" placeholder="Digite seu código (ex: FIT-ABC-123-XYZ)" style="width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 0.5rem; font-size: 0.95rem;">
+          <label>Já tem um código Premium?</label>
+          <input type="text" id="premium-code-input" placeholder="Digite seu código (ex: FIT-ABC-123-XYZ)">
         </div>
 
-        <div class="modal-actions" style="display: flex; gap: 0.75rem;">
-          <button id="modal-cancel" class="btn-secondary" style="flex: 1;">Agora Não</button>
-          <button id="modal-activate" class="btn-primary" style="flex: 2;">Ativar Premium</button>
+        <div class="modal-actions">
+          <button id="modal-cancel" class="btn-secondary">Agora Não</button>
+          <button id="modal-activate" class="btn-primary">Ativar Premium</button>
         </div>
 
-        <div style="padding-top: 1rem; border-top: 1px solid #e5e7eb; text-align: center; margin-top: 1rem;">
-          <p style="color: #6b7280; font-size: 0.8rem; margin: 0 0 0.625rem 0;">
-            Ainda não tem um código?
-          </p>
-          <div style="display: flex; gap: 0.625rem; justify-content: center; flex-wrap: wrap;">
-            <a href="https://wa.me/5511999999999?text=Quero%20virar%20Premium%20no%20MyNutriFlow!" target="_blank"
-               style="display: inline-flex; align-items: center; gap: 0.375rem; background: #25D366; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.8rem;">
+        <div class="modal-footer-links">
+          <p>Ainda não tem um código?</p>
+          <div class="modal-footer-pills">
+            <a class="pill pill-whats" href="https://wa.me/5511999999999?text=Quero%20virar%20Premium%20no%20MyNutriFlow!" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/>
+                <path d="M8.5 9.5c.3 3 3 5.7 6 6l1.2-1.2c.2-.2.5-.3.8-.2l2 .6c.4.1.6.5.5.9-.3 1.1-1.3 2-2.6 2-5.2 0-9.4-4.2-9.4-9.4 0-1.3.9-2.3 2-2.6.4-.1.8.1.9.5l.6 2c.1.3 0 .6-.2.8L8.5 9.5z"/>
+              </svg>
               WhatsApp
             </a>
-            <a href="https://instagram.com/mynutriflow" target="_blank"
-               style="display: inline-flex; align-items: center; gap: 0.375rem; background: #111; color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; font-size: 0.8rem;">
+            <a class="pill pill-ig" href="https://instagram.com/mynutriflow" target="_blank" rel="noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1"/>
+              </svg>
               Instagram
             </a>
           </div>
@@ -242,10 +250,10 @@
     </div>
 
     <!-- FAQ MODAL -->
-    <div id="faq-modal" class="modal hidden">
+    <div id="faq-modal" class="modal hidden" aria-hidden="true">
       <div class="modal-overlay"></div>
       <div class="modal-content-large">
-        <button class="modal-close" onclick="closeFAQ()">
+        <button class="modal-close" onclick="closeFAQ()" aria-label="Fechar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
