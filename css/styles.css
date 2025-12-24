@@ -159,3 +159,209 @@ header {
   align-items: center;
   justify-content: center;
 }
+
+/* ============================================================
+   PACOTE A — PADRONIZAÇÃO PREMIUM DE TODOS OS MODAIS
+   (Calc / Lista / Planner / Premium / FAQ / Meal Selector)
+   + Scroll invisível (com “gutter” pra não aparecer)
+   + FAQ com header/arrow verde
+   + Hardening pra não “quebrar” ao ativar premium
+   ============================================================ */
+
+/* Backdrop mais premium (todos os modais) */
+.modal::before,
+.meal-selector-modal {
+  backdrop-filter: blur(10px);
+}
+
+/* Overlay mais premium */
+.modal::before {
+  background: rgba(0,0,0,0.55);
+}
+
+/* Card padrão para TODOS os tamanhos */
+.modal-content,
+.modal-content-medium,
+.modal-content-large,
+.modal-content-xlarge,
+.meal-selector-content {
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.35);
+  border-radius: 24px;
+}
+
+/* Header spacing padronizado */
+.modal-title,
+.meal-selector-title {
+  letter-spacing: -0.02em;
+}
+
+/* Botão X padronizado (fica mais “iOS”) */
+.modal-close {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+
+.modal-close:hover {
+  background: rgba(255,255,255,0.95);
+}
+
+/* ============================================================
+   SCROLL INVISÍVEL (e “empurrado”)
+   - Alguns browsers mostram scrollbar mesmo com hidden
+   - Aqui a gente cria “gutter” e esconde visualmente
+   ============================================================ */
+
+.modal-content,
+.modal-content-medium,
+.modal-content-large,
+.modal-content-xlarge,
+.meal-selector-content {
+  /* mantém scroll, mas sem mostrar a barra */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge antigo */
+}
+
+.modal-content::-webkit-scrollbar,
+.modal-content-medium::-webkit-scrollbar,
+.modal-content-large::-webkit-scrollbar,
+.modal-content-xlarge::-webkit-scrollbar,
+.meal-selector-content::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* “Joga” o scroll um pouco pro lado sem quebrar layout */
+.modal-content,
+.modal-content-medium,
+.modal-content-large,
+.modal-content-xlarge {
+  padding-right: 22px;     /* cria espaço “interno” */
+  margin-right: -22px;     /* puxa de volta (a barra some) */
+}
+
+/* Conteúdo interno do FAQ também pode criar scrollbar visível */
+#faq-content {
+  max-height: calc(85vh - 140px);
+  overflow-y: auto;
+  padding-right: 22px;
+  margin-right: -22px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#faq-content::-webkit-scrollbar { width: 0 !important; height: 0 !important; }
+
+/* ============================================================
+   FAQ — deixar “setinha/header” VERDE (padrão que você quer)
+   Funciona independente do HTML que o JS gerar (details/summary)
+   ============================================================ */
+
+#faq-content details {
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  background: rgba(255,255,255,0.7);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+#faq-content summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /* VERDE NO TOPO (padrão premium) */
+  background: linear-gradient(180deg, #ecfdf5 0%, #f0fdf4 100%);
+  border-bottom: 1px solid #bbf7d0;
+}
+
+#faq-content summary::-webkit-details-marker { display: none; }
+
+/* “Setinha” vira pílula verde, sem quadrado estranho */
+#faq-content summary::after {
+  content: "›";
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #16a34a;
+  color: #fff;
+  font-weight: 900;
+  transform: rotate(0deg);
+  transition: transform .2s ease, background .2s ease;
+}
+
+#faq-content details[open] summary::after {
+  transform: rotate(90deg);
+  background: #15803d;
+}
+
+/* Conteúdo do item */
+#faq-content details > div,
+#faq-content details p,
+#faq-content details ul {
+  padding: 14px 16px;
+  color: #374151;
+}
+
+/* ============================================================
+   Meal Selector — deixar MAIS premium (como você pediu)
+   ============================================================ */
+
+.meal-selector-modal {
+  background: rgba(0,0,0,0.55) !important;
+}
+
+.meal-selector-content {
+  background: rgba(255,255,255,0.92) !important;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.meal-option {
+  background: rgba(249,250,251,0.85);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.meal-option:hover {
+  transform: translateY(-2px);
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+/* ============================================================
+   “HOME FICOU AZUL E QUEBROU” — hardening de estados
+   (Não deixa estados indesejados mudarem layout)
+   ============================================================ */
+
+.badge,
+.btn-premium,
+.tool-btn {
+  flex-shrink: 0;
+}
+
+/* Quando estiver premium, se o JS trocar classes,
+   a gente força o visual premium sem ficar azul estranho */
+body.premium-active .badge {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+}
+
+body.premium-active .btn-premium {
+  background: #15803d !important;
+}
+
+/* Botões das receitas: garante padrão */
+.recipe-button.unlocked { background: #16a34a !important; }
+.recipe-button.locked { background: #3b82f6 !important; }
+
+/* Se algum estado tentar “pintar azul” sem querer, não desloca layout */
+#credits-badge { height: 48px; }
+#premium-btn { height: 48px; }
+
+
