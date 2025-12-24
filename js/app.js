@@ -1,27 +1,23 @@
 // ============================================
-// ARQUIVO: js/app.js
-// VERSÃO (Etapa A): Modais padronizados + FAQ padrão + scroll invisível + premium estável
+// ARQUIVO: js/app.js (CONSOLIDADO B)
+// - FAQ sem emoji (ícones minimalistas em SVG)
+// - FAQ no padrão verde (chevron)
+// - Premium modal com close + warning correto
+// - Mantém funcionalidades atuais
 // ============================================
 
-// --------------------------------------------
-// Estado da aplicação
-// --------------------------------------------
 let credits = 3;
 let unlockedRecipes = [];
 let isPremium = false;
 let currentRecipe = null;
-
 let currentSlideIndex = 0;
-let sliderAutoplay = null;
 let featuredRecipes = [];
 let searchTerm = '';
 let shoppingList = [];
 let weekPlan = {};
 
-// Detectar ambiente
 const isClaudeEnvironment = typeof window.storage !== 'undefined';
 
-// Storage adaptativo
 const storage = {
   async get(key) {
     if (isClaudeEnvironment) return await window.storage.get(key);
@@ -35,9 +31,8 @@ const storage = {
   }
 };
 
-// --------------------------------------------
-// Elementos DOM
-// --------------------------------------------
+// DOM
+const creditsText = document.getElementById('credits-text');
 const creditsBadge = document.getElementById('credits-badge');
 const premiumBtn = document.getElementById('premium-btn');
 
@@ -51,8 +46,8 @@ const modalCancel = document.getElementById('modal-cancel');
 const modalActivate = document.getElementById('modal-activate');
 
 const searchInput = document.getElementById('search-input');
-const shoppingCounter = document.getElementById('shopping-counter');
 
+const shoppingCounter = document.getElementById('shopping-counter');
 const calculatorBtn = document.getElementById('calculator-btn');
 const shoppingBtn = document.getElementById('shopping-btn');
 const plannerBtn = document.getElementById('planner-btn');
@@ -66,96 +61,50 @@ const sliderDots = document.getElementById('sliderDots');
 const categoriesGrid = document.getElementById('categoriesGrid');
 
 const faqBtn = document.getElementById('faq-btn');
+const faqModal = document.getElementById('faq-modal');
 
-// --------------------------------------------
-// Helpers: Modais
-// --------------------------------------------
+// Modal helpers
 function openModal(el) {
   if (!el) return;
   el.classList.remove('hidden');
-  el.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');
 }
-
 function closeModal(el) {
   if (!el) return;
   el.classList.add('hidden');
-  el.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('modal-open');
 }
 
 window.closePremiumModal = function () {
   if (premiumCodeInput) premiumCodeInput.value = '';
+  const warning = document.getElementById('credits-warning');
+  if (warning) warning.classList.add('hidden');
   closeModal(premiumModal);
 };
 
-// Fechar clicando no overlay (todos)
-function bindOverlayClose() {
-  document.querySelectorAll('.modal').forEach(modal => {
-    const overlay = modal.querySelector('.modal-overlay');
-    if (!overlay) return;
-
-    overlay.onclick = () => {
-      if (modal.id === 'calculator-modal') window.closeCalculator();
-      else if (modal.id === 'shopping-modal') window.closeShoppingList();
-      else if (modal.id === 'planner-modal') window.closeWeekPlanner();
-      else if (modal.id === 'premium-modal') window.closePremiumModal();
-      else if (modal.id === 'faq-modal') window.closeFAQ();
-      else closeModal(modal);
-    };
-  });
-}
-
-// ESC fecha modal aberto
-document.addEventListener('keydown', (e) => {
-  if (e.key !== 'Escape') return;
-
-  const opened = Array.from(document.querySelectorAll('.modal')).find(m => !m.classList.contains('hidden'));
-  if (!opened) {
-    const meal = document.getElementById('meal-selector');
-    if (meal) window.closeMealSelector();
-    return;
-  }
-
-  if (opened.id === 'calculator-modal') window.closeCalculator();
-  else if (opened.id === 'shopping-modal') window.closeShoppingList();
-  else if (opened.id === 'planner-modal') window.closeWeekPlanner();
-  else if (opened.id === 'premium-modal') window.closePremiumModal();
-  else if (opened.id === 'faq-modal') window.closeFAQ();
-  else closeModal(opened);
-});
-
-// ============================================
-// INICIALIZAÇÃO
-// ============================================
+// INIT
 async function loadUserData() {
   try {
     const premiumResult = await storage.get('fit_premium');
-
     if (premiumResult && premiumResult.value === 'true') {
       isPremium = true;
     } else {
       const creditsResult = await storage.get('fit_credits');
       const unlockedResult = await storage.get('fit_unlocked');
-
       if (creditsResult) credits = parseInt(creditsResult.value || '3', 10);
       if (unlockedResult) unlockedRecipes = JSON.parse(unlockedResult.value || '[]');
     }
 
     const shoppingResult = await storage.get('fit_shopping');
     const weekPlanResult = await storage.get('fit_weekplan');
-
-    if (shoppingResult?.value) shoppingList = JSON.parse(shoppingResult.value);
-    if (weekPlanResult?.value) weekPlan = JSON.parse(weekPlanResult.value);
-  } catch (e) {
-    // primeira visita
-  }
+    if (shoppingResult && shoppingResult.value) shoppingList = JSON.parse(shoppingResult.value);
+    if (weekPlanResult && weekPlanResult.value) weekPlan = JSON.parse(weekPlanResult.value);
+  } catch (e) {}
 
   updateUI();
   updateShoppingCounter();
   initSliderAndCategories();
   renderRecipes();
-  bindOverlayClose();
 }
 
 async function saveUserData() {
@@ -214,13 +163,12 @@ function updateShoppingCounter() {
   }
 }
 
-// ============================================
 // SLIDER + CATEGORIAS
-// ============================================
+let sliderAutoplay = null;
+
 function initSliderAndCategories() {
   if (typeof RECIPES === 'undefined') return;
 
-  // Slider
   if (sliderTrack && sliderDots) {
     featuredRecipes = RECIPES.filter(r => r.featured).slice(0, 4);
 
@@ -236,14 +184,13 @@ function initSliderAndCategories() {
     `).join('');
 
     sliderDots.innerHTML = featuredRecipes.map((_, idx) =>
-      `<button class="slider-dot-new ${idx === 0 ? 'active' : ''}" onclick="goToSlideNew(${idx})" aria-label="Ir para slide ${idx + 1}"></button>`
+      `<button class="slider-dot-new ${idx === 0 ? 'active' : ''}" onclick="goToSlideNew(${idx})"></button>`
     ).join('');
 
     startAutoplay();
     updateSlider();
   }
 
-  // Categorias
   if (categoriesGrid) {
     const categories = [
       { name: 'Todas', value: '' },
@@ -280,7 +227,9 @@ window.goToSlideNew = function(index) {
 function updateSlider() {
   if (!sliderTrack) return;
   sliderTrack.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-  document.querySelectorAll('.slider-dot-new').forEach((dot, i) => dot.classList.toggle('active', i === currentSlideIndex));
+  document.querySelectorAll('.slider-dot-new').forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentSlideIndex);
+  });
 }
 
 function startAutoplay() {
@@ -306,8 +255,15 @@ function initCategoriesDrag() {
     scrollLeft = grid.scrollLeft;
   });
 
-  grid.addEventListener('mouseleave', () => { isDown = false; grid.style.cursor = 'grab'; });
-  grid.addEventListener('mouseup', () => { isDown = false; grid.style.cursor = 'grab'; });
+  grid.addEventListener('mouseleave', () => {
+    isDown = false;
+    grid.style.cursor = 'grab';
+  });
+
+  grid.addEventListener('mouseup', () => {
+    isDown = false;
+    grid.style.cursor = 'grab';
+  });
 
   grid.addEventListener('mousemove', (e) => {
     if (!isDown) return;
@@ -337,29 +293,21 @@ function initCategoriesDrag() {
 window.filterByCategory = function(category, element) {
   document.querySelectorAll('.category-card-new').forEach(card => card.classList.remove('active'));
   if (element) element.classList.add('active');
-
-  // filtro por categoria (sem misturar com busca)
   searchTerm = category || '';
-  renderRecipes(true);
+  renderRecipes();
 };
 
-// ============================================
 // RECEITAS
-// ============================================
-function renderRecipes(isCategory = false) {
+function renderRecipes() {
   if (!recipeGrid || typeof RECIPES === 'undefined') return;
 
   let filtered = RECIPES;
 
-  // Se é categoria, filtra por igualdade de category.
-  // Se é busca (input), filtra por name.
   if (searchTerm) {
-    if (isCategory || ['Café da Manhã','Almoço','Jantar','Lanches','Sobremesas','Veganas'].includes(searchTerm)) {
-      filtered = RECIPES.filter(r => r.category === searchTerm);
-    } else {
-      const q = searchTerm.toLowerCase();
-      filtered = RECIPES.filter(r => r.name.toLowerCase().includes(q));
-    }
+    filtered = RECIPES.filter(recipe => {
+      return recipe.category === searchTerm ||
+        recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
+    });
   }
 
   recipeGrid.innerHTML = filtered.map(recipe => {
@@ -375,7 +323,7 @@ function renderRecipes(isCategory = false) {
 
           ${showLock ? `
             <div class="recipe-overlay">
-              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
@@ -387,19 +335,19 @@ function renderRecipes(isCategory = false) {
           <h3 class="recipe-title">${recipe.name}</h3>
 
           <div class="recipe-meta">
-            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/>
               <polyline points="12 6 12 12 16 14"/>
             </svg>
             <span>${recipe.time}min</span>
 
-            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
               <circle cx="9" cy="7" r="4"/>
             </svg>
             <span>${recipe.servings}</span>
 
-            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
             </svg>
             <span>${recipe.difficulty}</span>
@@ -416,14 +364,15 @@ function renderRecipes(isCategory = false) {
             </div>
           </div>
 
-          <button class="recipe-button ${isUnlocked ? 'unlocked' : 'locked'}" type="button">
+          <button class="recipe-button ${isUnlocked ? 'unlocked' : 'locked'}">
             ${isUnlocked ? `
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M20 6 9 17l-5-5"></path>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
               </svg>
               Ver Receita
             ` : `
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
@@ -440,9 +389,9 @@ window.viewRecipe = function(recipeId) {
   const recipe = RECIPES.find(r => r.id === recipeId);
   if (!recipe) return;
 
-  const unlocked = isPremium || unlockedRecipes.includes(recipeId);
+  const isUnlocked = isPremium || unlockedRecipes.includes(recipeId);
 
-  if (!unlocked) {
+  if (!isUnlocked) {
     if (credits > 0) {
       credits--;
       unlockedRecipes.push(recipeId);
@@ -450,9 +399,9 @@ window.viewRecipe = function(recipeId) {
       updateUI();
       renderRecipes();
     } else {
-      if (modalMessage) modalMessage.textContent = 'Seus créditos acabaram! Ative o Premium para acesso ilimitado.';
-      const warn = document.getElementById('credits-warning');
-      if (warn) warn.classList.remove('hidden');
+      if (modalMessage) modalMessage.textContent = 'Seus créditos acabaram. Ative o Premium para acesso ilimitado.';
+      const warning = document.getElementById('credits-warning');
+      if (warning) warning.classList.remove('hidden');
       openModal(premiumModal);
       return;
     }
@@ -465,7 +414,6 @@ window.viewRecipe = function(recipeId) {
 function showRecipeDetail(recipe) {
   if (!recipeGrid || !recipeDetail) return;
 
-  // esconder slider/categorias
   const slider = document.getElementById('heroSlider');
   const categories = document.querySelector('.categories-new');
   if (slider) slider.classList.add('hidden');
@@ -481,8 +429,8 @@ function showRecipeDetail(recipe) {
     <div class="detail-content">
       <div class="detail-header">
         <h2 class="detail-title">${recipe.name}</h2>
-        <button onclick="addToShoppingList(${recipe.id})" class="btn-add-list" type="button">
-          <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <button onclick="addToShoppingList(${recipe.id})" class="btn-add-list">
+          <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="9" cy="21" r="1"/>
             <circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
@@ -514,7 +462,7 @@ function showRecipeDetail(recipe) {
         <h3 class="section-title">Adicionar ao Planejamento Semanal</h3>
         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
           ${['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'].map(day => `
-            <button onclick="selectDayForPlanning('${day}', ${recipe.id})" class="btn-secondary" style="padding:0.6rem 1rem;" type="button">
+            <button onclick="selectDayForPlanning('${day}', ${recipe.id})" class="btn-secondary" style="padding:0.6rem 1rem;">
               ${day}
             </button>
           `).join('')}
@@ -565,19 +513,19 @@ window.closeRecipeDetail = function() {
   renderRecipes();
 };
 
-// ============================================
 // LISTA DE COMPRAS
-// ============================================
 window.addToShoppingList = function(recipeId) {
   const recipe = RECIPES.find(r => r.id === recipeId);
   if (!recipe) return;
 
   (recipe.ingredients || []).forEach(ing => {
-    const existing = shoppingList.find(item => item.text.toLowerCase() === ing.toLowerCase());
+    const existingItem = shoppingList.find(item =>
+      item.text.toLowerCase() === ing.toLowerCase()
+    );
 
-    if (existing) {
-      if (!existing.recipes) existing.recipes = [existing.recipe];
-      if (!existing.recipes.includes(recipe.name)) existing.recipes.push(recipe.name);
+    if (existingItem) {
+      if (!existingItem.recipes) existingItem.recipes = [existingItem.recipe];
+      if (!existingItem.recipes.includes(recipe.name)) existingItem.recipes.push(recipe.name);
     } else {
       shoppingList.push({
         id: Date.now() + Math.random(),
@@ -590,7 +538,7 @@ window.addToShoppingList = function(recipeId) {
   });
 
   saveShoppingList();
-  alert(`Ingredientes de "${recipe.name}" adicionados à lista!`);
+  alert(`Ingredientes de "${recipe.name}" adicionados à lista.`);
 };
 
 function renderShoppingList() {
@@ -600,20 +548,20 @@ function renderShoppingList() {
   if (shoppingList.length === 0) {
     content.innerHTML = `
       <div class="shopping-empty">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="9" cy="21" r="1"/>
           <circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
         <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">Sua lista está vazia</p>
-        <p style="font-size: 0.875rem;">Adicione ingredientes das receitas.</p>
+        <p style="font-size: 0.875rem;">Adicione ingredientes das receitas</p>
       </div>
     `;
     return;
   }
 
   content.innerHTML = `
-    <div style="max-height: 60vh; overflow-y: auto; padding-right: 6px; scrollbar-width:none;">
+    <div style="max-height: 60vh; overflow-y: auto;">
       ${shoppingList.map(item => {
         const recipesList = item.recipes ? item.recipes.join(', ') : item.recipe;
         return `
@@ -623,8 +571,8 @@ function renderShoppingList() {
               <div class="shopping-item-text ${item.checked ? 'checked' : ''}">${item.text}</div>
               <div class="shopping-item-recipe">${recipesList}</div>
             </div>
-            <button class="btn-delete" onclick="removeShoppingItem('${item.id}')" aria-label="Remover item" type="button">
-              <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <button class="btn-delete" onclick="removeShoppingItem('${item.id}')" aria-label="Remover item">
+              <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="3 6 5 6 21 6"/>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
               </svg>
@@ -634,7 +582,7 @@ function renderShoppingList() {
       }).join('')}
     </div>
 
-    <button class="btn-clear-list" onclick="clearShoppingList()" type="button">
+    <button class="btn-clear-list" onclick="clearShoppingList()">
       Limpar Toda a Lista
     </button>
   `;
@@ -662,9 +610,7 @@ window.clearShoppingList = function() {
   }
 };
 
-// ============================================
-// PLANEJADOR SEMANAL + seletor (modal padrão)
-// ============================================
+// PLANEJADOR SEMANAL
 let selectedDayForPlanner = null;
 let selectedRecipeForPlanner = null;
 
@@ -672,7 +618,6 @@ window.selectDayForPlanning = function(day, recipeId) {
   const recipe = RECIPES.find(r => r.id === recipeId);
   if (!recipe) return;
 
-  // remove modal antigo
   const existing = document.getElementById('meal-selector');
   if (existing) existing.remove();
 
@@ -681,10 +626,8 @@ window.selectDayForPlanning = function(day, recipeId) {
 
   const modalHTML = `
     <div class="modal" id="meal-selector" role="dialog" aria-modal="true">
-      <div class="modal-overlay" onclick="closeMealSelector()"></div>
-
-      <div class="modal-content-medium" style="max-width:520px;">
-        <button class="modal-close" onclick="closeMealSelector()" aria-label="Fechar">
+      <div class="modal-content-medium modal-surface" style="max-width:520px;">
+        <button class="modal-close" onclick="closeMealSelector()" aria-label="Fechar modal">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -692,28 +635,23 @@ window.selectDayForPlanning = function(day, recipeId) {
         </button>
 
         <h3 class="modal-title" style="text-align:center;">Escolha a Refeição</h3>
-        <p style="text-align:center;color:#6b7280;margin:-0.5rem 0 1.25rem 0;font-weight:800;">
-          ${day} • ${recipe.name}
+        <p style="text-align:center;color:#6b7280;margin:-0.5rem 0 1.25rem 0;">
+          ${day} - ${recipe.name}
         </p>
 
         <div style="display:flex;flex-direction:column;gap:0.75rem;">
-          ${[
-            { label:'Café da Manhã', icon:'<path d="M4 7h12v10H4z"/><path d="M16 9h2a2 2 0 0 1 0 4h-2"/><path d="M8 3v4"/><path d="M12 3v4"/>' },
-            { label:'Lanche da Manhã', icon:'<path d="M4 11h16"/><path d="M6 7h12l-1 4H7z"/><path d="M7 11l-1 6h12l-1-6"/>' },
-            { label:'Almoço', icon:'<path d="M4 12h16"/><path d="M6 6h12v6H6z"/><path d="M9 18h6"/>' },
-            { label:'Lanche da Tarde', icon:'<path d="M4 11h16"/><path d="M6 7h12l-1 4H7z"/><path d="M7 11l-1 6h12l-1-6"/>' },
-            { label:'Jantar', icon:'<path d="M7 4v8"/><path d="M11 4v8"/><path d="M7 8h4"/><path d="M17 4v16"/><path d="M17 4a4 4 0 0 0-4 4v1a3 3 0 0 0 3 3h1"/>' },
-          ].map(m => `
-            <button class="meal-option-btn" onclick="addToWeekPlanWithMeal('${m.label}')" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                ${m.icon}
+          ${['Café da Manhã','Lanche da Manhã','Almoço','Lanche da Tarde','Jantar'].map(m => `
+            <button class="btn-secondary" onclick="addToWeekPlanWithMeal('${m}')" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border-radius:10px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 6v6l4 2"></path>
               </svg>
-              <span>${m.label}</span>
+              <span style="font-weight:600;">${m}</span>
             </button>
           `).join('')}
         </div>
 
-        <button class="btn-secondary" onclick="closeMealSelector()" style="margin-top:1rem;width:100%;border-radius:1rem;" type="button">
+        <button class="btn-secondary" onclick="closeMealSelector()" style="margin-top:1rem;width:100%;border-radius:10px;">
           Cancelar
         </button>
       </div>
@@ -742,7 +680,7 @@ function addToWeekPlan(recipe, day, meal) {
   const key = `${day}-${meal}`;
   weekPlan[key] = recipe;
   saveWeekPlan();
-  alert(`"${recipe.name}" adicionado: ${day} • ${meal}`);
+  alert(`Receita adicionada ao ${day} - ${meal}.`);
 }
 
 function renderWeekPlanner() {
@@ -774,7 +712,7 @@ function renderWeekPlanner() {
         <tbody>
           ${meals.map(meal => `
             <tr>
-              <td style="background:#f9fafb;font-weight:900;">${meal}</td>
+              <td style="background:#f9fafb;font-weight:600;">${meal}</td>
               ${days.map(day => {
                 const key = `${day}-${meal}`;
                 const planned = weekPlan[key];
@@ -784,7 +722,7 @@ function renderWeekPlanner() {
                       <div class="planned-meal">
                         <div class="planned-meal-name">${planned.name}</div>
                         <div class="planned-meal-cal">${planned.calories} cal</div>
-                        <button class="btn-remove-meal" onclick="removeFromWeekPlan('${day}', '${meal}')" type="button">Remover</button>
+                        <button class="btn-remove-meal" onclick="removeFromWeekPlan('${day}', '${meal}')">Remover</button>
                       </div>
                     ` : `<div class="empty-slot">-</div>`}
                   </td>
@@ -793,9 +731,9 @@ function renderWeekPlanner() {
             </tr>
           `).join('')}
           <tr>
-            <td style="background:#fffbeb;font-weight:900;">Total do Dia</td>
+            <td style="background:#fffbeb;font-weight:600;">Total do Dia</td>
             ${days.map(day => `
-              <td style="background:#fffbeb;font-weight:900;color:#ea580c;font-size:1.125rem;">
+              <td style="background:#fffbeb;font-weight:600;color:#ea580c;">
                 ${dailyCalories[day]} cal
               </td>
             `).join('')}
@@ -805,9 +743,9 @@ function renderWeekPlanner() {
     </div>
 
     ${isPremium ? `
-      <button class="btn-save-plan" onclick="saveWeekPlanConfirm()" type="button">Salvar Planejamento</button>
+      <button class="btn-save-plan" onclick="saveWeekPlanConfirm()">Salvar Planejamento</button>
     ` : `
-      <button class="btn-save-plan" disabled title="Disponível apenas para usuários Premium" type="button">Salvar Planejamento (Premium)</button>
+      <button class="btn-save-plan" disabled title="Disponível apenas para usuários Premium">Salvar Planejamento (Premium)</button>
     `}
   `;
 }
@@ -823,9 +761,7 @@ window.removeFromWeekPlan = function(day, meal) {
   renderWeekPlanner();
 };
 
-// ============================================
 // CALCULADORA
-// ============================================
 window.calculateCalories = function() {
   const weight = parseFloat(document.getElementById('calc-weight')?.value);
   const height = parseFloat(document.getElementById('calc-height')?.value);
@@ -834,7 +770,7 @@ window.calculateCalories = function() {
   const activity = document.getElementById('calc-activity')?.value;
 
   if (!weight || !height || !age) {
-    alert('Preencha todos os campos!');
+    alert('Preencha todos os campos.');
     return;
   }
 
@@ -845,7 +781,14 @@ window.calculateCalories = function() {
     bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
   }
 
-  const activityMultipliers = { sedentary: 1.2, light: 1.375, moderate: 1.55, active: 1.725, veryActive: 1.9 };
+  const activityMultipliers = {
+    sedentary: 1.2,
+    light: 1.375,
+    moderate: 1.55,
+    active: 1.725,
+    veryActive: 1.9
+  };
+
   const tdee = bmr * (activityMultipliers[activity] || 1.2);
   const deficit = tdee - 500;
   const surplus = tdee + 300;
@@ -893,12 +836,10 @@ window.calculateCalories = function() {
   `;
 };
 
-// ============================================
-// CONTROLE DE MODAIS (Premium gating)
-// ============================================
+// MODAIS (controle)
 window.openCalculator = function() {
   if (!isPremium) {
-    if (modalMessage) modalMessage.textContent = 'A Calculadora de Calorias é exclusiva para usuários Premium.';
+    if (modalMessage) modalMessage.textContent = 'A Calculadora é exclusiva para usuários Premium.';
     openModal(premiumModal);
     return;
   }
@@ -928,9 +869,7 @@ window.openWeekPlanner = function() {
 };
 window.closeWeekPlanner = function() { closeModal(plannerModal); };
 
-// ============================================
 // PREMIUM
-// ============================================
 async function activatePremium() {
   const code = (premiumCodeInput?.value || '').trim().toUpperCase();
   if (!code) { alert('Digite um código.'); return; }
@@ -947,31 +886,24 @@ async function activatePremium() {
 
     isPremium = true;
     await storage.set('fit_premium', 'true');
-
-    // limpa aviso
-    const warn = document.getElementById('credits-warning');
-    if (warn) warn.classList.add('hidden');
-
     updateUI();
     renderRecipes();
-    window.closePremiumModal();
 
-    alert('Premium ativado com sucesso!');
+    window.closePremiumModal();
+    alert('Premium ativado com sucesso.');
   } catch (err) {
-    alert('Erro ao validar o código. Tente novamente.');
+    alert('Erro ao validar o código.');
   }
 }
 
-// ============================================
-// EVENT LISTENERS
-// ============================================
+// EVENTOS
 if (premiumBtn) {
   premiumBtn.addEventListener('click', () => {
-    if (modalMessage) modalMessage.textContent = 'Tenha acesso ilimitado a todas as receitas!';
-    const warn = document.getElementById('credits-warning');
-    if (warn) {
-      if (credits === 0) warn.classList.remove('hidden');
-      else warn.classList.add('hidden');
+    if (modalMessage) modalMessage.textContent = 'Tenha acesso ilimitado a todas as receitas.';
+    const warning = document.getElementById('credits-warning');
+    if (warning) {
+      if (credits === 0) warning.classList.remove('hidden');
+      else warning.classList.add('hidden');
     }
     openModal(premiumModal);
   });
@@ -979,7 +911,6 @@ if (premiumBtn) {
 
 if (modalCancel) modalCancel.addEventListener('click', () => window.closePremiumModal());
 if (modalActivate) modalActivate.addEventListener('click', activatePremium);
-
 if (premiumCodeInput) {
   premiumCodeInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') activatePremium();
@@ -988,12 +919,8 @@ if (premiumCodeInput) {
 
 if (searchInput) {
   searchInput.addEventListener('input', (e) => {
-    // busca por nome
     searchTerm = e.target.value || '';
-    renderRecipes(false);
-
-    // remove active das categorias quando digita
-    document.querySelectorAll('.category-card-new').forEach(card => card.classList.remove('active'));
+    renderRecipes();
   });
 }
 
@@ -1001,107 +928,112 @@ if (calculatorBtn) calculatorBtn.addEventListener('click', window.openCalculator
 if (shoppingBtn) shoppingBtn.addEventListener('click', window.openShoppingList);
 if (plannerBtn) plannerBtn.addEventListener('click', window.openWeekPlanner);
 
-// ============================================
-// FAQ — SEM EMOJI / ÍCONES SVG / setinha verde via CSS
-// ============================================
+// FAQ (SEM emoji)
 const faqData = [
   {
     title: 'Créditos',
-    icon: 'eye',
     items: [
       { q: 'Como funcionam os 3 créditos?', a: 'Use 1 crédito para liberar 1 receita permanentemente.' },
-      { q: 'Perco acesso às receitas?', a: 'Não. Receitas desbloqueadas continuam disponíveis para sempre.' },
-      { q: 'Posso ganhar mais créditos?', a: 'Os 3 são únicos. Para ilimitado, ative o Premium.' }
+      { q: 'Perco acesso às receitas?', a: 'Não. Receita desbloqueada fica sua.' },
+      { q: 'Posso ganhar mais créditos?', a: 'Para acesso ilimitado, ative o Premium.' }
     ]
   },
   {
     title: 'Premium',
-    icon: 'star',
     items: [
-      { q: 'O que ganho com Premium?', a: 'Receitas ilimitadas, ferramentas, novidades mensais e conteúdos extras.' },
-      { q: 'Como ativar?', a: 'Clique em “Ativar Premium”, receba seu código e valide no modal.' },
-      { q: 'Posso cancelar?', a: 'Sim. Sem fidelidade (considere a política/garantia do seu negócio).' }
+      { q: 'O que ganho?', a: 'Receitas ilimitadas e ferramentas completas.' },
+      { q: 'Como ativar?', a: 'Clique em Ativar Premium e digite o código recebido.' },
+      { q: 'Posso cancelar?', a: 'Sim. Sem fidelidade.' }
     ]
   },
   {
     title: 'Ferramentas',
-    icon: 'tool',
     items: [
-      { q: 'Calculadora de Calorias', a: 'Preencha os dados e veja estimativas de manutenção e objetivos.' },
-      { q: 'Lista de Compras', a: 'Na receita, clique “Adicionar à Lista” e marque itens ao comprar.' },
-      { q: 'Planejador Semanal', a: 'Escolha o dia e a refeição, depois salve o planejamento.' }
+      { q: 'Calculadora de Calorias', a: 'Preencha seus dados para estimar metas.' },
+      { q: 'Lista de Compras', a: 'Adicione ingredientes direto da receita.' },
+      { q: 'Planejador Semanal', a: 'Escolha dia e refeição e organize sua semana.' }
     ]
   },
   {
     title: 'Receitas',
-    icon: 'chef',
     items: [
-      { q: 'Como desbloquear?', a: 'Clique na receita e use 1 crédito (se não for Premium).' },
-      { q: 'Posso buscar receitas?', a: 'Sim. Use a barra de busca ou as categorias.' },
-      { q: 'As receitas têm info nutricional?', a: 'Sim. Calorias, proteína, tempo e porções.' }
+      { q: 'Como desbloquear?', a: 'Clique na receita e use 1 crédito.' },
+      { q: 'Posso buscar?', a: 'Use a barra de busca ou categorias.' },
+      { q: 'Tem informação nutricional?', a: 'Sim: calorias, proteína, tempo e porções.' }
     ]
   }
 ];
 
-function iconSVG(name) {
-  if (name === 'eye') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
-  if (name === 'star') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>`;
-  if (name === 'tool') return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.6 5.6l-6.1 6.1 2.8 2.8 6.1-6.1a4 4 0 0 0 5.6-5.6l-2 2-2.8-2.8 2-2z"/></svg>`;
-  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 3h10v4H7z"/><path d="M6 7h12l-1 14H7L6 7z"/><path d="M9 11v6"/><path d="M15 11v6"/></svg>`;
+function chevronSvg() {
+  return `
+    <svg viewBox="0 0 24 24" fill="none">
+      <polyline points="9 18 15 12 9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+    </svg>
+  `;
 }
 
 function renderFAQ() {
   const content = document.getElementById('faq-content');
   if (!content) return;
 
-  content.innerHTML = faqData.map((section) => `
-    <details>
-      <summary>${section.title}</summary>
-      <div class="faq-body">
+  content.innerHTML = faqData.map((section, idx) => `
+    <div class="faq-section" id="faq-sec-${idx}">
+      <button class="faq-header" onclick="toggleFAQSection(${idx})" aria-expanded="false">
+        <span class="faq-title">${section.title}</span>
+        <span class="faq-chevron">${chevronSvg()}</span>
+      </button>
+      <div class="faq-body" id="faq-body-${idx}" style="display:block;">
         ${section.items.map(item => `
-          <div class="faq-q">
-            ${iconSVG(section.icon)}
-            <div>
-              <strong>${item.q}</strong>
-              <p>${item.a}</p>
-            </div>
+          <div style="margin-bottom:12px;">
+            <div class="faq-q">${item.q}</div>
+            <div class="faq-a">${item.a}</div>
           </div>
         `).join('')}
       </div>
-    </details>
+    </div>
   `).join('') + `
-    <div class="faq-footer">
+    <div class="faq-help">
       <h4>Ainda tem dúvidas?</h4>
-      <div class="modal-footer-pills">
-        <a class="pill pill-whats" href="https://wa.me/5511999999999?text=Ajuda%20MyNutriFlow" target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/>
-            <path d="M8.5 9.5c.3 3 3 5.7 6 6l1.2-1.2c.2-.2.5-.3.8-.2l2 .6c.4.1.6.5.5.9-.3 1.1-1.3 2-2.6 2-5.2 0-9.4-4.2-9.4-9.4 0-1.3.9-2.3 2-2.6.4-.1.8.1.9.5l.6 2c.1.3 0 .6-.2.8L8.5 9.5z"/>
+      <div class="faq-help-links">
+        <a class="wa" href="https://wa.me/5511999999999?text=Ajuda%20MyNutriFlow" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M22 16.92V21a1 1 0 0 1-1.09 1A19.8 19.8 0 0 1 3 5.09 1 1 0 0 1 4 4h4.09a1 1 0 0 1 1 .75l1.14 4.57a1 1 0 0 1-.27.95l-2.2 2.2a16 16 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 .95-.27l4.57 1.14a1 1 0 0 1 .75 1z" stroke="currentColor" stroke-width="2"/>
           </svg>
           WhatsApp
         </a>
-        <a class="pill pill-ig" href="https://instagram.com/mynutriflow" target="_blank" rel="noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="1"/>
+        <a class="ig" href="https://instagram.com/mynutriflow" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M16 11.37a4 4 0 1 1-7.88 1.26 4 4 0 0 1 7.88-1.26z" stroke="currentColor" stroke-width="2"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/>
           </svg>
           Instagram
         </a>
       </div>
     </div>
   `;
+
+  // marca como "open" pra CSS girar chevron
+  document.querySelectorAll('.faq-section').forEach(sec => sec.classList.add('open'));
 }
+
+window.toggleFAQSection = function(idx) {
+  const body = document.getElementById(`faq-body-${idx}`);
+  const sec = document.getElementById(`faq-sec-${idx}`);
+  if (!body || !sec) return;
+
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  sec.classList.toggle('open', !isOpen);
+};
 
 window.openFAQ = function() {
   renderFAQ();
-  openModal(document.getElementById('faq-modal'));
+  openModal(faqModal);
 };
-window.closeFAQ = function() { closeModal(document.getElementById('faq-modal')); };
+window.closeFAQ = function() { closeModal(faqModal); };
 
 if (faqBtn) faqBtn.addEventListener('click', window.openFAQ);
 
-// ============================================
-// INICIALIZAR
-// ============================================
+// START
 loadUserData();
