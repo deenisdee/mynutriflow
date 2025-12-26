@@ -147,9 +147,13 @@ function updateUI() {
       </svg>
       <span>PREMIUM</span>
     `;
-    if (premiumBtn) {
-      premiumBtn.style.display = 'none';
-    }
+
+    
+if (premiumBtn) {
+  premiumBtn.style.visibility = isPremium ? 'hidden' : 'visible';
+}
+
+    
   } else {
     creditsBadge.classList.remove('premium');
     creditsBadge.innerHTML = `
