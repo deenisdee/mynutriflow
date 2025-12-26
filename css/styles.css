@@ -6,6 +6,16 @@
    - Tipografia mais leve (sem 800/900 inflando)
    ============================================ */
 
+/* No início do styles.css */
+#premium-btn {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+#premium-btn.ready {
+  opacity: 1;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
