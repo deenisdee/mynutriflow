@@ -140,6 +140,9 @@ function updateUI() {
   if (!creditsBadge) return;
 
   if (isPremium) {
+    // Remove classe free-user
+    document.body.classList.remove('free-user');
+    
     creditsBadge.classList.add('premium');
     creditsBadge.innerHTML = `
       <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -147,14 +150,10 @@ function updateUI() {
       </svg>
       <span>PREMIUM</span>
     `;
-
-    
-if (premiumBtn) {
-  premiumBtn.style.visibility = isPremium ? 'hidden' : 'visible';
-}
-
-    
   } else {
+    // Adiciona classe free-user
+    document.body.classList.add('free-user');
+    
     creditsBadge.classList.remove('premium');
     creditsBadge.innerHTML = `
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
@@ -163,15 +162,6 @@ if (premiumBtn) {
       </svg>
       <span id="credits-text">${credits} créditos</span>
     `;
-    if (premiumBtn) {
-      premiumBtn.style.display = 'block';
-    }
-  }
-}
-  
-  // Adiciona classe 'ready' para transição suave
-  if (premiumBtn) {
-    premiumBtn.classList.add('ready');
   }
 }
 
