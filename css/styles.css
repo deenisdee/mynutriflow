@@ -790,8 +790,7 @@ body.modal-open{ overflow:hidden; height:100vh; }
   padding:14px 16px;
   cursor:pointer;
   border:none;
-  background:linear-gradient(180deg,#ecfdf5 0%, #f0fdf4 100%);
-  border-bottom:1px solid #bbf7d0;
+
   color:#111827;
 }
 .faq-title{
