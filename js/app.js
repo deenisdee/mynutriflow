@@ -147,8 +147,11 @@ function updateUI() {
     if (!creditsBadge) return;
 
     if (isPremium) {
+      // Usuário PREMIUM
       document.body.classList.remove('free-user');
+      document.body.classList.add('premium-active');
       
+      // Badge vira amarelo PREMIUM
       creditsBadge.classList.add('premium');
       creditsBadge.innerHTML = `
         <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -157,13 +160,17 @@ function updateUI() {
         <span>PREMIUM</span>
       `;
       
+      // ESCONDE o botão verde "Ativar Premium"
       if (premiumBtn) {
         premiumBtn.style.display = 'none';
       }
       
     } else {
+      // Usuário FREE
       document.body.classList.add('free-user');
+      document.body.classList.remove('premium-active');
       
+      // Badge volta a ser azul com créditos
       creditsBadge.classList.remove('premium');
       creditsBadge.innerHTML = `
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
@@ -173,12 +180,13 @@ function updateUI() {
         <span id="credits-text">${credits} créditos</span>
       `;
       
+      // MOSTRA o botão verde "Ativar Premium"
       if (premiumBtn) {
         premiumBtn.style.display = 'block';
       }
     }
     
-    // 👇 ADICIONE ESTA LINHA NO FINAL
+    // Marca badge como pronto para aparecer
     creditsBadge.classList.add('ready');
     
   } catch (error) {
@@ -930,14 +938,10 @@ async function activatePremium() {
     const data = await res.json();
     if (!data.ok) { alert(data.error || 'Código inválido.'); return; }
 
-    console.log('🔵 Antes:', isPremium);
-
     isPremium = true;
     await storage.set('fit_premium', 'true');
     
-    console.log('🟢 Depois:', isPremium);
-    
-    // FORÇA atualização MANUAL do badge
+    // Atualiza badge
     if (creditsBadge) {
       creditsBadge.classList.remove('ready');
       creditsBadge.classList.add('premium');
@@ -953,20 +957,21 @@ async function activatePremium() {
       }, 50);
     }
     
-    // FORÇA esconder botão premium
+    // Esconde botão verde (tripla garantia)
     if (premiumBtn) {
-      console.log('✅ Escondendo botão premium...', premiumBtn);
       premiumBtn.style.display = 'none';
-    } else {
-      console.log('❌ premiumBtn não encontrado!');
+      premiumBtn.style.visibility = 'hidden';
     }
+    
+    // Adiciona classe no body
+    document.body.classList.add('premium-active');
     
     renderRecipes();
     window.closePremiumModal();
     alert('Premium ativado com sucesso.');
     
   } catch (err) {
-    console.error('❌ Erro:', err);
+    console.error('Erro ao ativar premium:', err);
     alert('Erro ao validar o código.');
   }
 }
