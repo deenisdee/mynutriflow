@@ -139,6 +139,17 @@ a { color:inherit; text-decoration:none; }
 
 
 
+/* Esconde botão premium por padrão */
+#premium-btn {
+  display: none;
+}
+
+/* Só mostra quando usuário for free */
+body.free-user #premium-btn {
+  display: block;
+}
+
+
 
 /* ============================================
    SLIDER HERO
