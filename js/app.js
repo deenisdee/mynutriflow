@@ -10,11 +10,6 @@
 
 // DOM elements
 const creditsText = document.getElementById('credits-text');
-const creditsBadge = document.getElementById('credits-badge');
-const premiumBtn = document.getElementById('premium-btn'); // 👈 Certifique-se que está aqui
-
-console.log('🔍 premiumBtn encontrado?', premiumBtn); // 👈 ADICIONE ESTE LOG
-
 
 
 
@@ -52,6 +47,13 @@ const recipeGrid = document.getElementById('recipe-grid');
 const recipeDetail = document.getElementById('recipe-detail');
 
 const premiumModal = document.getElementById('premium-modal');
+
+
+
+console.log('🔍 premiumBtn encontrado?', premiumBtn); // 👈 ADICIONE AQUI
+
+
+
 const modalMessage = document.getElementById('modal-message');
 const premiumCodeInput = document.getElementById('premium-code-input');
 const modalCancel = document.getElementById('modal-cancel');
