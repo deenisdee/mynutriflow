@@ -1031,25 +1031,25 @@ html { scrollbar-gutter: stable; }
 
 
 /* ================================
-   REDUZ FLASH DO BADGE
+   ANTI-FLASH com CSS Variables
    ================================ */
 
-/* Badge premium amarelo */
-.badge.premium {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+:root {
+  --badge-bg: #3b82f6;
+  --show-premium-btn: block;
 }
 
-.badge.premium svg {
-  fill: currentColor !important;
-  stroke: none !important;
-}
-
-/* Transição suave para disfarçar a mudança */
+/* Badge usa variáveis CSS */
 .badge {
-  transition: background 0.25s ease-in-out !important;
+  background: var(--badge-bg) !important;
 }
 
-.badge span,
-.badge svg {
-  transition: opacity 0.2s ease-in-out !important;
+#premium-btn {
+  display: var(--show-premium-btn) !important;
+}
+
+/* Ícone estrela para premium */
+.badge.premium svg {
+  fill: currentColor;
+  stroke: none;
 }
