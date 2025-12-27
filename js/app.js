@@ -177,12 +177,16 @@ function updateUI() {
         premiumBtn.style.display = 'block';
       }
     }
+    
+    // 👇 ADICIONE ESTA LINHA AQUI (última linha antes do catch)
+    document.body.classList.add('ui-loaded');
+    
   } catch (error) {
     console.error('Erro em updateUI:', error);
   }
 }
 
-
+// 👇 NÃO MEXA AQUI
 function updateShoppingCounter() {
   if (!shoppingCounter) return; 
   
@@ -193,9 +197,6 @@ function updateShoppingCounter() {
     shoppingCounter.classList.add('hidden');
   }
 }
-
-
-
 
 
 
