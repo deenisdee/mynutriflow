@@ -12,7 +12,7 @@ export default function handler(req, res) {
 
   // ✅ Códigos válidos (MVP)
   const VALID_CODES = new Set([
-    "TESTE-123",
+    "684884",
     "TESTE-456",
     "FITPRO2024"
   ]);
