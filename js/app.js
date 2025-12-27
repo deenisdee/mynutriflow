@@ -898,6 +898,10 @@ window.openWeekPlanner = function() {
 };
 window.closeWeekPlanner = function() { closeModal(plannerModal); };
 
+
+
+
+
 // PREMIUM
 async function activatePremium() {
   const code = (premiumCodeInput?.value || '').trim().toUpperCase();
@@ -915,8 +919,17 @@ async function activatePremium() {
 
     isPremium = true;
     await storage.set('fit_premium', 'true');
-    updateUI();
-    renderRecipes();
+    
+    // 👇 REMOVE A CLASSE .ready ANTES DE ATUALIZAR
+    if (creditsBadge) {
+      creditsBadge.classList.remove('ready');
+    }
+    
+    // Pequeno delay para garantir que a classe foi removida
+    setTimeout(() => {
+      updateUI();
+      renderRecipes();
+    }, 50);
 
     window.closePremiumModal();
     alert('Premium ativado com sucesso.');
@@ -924,6 +937,11 @@ async function activatePremium() {
     alert('Erro ao validar o código.');
   }
 }
+
+
+
+
+
 
 // EVENTOS
 if (premiumBtn) {
