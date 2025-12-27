@@ -1041,7 +1041,9 @@ html { scrollbar-gutter: stable; }
 
 /* Badge usa variáveis CSS */
 .badge {
-  background: var(--badge-bg) !important;
+  min-width: 160px; /* Largura fixa para evitar "pulo" */
+  opacity: 0; /* Começa invisível */
+  transition: opacity 0.2s ease-in-out;
 }
 
 #premium-btn {
@@ -1053,3 +1055,19 @@ html { scrollbar-gutter: stable; }
   fill: currentColor;
   stroke: none;
 }
+
+/* Badge premium */
+.badge.premium {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+}
+
+.badge.ready {
+  opacity: 1; /* Aparece quando JS marcar como pronto */
+}
+
+
+
+
+
+
+
