@@ -1033,7 +1033,17 @@ html { scrollbar-gutter: stable; }
    Badge Premium - Estilo
    ================================ */
 
-/* Badge premium amarelo */
+
+/* Transição suave no badge */
+#credits-badge {
+  transition: background 0.2s ease-in-out;
+}
+
+#credits-badge span {
+  transition: opacity 0.15s ease-in-out;
+}
+
+/* Badge premium */
 .badge.premium {
   background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
 }
