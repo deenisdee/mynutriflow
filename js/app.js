@@ -140,10 +140,6 @@ function updateUI() {
     if (isPremium) {
       document.body.classList.remove('free-user');
       
-      // Atualiza CSS variables
-      document.documentElement.style.setProperty('--badge-bg', 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)');
-      document.documentElement.style.setProperty('--show-premium-btn', 'none');
-      
       creditsBadge.classList.add('premium');
       creditsBadge.innerHTML = `
         <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -159,10 +155,6 @@ function updateUI() {
     } else {
       document.body.classList.add('free-user');
       
-      // Atualiza CSS variables
-      document.documentElement.style.setProperty('--badge-bg', '#3b82f6');
-      document.documentElement.style.setProperty('--show-premium-btn', 'block');
-      
       creditsBadge.classList.remove('premium');
       creditsBadge.innerHTML = `
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
@@ -176,6 +168,9 @@ function updateUI() {
         premiumBtn.style.display = 'block';
       }
     }
+    
+    // 👇 ADICIONE ESTA LINHA NO FINAL
+    creditsBadge.classList.add('ready');
     
   } catch (error) {
     console.error('Erro em updateUI:', error);
