@@ -1181,3 +1181,24 @@ body.premium-active #premium-btn {
 .hero-slider-fullwidth {
   margin-bottom: 0 !important;
 }
+
+
+
+/* ================================
+   FIX: Remover margem do grid de receitas
+   ================================ */
+
+.recipe-grid {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ajusta container principal */
+.container {
+  padding: 0 1rem !important;
+}
+
+/* Garante que categorias mantêm padding lateral */
+.categories-new {
+  padding: 0 2rem !important;
+}
