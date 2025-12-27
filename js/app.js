@@ -933,14 +933,14 @@ async function activatePremium() {
     const data = await res.json();
     if (!data.ok) { alert(data.error || 'Código inválido.'); return; }
 
-    console.log('🔵 Antes:', isPremium); // DEBUG
+    console.log('🔵 Antes:', isPremium);
 
     isPremium = true;
     await storage.set('fit_premium', 'true');
     
-    console.log('🟢 Depois:', isPremium); // DEBUG
+    console.log('🟢 Depois:', isPremium);
     
-    // FORÇA atualização MANUAL do badge e botão
+    // FORÇA atualização MANUAL do badge
     if (creditsBadge) {
       creditsBadge.classList.remove('ready');
       creditsBadge.classList.add('premium');
@@ -956,8 +956,12 @@ async function activatePremium() {
       }, 50);
     }
     
+    // FORÇA esconder botão premium
     if (premiumBtn) {
+      console.log('✅ Escondendo botão premium...', premiumBtn);
       premiumBtn.style.display = 'none';
+    } else {
+      console.log('❌ premiumBtn não encontrado!');
     }
     
     renderRecipes();
