@@ -994,8 +994,22 @@ if (premiumBtn) {
       else warning.classList.add('hidden');
     }
     openModal(premiumModal);
+    
+    // 👇 ADICIONE ESTAS LINHAS
+    setTimeout(() => {
+      if (premiumCodeInput) {
+        premiumCodeInput.focus();
+      }
+    }, 100);
   });
 }
+
+
+
+
+
+
+
 
 if (modalCancel) modalCancel.addEventListener('click', () => window.closePremiumModal());
 if (modalActivate) modalActivate.addEventListener('click', activatePremium);
