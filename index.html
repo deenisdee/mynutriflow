@@ -6,25 +6,34 @@
   <title>Mynutriflow - Receitas Fit Premium</title>
   <link rel="stylesheet" href="css/styles.css" />
   
-<style>
-  /* Esconde elementos até o JS carregar */
-  #credits-badge,
-  #premium-btn {
-    opacity: 0;
-    transition: opacity 0.15s ease-in;
-  }
-  
-  /* Mostra quando JS marcar como "carregado" */
-  body.ui-loaded #credits-badge,
-  body.ui-loaded #premium-btn {
-    opacity: 1;
-  }
-</style>
+
   
 
 </head>
 
 <body>
+
+
+  <script>
+    // Executa ANTES de renderizar qualquer coisa
+    (function() {
+      try {
+        const isPremium = localStorage.getItem('fit_premium') === 'true';
+        const credits = parseInt(localStorage.getItem('fit_credits') || '3', 10);
+        
+        // Adiciona classe no HTML imediatamente
+        if (isPremium) {
+          document.documentElement.classList.add('is-premium');
+        } else {
+          document.documentElement.classList.add('is-free');
+        }
+      } catch(e) {}
+    })();
+  </script>
+
+
+
+  
   <div id="app">
     <!-- Header -->
     <header id="header">
