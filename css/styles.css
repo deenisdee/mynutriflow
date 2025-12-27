@@ -1042,3 +1042,28 @@ html { scrollbar-gutter: stable; }
 #premium-btn {
   opacity: 1 !important;
 }
+
+
+
+/* ================================
+   ANTI-FLASH: Estado Premium/Free
+   ================================ */
+
+/* Esconde botão Premium por padrão */
+#premium-btn {
+  display: none;
+}
+
+/* Mostra APENAS para usuários free */
+html.is-free #premium-btn {
+  display: block !important;
+}
+
+/* Badge amarelo apenas para premium */
+html.is-premium #credits-badge {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+}
+
+html.is-premium #credits-badge .icon {
+  fill: currentColor !important;
+}
