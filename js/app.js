@@ -6,6 +6,58 @@
 // - Mantém funcionalidades atuais
 // ============================================
 
+
+// ============================================
+// ANTI-FLASH: Atualiza UI imediatamente
+// ============================================
+(function immediateUIUpdate() {
+  const isPremiumStored = localStorage.getItem('fit_premium') === 'true';
+  const creditsStored = parseInt(localStorage.getItem('fit_credits') || '3', 10);
+  
+  window.addEventListener('DOMContentLoaded', function() {
+    const badge = document.getElementById('credits-badge');
+    const btn = document.getElementById('premium-btn');
+    
+    if (!badge || !btn) return;
+    
+    if (isPremiumStored) {
+      badge.className = 'badge premium';
+      badge.innerHTML = `
+        <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        <span>PREMIUM</span>
+      `;
+      btn.style.display = 'none';
+    } else {
+      badge.className = 'badge';
+      badge.innerHTML = `
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        <span>${creditsStored} créditos</span>
+      `;
+      btn.style.display = 'block';
+    }
+  });
+})();
+
+// ============================================
+// RESTO DO CÓDIGO ORIGINAL
+// ============================================
+
+
+
+
+
+let credits = 3;
+let unlockedRecipes = [];
+// ... continua normal
+
+
+
+
 let credits = 3;
 let unlockedRecipes = [];
 let isPremium = false;
