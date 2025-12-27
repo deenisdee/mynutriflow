@@ -1038,10 +1038,25 @@ html { scrollbar-gutter: stable; }
   --show-premium-btn: block;
 }
 
+/* Esconde badge e botão até JS carregar */
+#credits-badge,
+#premium-btn {
+  opacity: 0;
+  transition: opacity 0.15s ease-in;
+}
+
+/* Mostra quando JS adicionar classe "ready" */
+#credits-badge.ready,
+#premium-btn.ready {
+  opacity: 1;
+}
+
+/* Aplica cor do badge via CSS variable */
 #credits-badge {
   background: var(--badge-bg) !important;
 }
 
+/* Controla exibição do botão premium */
 #premium-btn {
   display: var(--show-premium-btn) !important;
 }
