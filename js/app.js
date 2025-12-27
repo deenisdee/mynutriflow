@@ -142,10 +142,11 @@ function updateUI() {
 
     if (isPremium) {
       document.body.classList.remove('free-user');
-      document.documentElement.classList.add('is-premium'); // 👈 ADICIONA
-      document.documentElement.classList.remove('is-free'); // 👈 ADICIONA
+      document.documentElement.classList.add('is-premium');
+      document.documentElement.classList.remove('is-free');
       
       creditsBadge.classList.add('premium');
+      // 👇 CONTEÚDO CORRETO DO BADGE PREMIUM
       creditsBadge.innerHTML = `
         <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
@@ -159,8 +160,8 @@ function updateUI() {
       
     } else {
       document.body.classList.add('free-user');
-      document.documentElement.classList.add('is-free'); // 👈 ADICIONA
-      document.documentElement.classList.remove('is-premium'); // 👈 ADICIONA
+      document.documentElement.classList.add('is-free');
+      document.documentElement.classList.remove('is-premium');
       
       creditsBadge.classList.remove('premium');
       creditsBadge.innerHTML = `
@@ -180,6 +181,13 @@ function updateUI() {
     console.error('Erro em updateUI:', error);
   }
 }
+
+
+
+
+
+
+
 
 // 👇 NÃO MEXA AQUI
 function updateShoppingCounter() {
