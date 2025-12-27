@@ -1027,3 +1027,29 @@ html { scrollbar-gutter: stable; }
 @supports not (scrollbar-gutter: stable) {
   html { overflow-y: scroll; } /* sempre reserva o espaço do scroll */
 }
+
+
+
+/* ================================
+   REDUZ FLASH DO BADGE
+   ================================ */
+
+/* Badge premium amarelo */
+.badge.premium {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+}
+
+.badge.premium svg {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+
+/* Transição suave para disfarçar a mudança */
+.badge {
+  transition: background 0.25s ease-in-out !important;
+}
+
+.badge span,
+.badge svg {
+  transition: opacity 0.2s ease-in-out !important;
+}
