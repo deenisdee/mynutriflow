@@ -956,12 +956,9 @@ async function activatePremium() {
       }, 50);
     }
     
-   if (premiumBtn) {
-  console.log('✅ Escondendo botão premium...'); // 👈 ADICIONE
-  premiumBtn.style.display = 'none';
-} else {
-  console.log('❌ premiumBtn não encontrado!'); // 👈 ADICIONE
-}
+    if (premiumBtn) {
+      premiumBtn.style.display = 'none';
+    }
     
     renderRecipes();
     window.closePremiumModal();
