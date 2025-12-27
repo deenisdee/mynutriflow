@@ -1200,5 +1200,5 @@ body.premium-active #premium-btn {
 
 /* Garante que categorias mantêm padding lateral */
 .categories-new {
-  padding: 0 2rem !important;
+  padding: 10px 2rem !important;
 }
