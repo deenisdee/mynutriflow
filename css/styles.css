@@ -1067,3 +1067,17 @@ html.is-premium #credits-badge {
 html.is-premium #credits-badge .icon {
   fill: currentColor !important;
 }
+
+
+
+/* Garante que o ícone de estrela aparece preenchido em premium */
+html.is-premium #credits-badge svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Ícone de olho continua vazado em free */
+html.is-free #credits-badge svg {
+  fill: none;
+  stroke: currentColor;
+}
