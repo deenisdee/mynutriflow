@@ -1114,3 +1114,33 @@ body.premium-active #premium-btn {
   }
 }
 
+
+
+
+
+/* ================================
+   FIX: Botões dias da semana arredondados
+   ================================ */
+
+/* Estiliza botões de seleção de dia (no detalhe da receita) */
+.detail-section button.btn-secondary {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+  border: none !important;
+  border-radius: 50px !important; /* arredondado */
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+}
+
+.detail-section button.btn-secondary:hover {
+  background: #d1d5db !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
+}
+
+.detail-section button.btn-secondary:active {
+  transform: translateY(0) !important;
+}
