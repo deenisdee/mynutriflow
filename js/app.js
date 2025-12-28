@@ -675,13 +675,16 @@ ${recipe.tags && recipe.tags.length > 0 ? `
     </div>
   `;
 
-  recipeGrid.classList.add('hidden');
-  recipeDetail.classList.remove('hidden');
- 
+
+  
   window.scrollTo({
   top: 0,
   behavior: 'smooth'
-});
+  });
+
+  recipeGrid.classList.add('hidden');
+  recipeDetail.classList.remove('hidden');
+ 
 
   // 👇 INICIALIZA ÍCONES LUCIDE
   if (typeof lucide !== 'undefined') {
