@@ -1039,9 +1039,18 @@ function renderWeekPlanner() {
   `;
 }
 
+
+
+
+
 window.saveWeekPlanConfirm = function() {
-  alert('Planejamento semanal salvo com sucesso.');
+  showNotification('Planejamento salvo', 'Planejamento semanal salvo com sucesso.');
 };
+
+
+
+
+
 
 window.removeFromWeekPlan = function(day, meal) {
   const key = `${day}-${meal}`;
