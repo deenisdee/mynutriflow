@@ -507,7 +507,29 @@ ${recipe.tags && recipe.tags.length > 0 ? `
   <div class="tags-container">
     ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
   </div>
-` : ''}
+` : ''
+
+
+
+
+ setTimeout(() => {
+    const recipeDetail = document.getElementById('recipe-detail');
+    if (recipeDetail) {
+      const headerHeight = 80; // Altura aproximada do header
+      const targetPosition = recipeDetail.offsetTop - headerHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, 100);
+
+
+
+
+
+}
 
 
 
