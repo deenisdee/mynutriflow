@@ -1592,3 +1592,48 @@ body.premium-active #premium-btn {
   flex-shrink: 0;
 }
 
+
+
+/* Modal de Notificação */
+.modal-content-small {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  z-index: 10001;
+}
+
+.modal-content-small .modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.modal-content-small .modal-text {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.modal-content-small .btn-primary {
+  width: 100%;
+  padding: 0.875rem;
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modal-content-small .btn-primary:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+}
