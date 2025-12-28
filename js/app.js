@@ -6,7 +6,7 @@
 // - Mantém funcionalidades atuais
 // ============================================
 
-
+let allRecipes = recipesData || [];
 
 let credits = 3;
 let unlockedRecipes = [];
