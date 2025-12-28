@@ -485,12 +485,22 @@ function showRecipeDetail(recipeId) {
     <div class="detail-content-wrapper">
       <h2 class="detail-title">${recipe.name}</h2>
 
+
+
+
+
+<!--
    ${recipe.tags && recipe.tags.length > 0 ? `
   <div class="tags-container">
     ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
   </div>
 ` : ''}
+-->
 
+
+  
+      
+      
       <!-- STATS -->
       <div class="detail-stats">
         <div class="detail-stat">
