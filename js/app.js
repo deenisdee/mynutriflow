@@ -891,7 +891,7 @@ function addToWeekPlan(day, recipeId) {
   selectedDayForPlanner = day;
   selectedRecipeForPlanner = recipeId;
   
-  const mealModal = document.getElementById('meal-selector-modal');
+ const mealModal = document.getElementById('planner-modal');
   if (mealModal) {
     mealModal.classList.remove('hidden');
     document.body.classList.add('modal-open');
