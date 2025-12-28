@@ -1067,11 +1067,15 @@ window.calculateCalories = function() {
   const gender = document.getElementById('calc-gender')?.value;
   const activity = document.getElementById('calc-activity')?.value;
 
+
+  
   if (!weight || !height || !age) {
-    alert('Preencha todos os campos.');
+   showNotification('Atenção', 'Preencha todos os campos.');
     return;
   }
 
+
+  
   let bmr;
   if (gender === 'male') {
     bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
