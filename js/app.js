@@ -675,25 +675,17 @@ ${recipe.tags && recipe.tags.length > 0 ? `
     </div>
   `;
 
+  recipeGrid.classList.add('hidden');
+  recipeDetail.classList.remove('hidden');
+  window.scrollTo(0, 0);
 
-  
-
-
- recipeGrid.classList.add('hidden');
-recipeDetail.classList.remove('hidden');
-
-// 👇 AGUARDA O DOM ATUALIZAR ANTES DE ROLAR
-setTimeout(() => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-}, 100);
-
-// 👇 INICIALIZA ÍCONES LUCIDE
-if (typeof lucide !== 'undefined') {
-  lucide.createIcons();
+  // 👇 INICIALIZA ÍCONES LUCIDE
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 }
+
+
 
 
 
