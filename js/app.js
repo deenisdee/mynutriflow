@@ -6,7 +6,7 @@
 // - Mantém funcionalidades atuais
 // ============================================
 
-let allRecipes = RECIPES || [];
+import { recipes } from './data.js';
 
 let credits = 3;
 let unlockedRecipes = [];
@@ -17,6 +17,9 @@ let featuredRecipes = [];
 let searchTerm = '';
 let shoppingList = [];
 let weekPlan = {};
+
+// Carregar todas as receitas
+let allRecipes = recipes;
 
 const isClaudeEnvironment = typeof window.storage !== 'undefined';
 
