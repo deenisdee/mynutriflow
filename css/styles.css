@@ -43,7 +43,8 @@ a { color:inherit; text-decoration:none; }
 .logo h1{ font-size:2rem; font-weight:600; white-space:nowrap; }
 
 .logo-receita{ color:#1f2937; }
-.logo-fit{ color:#16a34a; font-weight:700; }
+.logo-fit{ color:#1f2937; }
+.logo-app{ color:#16a34a; font-weight:700; }
 
 .logo-icon{
   width:45px; height:45px;
