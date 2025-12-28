@@ -682,16 +682,12 @@ ${recipe.tags && recipe.tags.length > 0 ? `
  recipeGrid.classList.add('hidden');
 recipeDetail.classList.remove('hidden');
 
-// 👇 FORÇA O SCROLL DE VÁRIAS FORMAS
-document.documentElement.scrollTop = 0;
-document.body.scrollTop = 0;
-
+// 👇 AGUARDA O DOM ATUALIZAR ANTES DE ROLAR
 setTimeout(() => {
-  window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-}, 50);
-
-setTimeout(() => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }, 100);
 
 // 👇 INICIALIZA ÍCONES LUCIDE
