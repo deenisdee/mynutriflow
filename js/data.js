@@ -17,6 +17,9 @@ const RECIPES = [
     servings: 1,
     difficulty: 'Fácil',
     featured: true,
+
+    featured: true,
+    description: 'Bowl cremoso de açaí com 25g de proteína, perfeito para pós-treino',
     
     tags: [
         'Post-treino',
