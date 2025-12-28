@@ -480,29 +480,11 @@ function renderRecipes() {
   }).join('');
 }
 
+
+
+
 window.viewRecipe = function(recipeId) {
-  const recipe = RECIPES.find(r => r.id === recipeId);
-  if (!recipe) return;
-
-  const isUnlocked = isPremium || unlockedRecipes.includes(recipeId);
-
-  if (!isUnlocked) {
-    if (credits > 0) {
-      credits--;
-      unlockedRecipes.push(recipeId);
-      saveUserData();
-      updateUI();
-      renderRecipes();
-    } else {
-      if (modalMessage) modalMessage.textContent = 'Seus créditos acabaram. Ative o Premium para acesso ilimitado.';
-      const warning = document.getElementById('credits-warning');
-      if (warning) warning.classList.remove('hidden');
-      openModal(premiumModal);
-      return;
-    }
-  }
-
-  currentRecipe = recipe;
+  if (!ensureRecipeAccess(recipeId)) return;
   showRecipeDetail(recipeId);
 };
 
@@ -510,10 +492,10 @@ window.viewRecipe = function(recipeId) {
 
 
 
-
-
-
 function showRecipeDetail(recipeId) {
+
+  if (!ensureRecipeAccess(recipeId)) return;
+  
   const recipe = allRecipes.find(r => r.id === recipeId);
   if (!recipe) return;
 
