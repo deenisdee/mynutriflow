@@ -2801,4 +2801,4 @@ const RECIPES = [
 ];
 
 // Código premium válido - ALTERE AQUI PARA MUDAR O CÓDIGO
-// const VALID_PREMIUM_CODE = 'FITPRO2024';
+//const VALID_PREMIUM_CODE = 'FITPRO2024';
