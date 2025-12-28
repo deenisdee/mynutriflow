@@ -1203,3 +1203,343 @@ body.premium-active #premium-btn {
 .categories-new {
   padding: 10px 2rem !important;
 }
+
+
+/* ================================
+   LAYOUT TURBINADO - RECEITA DETALHADA
+   ================================ */
+
+.detail-hero-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.detail-content-wrapper {
+  padding: 2rem;
+  max-width: 1248px;
+  margin: 0 auto;
+}
+
+.detail-title {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+/* Tags */
+.tags-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.tag {
+  padding: 0.5rem 1rem;
+  background: #f0fdf4;
+  color: #16a34a;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid #bbf7d0;
+}
+
+/* Stats */
+.detail-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.detail-stat {
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #bbf7d0;
+  text-align: center;
+}
+
+.detail-stat-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #16a34a;
+  margin-bottom: 0.25rem;
+}
+
+.detail-stat-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Seções */
+.detail-section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-icon {
+  width: 28px;
+  height: 28px;
+  color: #16a34a;
+}
+
+/* Planejamento Semanal */
+.planner-subtitle {
+  font-size: 0.95rem;
+  color: #16a34a;
+  margin-bottom: 1rem;
+}
+
+.planner-days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.75rem;
+}
+
+.planner-day {
+  padding: 0.875rem 1.25rem;
+  background: #e5e7eb;
+  color: #374151;
+  border-radius: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.planner-day:hover {
+  background: #d1d5db;
+  transform: translateY(-2px);
+}
+
+/* Benefícios */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.benefit-item {
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.benefit-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: #16a34a;
+  margin-top: 0.125rem;
+}
+
+/* Ingredientes em 2 colunas */
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0.75rem;
+  border: 1px solid #bbf7d0;
+  transition: all 0.2s;
+}
+
+.ingredient-item:hover {
+  background: #f0fdf4;
+  border-color: #16a34a;
+  transform: translateX(4px);
+}
+
+.ingredient-icon-wrapper {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #16a34a;
+}
+
+.ingredient-icon {
+  width: 20px;
+  height: 20px;
+  color: #16a34a;
+}
+
+.ingredient-content {
+  flex: 1;
+}
+
+.ingredient-text {
+  color: #374151;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ingredient-quantity {
+  display: inline-block;
+  font-weight: 600;
+  color: #16a34a;
+  margin-right: 0.5rem;
+}
+
+.ingredient-optional {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Modo de Preparo */
+.instructions-list {
+  list-style: none;
+}
+
+.instruction-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-direction: column;
+}
+
+.instruction-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.instruction-number {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  background: #16a34a;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.instruction-text {
+  padding-top: 0.25rem;
+  color: #374151;
+  flex: 1;
+  line-height: 1.6;
+}
+
+.instruction-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  aspect-ratio: 600 / 370;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  align-self: center;
+}
+
+/* Dicas */
+.tips-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.tip-item {
+  padding: 1rem;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-left: 4px solid #f59e0b;
+  border-radius: 0.5rem;
+  color: #92400e;
+  font-size: 0.95rem;
+}
+
+/* Alérgenos */
+.allergens-container {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.allergen-badge {
+  padding: 0.5rem 1rem;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid #fecaca;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.allergen-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .detail-title {
+    font-size: 1.7rem;
+  }
+  
+  .detail-hero-image {
+    height: 300px;
+  }
+  
+  .detail-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ingredients-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .planner-days {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .instruction-image {
+    max-width: 100%;
+  }
+}
