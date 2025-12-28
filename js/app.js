@@ -685,10 +685,15 @@ ${recipe.tags && recipe.tags.length > 0 ? `
   // Scroll suave
   document.body.scrollTop = 0; // Safari
   document.documentElement.scrollTop = 0; // Chrome, Firefox, IE, Opera
+
+  
+// 👇 AGUARDA O DOM ATUALIZAR ANTES DE ROLAR
+setTimeout(() => {
   window.scrollTo({
-  top: 0,
-  behavior: 'smooth'
+    top: 0,
+    behavior: 'smooth'
   });
+}, 100);
  
 
   // 👇 INICIALIZA ÍCONES LUCIDE
