@@ -489,13 +489,13 @@ function showRecipeDetail(recipeId) {
 
 
 
-<!--
-   ${recipe.tags && recipe.tags.length > 0 ? `
-  <div class="tags-container">
-    ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-  </div>
-` : ''}
--->
+
+//   ${recipe.tags && recipe.tags.length > 0 ? `
+//  <div class="tags-container">
+//    ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+//  </div>
+// ` : ''}
+
 
 
   
