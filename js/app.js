@@ -468,80 +468,131 @@ function showRecipeDetail(recipe) {
   recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
 
-  recipeDetail.innerHTML = `
-    <button class="back-button" onclick="closeRecipeDetail()">← Voltar</button>
-    <img src="${recipe.image}" alt="${recipe.name}" class="detail-image"
-         onerror="this.src='https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80'">
-    <div class="detail-content">
-      <div class="detail-header">
-        <h2 class="detail-title">${recipe.name}</h2>
-        <button onclick="addToShoppingList(${recipe.id})" class="btn-add-list">
-          <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"/>
-            <circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-          </svg>
-          Adicionar à Lista
-        </button>
-      </div>
 
-      <div class="detail-stats">
-        <div class="detail-stat">
-          <div class="detail-stat-value">${recipe.calories}</div>
-          <div class="detail-stat-label">calorias</div>
-        </div>
-        <div class="detail-stat">
-          <div class="detail-stat-value">${recipe.protein}g</div>
-          <div class="detail-stat-label">proteína</div>
-        </div>
-        <div class="detail-stat">
-          <div class="detail-stat-value">${recipe.time}min</div>
-          <div class="detail-stat-label">tempo</div>
-        </div>
-        <div class="detail-stat">
-          <div class="detail-stat-value">${recipe.servings}</div>
-          <div class="detail-stat-label">porções</div>
-        </div>
-      </div>
+function showRecipeDetail(recipe) {
+    recipeGrid.classList.add('hidden');
+    recipeDetail.classList.remove('hidden');
+    
+    recipeDetail.innerHTML = `
+        <button class="back-button" onclick="closeRecipeDetail()">← Voltar</button>
+        <img src="${recipe.image}" alt="${recipe.name}" class="detail-image">
+        <div class="detail-content">
+            <div class="detail-header">
+                <h2 class="detail-title">${recipe.name}</h2>
+                <button onclick="addToShoppingList(${recipe.id})" class="btn-add-list">
+                    <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"/>
+                        <circle cx="20" cy="21" r="1"/>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Adicionar à Lista
+                </button>
+            </div>
 
-      <div class="detail-section">
-        <h3 class="section-title">Adicionar ao Planejamento Semanal</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
-          ${['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'].map(day => `
-            <button onclick="selectDayForPlanning('${day}', ${recipe.id})" class="btn-secondary" style="padding:0.6rem 1rem;">
-              ${day}
-            </button>
-          `).join('')}
+            <div class="detail-stats">
+                <div class="detail-stat">
+                    <div class="detail-stat-value">${recipe.calories}</div>
+                    <div class="detail-stat-label">calorias</div>
+                </div>
+                <div class="detail-stat">
+                    <div class="detail-stat-value">${recipe.protein}g</div>
+                    <div class="detail-stat-label">proteína</div>
+                </div>
+                <div class="detail-stat">
+                    <div class="detail-stat-value">${recipe.time}min</div>
+                    <div class="detail-stat-label">tempo</div>
+                </div>
+                <div class="detail-stat">
+                    <div class="detail-stat-value">${recipe.servings}</div>
+                    <div class="detail-stat-label">porções</div>
+                </div>
+            </div>
+
+            ${recipe.tags ? `
+                <div class="detail-section">
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        ${recipe.tags.map(tag => `
+                            <span style="background: #f0fdf4; color: #16a34a; padding: 0.375rem 0.75rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;">
+                                ${tag}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+
+            ${recipe.benefits ? `
+                <div class="detail-section">
+                    <h3 class="section-title">✨ Benefícios</h3>
+                    <ul style="list-style: none; padding: 0; display: grid; gap: 0.75rem;">
+                        ${recipe.benefits.map(benefit => `
+                            <li style="display: flex; align-items: start; gap: 0.75rem;">
+                                <span style="color: #16a34a; font-size: 1.25rem;">✓</span>
+                                <span style="color: #4b5563;">${benefit}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            ` : ''}
+
+            <div class="detail-section">
+                <h3 class="section-title">Adicionar ao Planejamento Semanal</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    ${['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'].map(day => `
+                        <button onclick="selectDayForPlanning('${day}', ${recipe.id})" 
+                                class="btn-secondary" style="padding: 0.5rem 1rem;">
+                            ${day}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="detail-section">
+                <h3 class="section-title">Ingredientes</h3>
+                <ul class="ingredients-list">
+                    ${recipe.ingredients.map(ing => `
+                        <li class="ingredient-item">
+                            <span class="check-icon">✓</span>
+                            <span>${ing}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+            
+            <div class="detail-section">
+                <h3 class="section-title">Modo de Preparo</h3>
+                <ol class="instructions-list">
+                    ${recipe.instructions.map((step, idx) => `
+                        <li class="instruction-item">
+                            <div class="instruction-number">${idx + 1}</div>
+                            <div class="instruction-text">${step}</div>
+                        </li>
+                    `).join('')}
+                </ol>
+            </div>
+
+            ${recipe.tips ? `
+                <div class="detail-section">
+                    <h3 class="section-title">💡 Dicas Profissionais</h3>
+                    <div style="background: #fffbeb; border-left: 4px solid #f59e0b; padding: 1.5rem; border-radius: 0.5rem;">
+                        <ul style="list-style: none; padding: 0; display: grid; gap: 1rem;">
+                            ${recipe.tips.map(tip => `
+                                <li style="color: #92400e;">${tip}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            ` : ''}
         </div>
-      </div>
+    `;
 
-      <div class="detail-section">
-        <h3 class="section-title">Ingredientes</h3>
-        <ul class="ingredients-list">
-          ${(recipe.ingredients || []).map(ing => `
-            <li class="ingredient-item">
-              <span class="check-icon">✓</span>
-              <span>${ing}</span>
-            </li>
-          `).join('')}
-        </ul>
-      </div>
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-      <div class="detail-section">
-        <h3 class="section-title">Modo de Preparo</h3>
-        <ol class="instructions-list">
-          ${(recipe.instructions || []).map((step, idx) => `
-            <li class="instruction-item">
-              <div class="instruction-number">${idx + 1}</div>
-              <div class="instruction-text">${step}</div>
-            </li>
-          `).join('')}
-        </ol>
-      </div>
-    </div>
-  `;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function closeRecipeDetail() {
+    recipeDetail.classList.add('hidden');
+    recipeGrid.classList.remove('hidden');
+    currentRecipe = null;
+    renderRecipes();
 }
 
 window.closeRecipeDetail = function() {
