@@ -485,21 +485,17 @@ function showRecipeDetail(recipeId) {
 
     <img src="${heroImage}" alt="${recipe.name}" class="detail-hero-image">
 
-    <div class="detail-content-wrapper">
-    
-      <h2 class="detail-title">${recipe.name}</h2>
-
-
-
-<!-- Botão Adicionar à Lista -->
-<button class="btn-add-shopping" onclick="addToShoppingList(${recipe.id})">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
-    <circle cx="9" cy="21" r="1"/>
-    <circle cx="20" cy="21" r="1"/>
-    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-  </svg>
-  Adicionar à Lista
-</button>
+ <div class="detail-content-wrapper">
+  <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+    <h2 class="detail-title" style="margin: 0;">${recipe.name}</h2>
+    <button class="btn-add-shopping" onclick="addToShoppingList(${recipe.id})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+      </svg>
+      Adicionar à Lista
+    </button>
+  </div>
 
 
 
