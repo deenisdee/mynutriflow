@@ -454,7 +454,7 @@ window.viewRecipe = function(recipeId) {
   }
 
   currentRecipe = recipe;
-  showRecipeDetail(recipe);
+  showRecipeDetail(recipeId);
 };
 
 
