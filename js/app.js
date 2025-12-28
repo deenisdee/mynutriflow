@@ -224,7 +224,7 @@ function initSliderAndCategories() {
           onerror="this.src='https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80'">
         <div class="slide-overlay-new">
           <h2 class="slide-title-new">${recipe.name}</h2>
-          <p class="slide-description-new">${(recipe.ingredients && recipe.ingredients[0]) ? recipe.ingredients[0] : 'Receita deliciosa e saudável'}</p>
+       <p class="slide-description-new">${recipe.description || 'Receita deliciosa e saudável'}</p>
         </div>
       </div>
     `).join('');
