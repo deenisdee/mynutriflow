@@ -343,6 +343,7 @@ window.filterByCategory = function(category, element) {
   document.querySelectorAll('.category-card-new').forEach(card => card.classList.remove('active'));
   if (element) element.classList.add('active');
   searchTerm = category || '';
+  closeRecipeDetail();
   renderRecipes();
 };
 
