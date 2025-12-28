@@ -1097,13 +1097,13 @@ function renderFAQ() {
     <div class="faq-help">
       <h4>Ainda tem dúvidas?</h4>
       <div class="faq-help-links">
-        <a class="wa" href="https://wa.me/5511999999999?text=Ajuda%20MyNutriFlow" target="_blank" rel="noreferrer">
+        <a class="wa" href="https://wa.me/5511999999999?text=Ajuda%20receitafit.app" target="_blank" rel="noreferrer">
           <svg viewBox="0 0 24 24" fill="none">
             <path d="M22 16.92V21a1 1 0 0 1-1.09 1A19.8 19.8 0 0 1 3 5.09 1 1 0 0 1 4 4h4.09a1 1 0 0 1 1 .75l1.14 4.57a1 1 0 0 1-.27.95l-2.2 2.2a16 16 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 .95-.27l4.57 1.14a1 1 0 0 1 .75 1z" stroke="currentColor" stroke-width="2"/>
           </svg>
           WhatsApp
         </a>
-        <a class="ig" href="https://instagram.com/mynutriflow" target="_blank" rel="noreferrer">
+        <a class="ig" href="https://instagram.com/receitafit.app" target="_blank" rel="noreferrer">
           <svg viewBox="0 0 24 24" fill="none">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2"/>
             <path d="M16 11.37a4 4 0 1 1-7.88 1.26 4 4 0 0 1 7.88-1.26z" stroke="currentColor" stroke-width="2"/>
