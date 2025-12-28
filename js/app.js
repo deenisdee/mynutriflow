@@ -145,6 +145,51 @@ async function saveWeekPlan() {
 
 
 
+
+
+// ==============================
+// REGRA CENTRAL: acesso à receita
+// ==============================
+function canAccessRecipe(recipeId) {
+  if (isPremium) return true;
+  if (unlockedRecipes.includes(recipeId)) return true;
+  return credits > 0;
+}
+
+function ensureRecipeAccess(recipeId) {
+  // Já pode acessar?
+  if (isPremium || unlockedRecipes.includes(recipeId)) return true;
+
+  // Tem crédito? então desbloqueia agora (primeiro acesso)
+  if (credits > 0) {
+    credits--;
+    unlockedRecipes.push(recipeId);
+    saveUserData();     // mantém seu padrão (sem await)
+    updateUI();
+    renderRecipes();
+    return true;
+  }
+
+  // Sem crédito: bloqueia e chama premium
+  if (modalMessage) modalMessage.textContent =
+    'Seus créditos acabaram. Ative o Premium para acesso ilimitado.';
+
+  const warning = document.getElementById('credits-warning');
+  if (warning) warning.classList.remove('hidden');
+
+  openModal(premiumModal);
+  return false;
+}
+
+
+
+
+
+
+
+
+
+
 function updateUI() {
   try {
     if (!creditsBadge) return;
