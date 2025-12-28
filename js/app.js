@@ -1315,28 +1315,22 @@ loadUserData();
 
 // Notificação customizada
 function showNotification(title, message) {
-  const modal = document.getElementById('modal-message');
-  if (!modal) return;
-  
-  // Atualiza conteúdo
-  const titleEl = modal.querySelector('h3') || modal.querySelector('.modal-title');
-  const messageEl = modal.querySelector('p') || modal.querySelector('.modal-text');
+  const modal = document.getElementById('notification-modal');
+  const titleEl = document.getElementById('notification-title');
+  const messageEl = document.getElementById('notification-message');
   
   if (titleEl) titleEl.textContent = title;
   if (messageEl) messageEl.textContent = message;
-  
-  // Mostra modal
-  modal.classList.remove('hidden');
-  modal.style.display = 'flex';
-  document.body.classList.add('modal-open');
+  if (modal) {
+    modal.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+  }
 }
 
-// Fechar notificação
 window.closeNotification = function() {
-  const modal = document.getElementById('modal-message');
+  const modal = document.getElementById('notification-modal');
   if (modal) {
     modal.classList.add('hidden');
-    modal.style.display = 'none';
     document.body.classList.remove('modal-open');
   }
 }
