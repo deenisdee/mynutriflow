@@ -891,7 +891,13 @@ function addToWeekPlan(day, recipeId) {
   selectedDayForPlanner = day;
   selectedRecipeForPlanner = recipeId;
   
- const mealModal = document.getElementById('planner-modal');
+  const recipe = RECIPES.find(r => r.id === recipeId);
+  const subtitle = document.getElementById('meal-selector-subtitle');
+  if (subtitle && recipe) {
+    subtitle.textContent = `${day} - ${recipe.name}`;
+  }
+  
+  const mealModal = document.getElementById('meal-selector-modal');
   if (mealModal) {
     mealModal.classList.remove('hidden');
     document.body.classList.add('modal-open');
@@ -1347,4 +1353,17 @@ window.closeNotification = function() {
     modal.classList.add('hidden');
     document.body.classList.remove('modal-open');
   }
+}
+
+
+
+// Fechar modal de escolha de refeição
+window.closeMealSelector = function() {
+  const modal = document.getElementById('meal-selector-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+  selectedDayForPlanner = null;
+  selectedRecipeForPlanner = null;
 }
