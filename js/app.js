@@ -700,6 +700,10 @@ setTimeout(() => {
 window.closeRecipeDetail = function() {
   if (!recipeDetail || !recipeGrid) return;
 
+  setTimeout(() => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}, 100);
+
   recipeDetail.classList.add('hidden');
   recipeGrid.classList.remove('hidden');
   currentRecipe = null;
@@ -711,9 +715,7 @@ window.closeRecipeDetail = function() {
 
   renderRecipes();
 
-setTimeout(() => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}, 100);
+
   
 };
 
