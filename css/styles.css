@@ -1861,21 +1861,33 @@ z-index: 5;
   }
 }
 
-/* =========================
-   HEADER MOBILE — layout 83x77 (#DDDDDD / #AAAAAA)
-   ========================= */
+/* HEADER MOBILE — layout 83x77 SOMENTE nos ícones (não no Premium) */
 @media (max-width: 768px) {
-  .tool-btn{
+
+  /* aplica só nos botões-ícone do header */
+  .header-tools .tool-btn:not(#premium-btn):not(.btn-premium):not(.premium-btn) {
     width: 83px !important;
     height: 77px !important;
     background: #DDDDDD !important;
-    border-radius: 24px !important; /* mantém arredondado */
+    border-radius: 24px !important;
     box-shadow: 0 8px 18px rgba(17,24,39,.10);
   }
-  .tool-btn:active{
+
+  .header-tools .tool-btn:not(#premium-btn):not(.btn-premium):not(.premium-btn):active {
     background: #AAAAAA !important;
   }
+
+  /* garante que o botão premium NÃO herda o layout quadrado */
+  #premium-btn, .btn-premium, .premium-btn {
+    width: auto !important;
+    height: auto !important;
+    background: initial !important;      /* mantém o verde original */
+    border-radius: 9999px !important;
+    padding: 12px 16px !important;
+    box-shadow: 0 10px 22px rgba(17,24,39,.12) !important;
+  }
 }
+
 
 /* “Pill” do header no desktop (sem quadrado feio) */
 .tool-btn{
