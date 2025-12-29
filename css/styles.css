@@ -234,7 +234,7 @@ a { color:inherit; text-decoration:none; }
   transition:all .3s;
   font-weight:600;
   font-size:.95rem;
-  color:#2d2d2d;
+ 
   white-space:nowrap;
 
   display: inline-flex;
@@ -251,7 +251,7 @@ a { color:inherit; text-decoration:none; }
 
 .category-card-new.active{
   background:#16a34a;
- 
+ color:#fff;
   border-color:#16a34a;
 
   /* 👇 evita corte no mobile */
