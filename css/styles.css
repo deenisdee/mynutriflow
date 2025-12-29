@@ -1188,7 +1188,7 @@ body.premium-active #premium-btn {
 }
 
 .categories-grid-new {
-  padding: 0 !important; /* remove padding interno */
+  padding: 22px !important; /* remove padding interno */
 }
 
 /* Remove margem do slider */
