@@ -1758,37 +1758,46 @@ z-index: 5;
    ================================ */
 @media (pointer: coarse) {
 
-  /* 🔒 bloqueia copiar / seleção / menu estranho */
+  /* 🔒 bloqueia copiar / seleção / menu estranho + remove highlight azul */
   .tool-btn,
   .category-card-new,
   .recipe-card,
   .back-btn,
   .btn-premium,
   #premium-btn,
+  .btn-primary,
+  .btn-secondary,
+  .modal-close,
   button,
   a {
     -webkit-user-select: none;
     user-select: none;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    will-change: transform;
+    transition: transform .08s ease, filter .08s ease, opacity .08s ease;
   }
 
-  /* 👆 ÍCONES DO TOPO (alvo pequeno → cresce) */
+  /* 👆 ÍCONES DO TOPO (mais perceptível) */
   .tool-btn:active {
-    transform: scale(1.06);
-    opacity: 0.95;
+    transform: scale(1.12);
+    opacity: 0.96;
+    filter: brightness(0.98);
   }
 
   /* 🍀 CHIPS DE CATEGORIA */
   .category-card-new:active {
-    transform: scale(1.04);
-    opacity: 0.95;
+    transform: scale(1.10);
+    opacity: 0.97;
+    filter: brightness(0.98);
   }
 
-  /* 🧩 CARDS DE RECEITA (feedback sutil) */
+  /* 🧩 CARDS DE RECEITA (feedback moderado) */
   .recipe-card:active {
-    transform: scale(1.01);
+    transform: scale(1.04);
     opacity: 0.97;
+    filter: brightness(0.99);
   }
 
   /* 🔘 BOTÕES PRINCIPAIS */
@@ -1796,11 +1805,14 @@ z-index: 5;
   .btn-primary:active,
   .btn-secondary:active,
   #premium-btn:active,
-  .btn-premium:active {
-    transform: scale(1.03);
-    opacity: 0.95;
+  .btn-premium:active,
+  .modal-close:active {
+    transform: scale(1.10);
+    opacity: 0.97;
+    filter: brightness(0.98);
   }
 }
+
 
 
 /* Respeita acessibilidade: se o usuário não quer animações */
@@ -1811,3 +1823,20 @@ z-index: 5;
     transition: none !important;
   }
 }
+
+
+/* Botão de fechar sempre circular (mobile e desktop) */
+.modal-close{
+  padding: 0 !important;
+  aspect-ratio: 1 / 1;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 9999px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
