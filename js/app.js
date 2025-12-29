@@ -499,6 +499,7 @@ function renderRecipes() {
 
 
 window.viewRecipe = function(recipeId) {
+  haptic(10);
   if (!ensureRecipeAccess(recipeId)) return;
   showRecipeDetail(recipeId);
 };
@@ -1480,6 +1481,13 @@ function showConfirm(title, message, onConfirm) {
 }
 
 
+function haptic(ms = 10) {
+  try {
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      if (navigator.vibrate) navigator.vibrate(ms);
+    }
+  } catch(e) {}
+}
 
 
 
