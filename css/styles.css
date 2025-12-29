@@ -1878,14 +1878,25 @@ z-index: 5;
   }
 
   /* garante que o botão premium NÃO herda o layout quadrado */
-  #premium-btn, .btn-premium, .premium-btn {
-    width: auto !important;
-    height: auto !important;
-    background: initial !important;      /* mantém o verde original */
-    border-radius: 9999px !important;
-    padding: 12px 16px !important;
-    box-shadow: 0 10px 22px rgba(17,24,39,.12) !important;
-  }
+ #premium-btn, .btn-premium, .premium-btn {
+  width: auto !important;
+  height: 48px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+
+  /* mantém o visual premium bonito */
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+  color: #fff !important;
+  border: none !important;
+
+  border-radius: 9999px !important;
+  padding: 0 18px !important;
+
+  box-shadow: 0 12px 26px rgba(245,158,11,.28) !important;
+}
+
 }
 
 
