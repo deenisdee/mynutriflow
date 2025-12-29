@@ -1449,7 +1449,7 @@ function showConfirm(title, message, onConfirm) {
   modal.classList.remove('hidden');
 
   // fechar clicando fora do conteúdo
-  modal.addEventListener('click', (e) => {
+ modal.onclick = (e) => {
   if (e.target === modal) {
   modal.classList.add('hidden');
   }
