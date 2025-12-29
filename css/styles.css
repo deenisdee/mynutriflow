@@ -251,7 +251,7 @@ a { color:inherit; text-decoration:none; }
 
 .category-card-new.active{
   background:#16a34a;
-  color:#fff;
+ 
   border-color:#16a34a;
 
   /* 👇 evita corte no mobile */
