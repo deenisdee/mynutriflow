@@ -1481,14 +1481,13 @@ function showConfirm(title, message, onConfirm) {
 }
 
 
-function haptic(ms = 10) {
+function haptic(ms = 8) {
   try {
     if (window.matchMedia('(pointer: coarse)').matches) {
       if (navigator.vibrate) navigator.vibrate(ms);
     }
-  } catch(e) {}
+  } catch(e){}
 }
-
 
 
 
@@ -1513,3 +1512,10 @@ window.closeMealSelector = function() {
   selectedDayForPlanner = null;
   selectedRecipeForPlanner = null;
 }
+
+
+
+document.addEventListener('touchstart', (e) => {
+  const target = e.target.closest('.tap');
+  if (target) haptic(8);
+}, { passive: true });
