@@ -1779,6 +1779,21 @@ z-index: 5;
     transition: transform .08s ease, filter .08s ease, opacity .08s ease;
   }
 
+
+     .tap {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* TOQUE = cresce (sempre igual) */
+  .tap:active {
+    transform: scale(1.08);
+    filter: brightness(0.98);
+  }
+
   /* 👆 ÍCONES DO TOPO (mais perceptível) */
   .tool-btn:active {
     transform: scale(1.12);
@@ -1838,5 +1853,13 @@ z-index: 5;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+
+.tap {
+  transition: transform .08s cubic-bezier(.2,0,.2,1),
+              filter .08s ease,
+              opacity .08s ease;
+  will-change: transform;
 }
 
