@@ -224,6 +224,7 @@ a { color:inherit; text-decoration:none; }
   gap:.75rem;
   flex-wrap:wrap;
   padding:1rem 0;
+   border-radius: 50px;
 }
 .category-card-new{
   padding:1rem 1.5rem;
@@ -245,6 +246,7 @@ a { color:inherit; text-decoration:none; }
   border-color:#16a34a;
   color:#16a34a;
   transform:translateY(-4px);
+   border-radius: 50px;
   box-shadow:0 8px 16px rgba(22,163,74,.2);
 }
 
@@ -883,9 +885,9 @@ body.modal-open{ overflow:hidden; height:100vh; }
 }
 
 @media (max-width:480px){
-  .hero-slider-fullwidth{ height:285px; }
-  .slide-title-new{ font-size:1.5rem; }
-  .category-card-new{ padding:.75rem 1.25rem; font-size:.875rem; }
+  .hero-slider-fullwidth{ height:285px; border-radius: 50px; }
+  .slide-title-new{ font-size:1.5rem; border-radius: 50px; }
+  .category-card-new{ padding:.75rem 1.25rem; font-size:.875rem; border-radius: 50px; }
 }
 
 
@@ -1189,7 +1191,7 @@ body.premium-active #premium-btn {
 
 .categories-grid-new {
   padding: 22px !important; /* remove padding interno */
-      background: #ffcc00;
+  
 }
 
 /* Remove margem do slider */
