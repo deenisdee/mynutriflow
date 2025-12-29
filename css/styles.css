@@ -261,6 +261,10 @@ a { color:inherit; text-decoration:none; }
 
 
 .category-card-new.active{
+   
+ transform: scale(0.96);
+  opacity: 0.9;
+   
   background:#16a34a;
  color:#fff;
   border-color:#16a34a;
