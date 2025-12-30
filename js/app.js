@@ -1,17 +1,26 @@
 // ============================================
-// ARQUIVO: js/app.js (CONSOLIDADO B)
-// - FAQ sem emoji (ícones minimalistas em SVG)
-// - FAQ no padrão verde (chevron)
-// - Premium modal com close + warning correto
-// - Mantém funcionalidades atuais
+// ARQUIVO: js/app.js (CONSOLIDADO B — REVISADO)
+// - Remove dupla cobrança de crédito
+// - Remove duplicação de closeMealSelector (assumindo B: #meal-selector-modal no HTML)
+// - Centraliza RECIPES/allRecipes (fonte única)
+// - Premium preparado p/ evoluir pra token/KV sem quebrar nada
+// - Mantém visual e funcionalidades
 // ============================================
 
-// Carregar todas as receitas
-let allRecipes = RECIPES || [];  // ✅ CORRETO (MAIÚSCULO)
+// ==============================
+// FONTE ÚNICA DE DADOS (receitas)
+// ==============================
+const ALL_RECIPES = (typeof RECIPES !== 'undefined' && Array.isArray(RECIPES)) ? RECIPES : [];
+let allRecipes = ALL_RECIPES; // compat
 
+// ==============================
+// ESTADO DO USUÁRIO
+// ==============================
 let credits = 3;
 let unlockedRecipes = [];
 let isPremium = false;
+
+// UI state
 let currentRecipe = null;
 let currentSlideIndex = 0;
 let featuredRecipes = [];
@@ -19,34 +28,44 @@ let searchTerm = '';
 let shoppingList = [];
 let weekPlan = {};
 
-
-
+// ==============================
+// STORAGE ADAPTER (localStorage / Claude)
+// ==============================
 const isClaudeEnvironment = typeof window.storage !== 'undefined';
 
 const storage = {
   async get(key) {
-    if (isClaudeEnvironment) return await window.storage.get(key);
-    const value = localStorage.getItem(key);
-    return value ? { key, value } : null;
+    try {
+      if (isClaudeEnvironment) return await window.storage.get(key);
+      const value = localStorage.getItem(key);
+      return value ? { key, value } : null;
+    } catch (e) {
+      return null;
+    }
   },
   async set(key, value) {
-    if (isClaudeEnvironment) return await window.storage.set(key, value);
-    localStorage.setItem(key, value);
-    return { key, value };
+    try {
+      if (isClaudeEnvironment) return await window.storage.set(key, value);
+      localStorage.setItem(key, value);
+      return { key, value };
+    } catch (e) {
+      return null;
+    }
   }
 };
 
+// ==============================
 // DOM
-const creditsText = document.getElementById('credits-text');
+// ==============================
 const creditsBadge = document.getElementById('credits-badge');
 const premiumBtn = document.getElementById('premium-btn');
+const creditsText = document.getElementById('credits-text'); // pode não existir (vc re-renderiza)
 
 const recipeGrid = document.getElementById('recipe-grid');
 const recipeDetail = document.getElementById('recipe-detail');
 
 const premiumModal = document.getElementById('premium-modal');
 const premiumCodeInput = document.getElementById('premium-code-input');
-
 const modalMessage = document.getElementById('modal-message');
 const modalCancel = document.getElementById('modal-cancel');
 const modalActivate = document.getElementById('modal-activate');
@@ -69,7 +88,13 @@ const categoriesGrid = document.getElementById('categoriesGrid');
 const faqBtn = document.getElementById('faq-btn');
 const faqModal = document.getElementById('faq-modal');
 
-// Modal helpers
+// Modal (B) — modal de refeição existente no HTML
+const mealSelectorModal = document.getElementById('meal-selector-modal');
+const mealSelectorSubtitle = document.getElementById('meal-selector-subtitle');
+
+// ==============================
+// MODAL HELPERS
+// ==============================
 function openModal(el) {
   if (!el) return;
   el.classList.remove('hidden');
@@ -88,7 +113,48 @@ window.closePremiumModal = function () {
   closeModal(premiumModal);
 };
 
+// ==============================
+// CORE BUSINESS RULES (fonte da verdade)
+// ==============================
+function canAccessRecipe(recipeId) {
+  if (isPremium) return true;
+  if (unlockedRecipes.includes(recipeId)) return true;
+  return credits > 0;
+}
+
+/**
+ * Consome crédito e libera receita APENAS uma vez,
+ * e somente quando necessário.
+ * Retorna true se pode acessar, false se deve ir pro premium.
+ */
+function ensureRecipeAccess(recipeId) {
+  // Premium ou já liberada
+  if (isPremium || unlockedRecipes.includes(recipeId)) return true;
+
+  // Tem crédito: consome e libera
+  if (credits > 0) {
+    credits--;
+    unlockedRecipes.push(recipeId);
+    saveUserData();     // mantém seu padrão sem await
+    updateUI();
+    renderRecipes();
+    return true;
+  }
+
+  // Sem crédito: manda pro premium
+  if (modalMessage) modalMessage.textContent =
+    'Seus créditos acabaram. Ative o Premium para acesso ilimitado.';
+
+  const warning = document.getElementById('credits-warning');
+  if (warning) warning.classList.remove('hidden');
+
+  openModal(premiumModal);
+  return false;
+}
+
+// ==============================
 // INIT
+// ==============================
 async function loadUserData() {
   try {
     const premiumResult = await storage.get('fit_premium');
@@ -134,66 +200,17 @@ async function saveWeekPlan() {
   } catch (e) {}
 }
 
-
-
-
-
-
-
-
 // ==============================
-// REGRA CENTRAL: acesso à receita
+// UI (Badge / Premium)
 // ==============================
-function canAccessRecipe(recipeId) {
-  if (isPremium) return true;
-  if (unlockedRecipes.includes(recipeId)) return true;
-  return credits > 0;
-}
-
-function ensureRecipeAccess(recipeId) {
-  // Já pode acessar?
-  if (isPremium || unlockedRecipes.includes(recipeId)) return true;
-
-  // Tem crédito? então desbloqueia agora (primeiro acesso)
-  if (credits > 0) {
-    credits--;
-    unlockedRecipes.push(recipeId);
-    saveUserData();     // mantém seu padrão (sem await)
-    updateUI();
-    renderRecipes();
-    return true;
-  }
-
-  // Sem crédito: bloqueia e chama premium
-  if (modalMessage) modalMessage.textContent =
-    'Seus créditos acabaram. Ative o Premium para acesso ilimitado.';
-
-  const warning = document.getElementById('credits-warning');
-  if (warning) warning.classList.remove('hidden');
-
-  openModal(premiumModal);
-  return false;
-}
-
-
-
-
-
-
-
-
-
-
 function updateUI() {
   try {
     if (!creditsBadge) return;
 
     if (isPremium) {
-      // Usuário PREMIUM
       document.body.classList.remove('free-user');
       document.body.classList.add('premium-active');
-      
-      // Badge vira amarelo PREMIUM
+
       creditsBadge.classList.add('premium');
       creditsBadge.innerHTML = `
         <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -201,18 +218,13 @@ function updateUI() {
         </svg>
         <span>PREMIUM</span>
       `;
-      
-      // ESCONDE o botão verde "Ativar Premium"
-      if (premiumBtn) {
-        premiumBtn.style.display = 'none';
-      }
-      
+
+      if (premiumBtn) premiumBtn.style.display = 'none';
+
     } else {
-      // Usuário FREE
       document.body.classList.add('free-user');
       document.body.classList.remove('premium-active');
-      
-      // Badge volta a ser azul com créditos
+
       creditsBadge.classList.remove('premium');
       creditsBadge.innerHTML = `
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
@@ -221,25 +233,15 @@ function updateUI() {
         </svg>
         <span id="credits-text">${credits} créditos</span>
       `;
-      
-      // MOSTRA o botão verde "Ativar Premium"
-      if (premiumBtn) {
-        premiumBtn.style.display = 'block';
-      }
+
+      if (premiumBtn) premiumBtn.style.display = 'block';
     }
-    
-    // Marca badge como pronto para aparecer
+
     creditsBadge.classList.add('ready');
-    
   } catch (error) {
     console.error('Erro em updateUI:', error);
   }
 }
-
-
-
-
-
 
 function updateShoppingCounter() {
   if (!shoppingCounter) return;
@@ -251,14 +253,16 @@ function updateShoppingCounter() {
   }
 }
 
+// ==============================
 // SLIDER + CATEGORIAS
+// ==============================
 let sliderAutoplay = null;
 
 function initSliderAndCategories() {
-  if (typeof RECIPES === 'undefined') return;
+  if (!allRecipes || allRecipes.length === 0) return;
 
   if (sliderTrack && sliderDots) {
-    featuredRecipes = RECIPES.filter(r => r.featured).slice(0, 4);
+    featuredRecipes = allRecipes.filter(r => r.featured).slice(0, 4);
 
     sliderTrack.innerHTML = featuredRecipes.map(recipe => `
       <div class="slide-new">
@@ -266,7 +270,7 @@ function initSliderAndCategories() {
           onerror="this.src='https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80'">
         <div class="slide-overlay-new">
           <h2 class="slide-title-new">${recipe.name}</h2>
-       <p class="slide-description-new">${recipe.description || 'Receita deliciosa e saudável'}</p>
+          <p class="slide-description-new">${recipe.description || 'Receita deliciosa e saudável'}</p>
         </div>
       </div>
     `).join('');
@@ -378,10 +382,6 @@ function initCategoriesDrag() {
   grid.style.cursor = 'grab';
 }
 
-
-
-
-
 window.filterByCategory = function(category, element) {
   document.querySelectorAll('.category-card-new').forEach(card => card.classList.remove('active'));
   if (element) element.classList.add('active');
@@ -395,20 +395,16 @@ window.filterByCategory = function(category, element) {
   renderRecipes();
 };
 
-
-
-
-
-
-
-// RECEITAS
+// ==============================
+// RENDER RECEITAS
+// ==============================
 function renderRecipes() {
-  if (!recipeGrid || typeof RECIPES === 'undefined') return;
+  if (!recipeGrid || !allRecipes || allRecipes.length === 0) return;
 
-  let filtered = RECIPES;
+  let filtered = allRecipes;
 
   if (searchTerm) {
-    filtered = RECIPES.filter(recipe => {
+    filtered = allRecipes.filter(recipe => {
       return recipe.category === searchTerm ||
         recipe.name.toLowerCase().includes(searchTerm.toLowerCase());
     });
@@ -416,7 +412,7 @@ function renderRecipes() {
 
   recipeGrid.innerHTML = filtered.map(recipe => {
     const isUnlocked = isPremium || unlockedRecipes.includes(recipe.id);
-    const showLock = !isUnlocked && credits === 0;
+    const showLock = !isUnlocked && credits === 0; // UX: só aparece quando zerou
 
     return `
       <div class="recipe-card" onclick="viewRecipe(${recipe.id})">
@@ -468,58 +464,45 @@ function renderRecipes() {
             </div>
           </div>
 
-
-
-
           <button class="recipe-button ${isUnlocked ? 'unlocked' : 'locked'}">
-  ${isUnlocked ? `
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-      <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
-    </svg>
-    <span class="btn-label">Ver Receita</span>
-  ` : `
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-    </svg>
+            ${isUnlocked ? `
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+              </svg>
+              <span class="btn-label">Ver Receita</span>
+            ` : `
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
 
-    <span class="btn-label btn-label-desktop">Desbloquear <small>(1 crédito)</small></span>
-    <span class="btn-label btn-label-mobile">1 crédito</span>
-  `}
-</button>
-
-
-
-
+              <span class="btn-label btn-label-desktop">Desbloquear <small>(1 crédito)</small></span>
+              <span class="btn-label btn-label-mobile">1 crédito</span>
+            `}
+          </button>
         </div>
       </div>
     `;
   }).join('');
 }
 
-
-
-
 window.viewRecipe = function(recipeId) {
   haptic(10);
+  // ✅ garante 1 única cobrança aqui
   if (!ensureRecipeAccess(recipeId)) return;
   showRecipeDetail(recipeId);
 };
 
-
-
-
-
+// ==============================
+// DETALHE DA RECEITA
+// ==============================
 function showRecipeDetail(recipeId) {
-
-  if (!ensureRecipeAccess(recipeId)) return;
-  
+  // ❌ NÃO chama ensureRecipeAccess aqui (evita dupla cobrança)
   const recipe = allRecipes.find(r => r.id === recipeId);
   if (!recipe) return;
 
   currentRecipe = recipe;
-
   const heroImage = recipe.images?.hero || recipe.image;
 
   recipeDetail.innerHTML = `
@@ -532,33 +515,24 @@ function showRecipeDetail(recipeId) {
 
     <img src="${heroImage}" alt="${recipe.name}" class="detail-hero-image">
 
- <div class="detail-content-wrapper">
-  <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-    <h2 class="detail-title" style="margin: 0;">${recipe.name}</h2>
-    <button class="btn-add-shopping" onclick="addToShoppingList(${recipe.id})">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
-        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-      </svg>
-      Adicionar à Lista
-    </button>
-  </div>
+    <div class="detail-content-wrapper">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+        <h2 class="detail-title" style="margin:0;">${recipe.name}</h2>
+        <button class="btn-add-shopping" onclick="addToShoppingList(${recipe.id})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          Adicionar à Lista
+        </button>
+      </div>
 
+      ${recipe.tags && recipe.tags.length > 0 ? `
+        <div class="tags-container">
+          ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+      ` : ''}
 
-
-${recipe.tags && recipe.tags.length > 0 ? `
-  <div class="tags-container">
-    ${recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-  </div>
-` : ''}
-
-
-
-
-  
-      
-      
-      <!-- STATS -->
       <div class="detail-stats">
         <div class="detail-stat">
           <div class="detail-stat-value">${recipe.calories}</div>
@@ -586,7 +560,6 @@ ${recipe.tags && recipe.tags.length > 0 ? `
         </div>
       </div>
 
-      <!-- PLANEJAMENTO SEMANAL -->
       <div class="detail-section">
         <h3 class="section-title">
           <i data-lucide="calendar-plus" class="section-icon"></i>
@@ -594,15 +567,12 @@ ${recipe.tags && recipe.tags.length > 0 ? `
         </h3>
         <p class="planner-subtitle">Selecione o dia da semana que você quer fazer esta receita</p>
         <div class="planner-days">
-          ${['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'].map(day => `
-            <button class="planner-day" onclick="addToWeekPlan('${day}', ${recipe.id})">
-              ${day}
-            </button>
+          ${['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'].map(day => `
+            <button class="planner-day" onclick="addToWeekPlan('${day}', ${recipe.id})">${day}</button>
           `).join('')}
         </div>
       </div>
 
-      <!-- BENEFÍCIOS -->
       ${recipe.benefits && recipe.benefits.length > 0 ? `
         <div class="detail-section">
           <h3 class="section-title">
@@ -620,7 +590,6 @@ ${recipe.tags && recipe.tags.length > 0 ? `
         </div>
       ` : ''}
 
-      <!-- INGREDIENTES COM ÍCONES -->
       <div class="detail-section">
         <h3 class="section-title">
           <i data-lucide="chef-hat" class="section-icon"></i>
@@ -629,7 +598,6 @@ ${recipe.tags && recipe.tags.length > 0 ? `
         <div class="ingredients-grid">
           ${(recipe.ingredients || []).map(ing => {
             if (typeof ing === 'string') {
-              // Formato antigo (string simples)
               return `
                 <div class="ingredient-item">
                   <div class="ingredient-icon-wrapper">
@@ -640,26 +608,23 @@ ${recipe.tags && recipe.tags.length > 0 ? `
                   </div>
                 </div>
               `;
-            } else {
-              // Formato novo (objeto com ícone)
-              return `
-                <div class="ingredient-item">
-                  <div class="ingredient-icon-wrapper">
-                    <i data-lucide="${ing.icon || 'circle-dot'}" class="ingredient-icon"></i>
-                  </div>
-                  <div class="ingredient-content">
-                    <span class="ingredient-quantity">${ing.quantity}</span>
-                    <span class="ingredient-text">${ing.text}</span>
-                    ${ing.optional ? '<span class="ingredient-optional">Opcional</span>' : ''}
-                  </div>
-                </div>
-              `;
             }
+            return `
+              <div class="ingredient-item">
+                <div class="ingredient-icon-wrapper">
+                  <i data-lucide="${ing.icon || 'circle-dot'}" class="ingredient-icon"></i>
+                </div>
+                <div class="ingredient-content">
+                  <span class="ingredient-quantity">${ing.quantity || ''}</span>
+                  <span class="ingredient-text">${ing.text || ''}</span>
+                  ${ing.optional ? '<span class="ingredient-optional">Opcional</span>' : ''}
+                </div>
+              </div>
+            `;
           }).join('')}
         </div>
       </div>
 
-      <!-- MODO DE PREPARO COM FOTOS -->
       <div class="detail-section">
         <h3 class="section-title">
           <i data-lucide="utensils" class="section-icon"></i>
@@ -673,19 +638,14 @@ ${recipe.tags && recipe.tags.length > 0 ? `
                 <div class="instruction-text">${step}</div>
               </div>
               ${recipe.images?.steps && recipe.images.steps[idx] ? `
-                <img 
-                  src="${recipe.images.steps[idx]}" 
-                  alt="Passo ${idx + 1}"
-                  class="instruction-image"
-                  loading="lazy"
-                >
+                <img src="${recipe.images.steps[idx]}" alt="Passo ${idx + 1}"
+                     class="instruction-image" loading="lazy">
               ` : ''}
             </li>
           `).join('')}
         </ol>
       </div>
 
-      <!-- DICAS -->
       ${recipe.tips && recipe.tips.length > 0 ? `
         <div class="detail-section">
           <h3 class="section-title">
@@ -698,7 +658,6 @@ ${recipe.tags && recipe.tags.length > 0 ? `
         </div>
       ` : ''}
 
-      <!-- ALÉRGENOS -->
       ${recipe.allergens && recipe.allergens.length > 0 ? `
         <div class="detail-section">
           <h3 class="section-title">
@@ -721,56 +680,31 @@ ${recipe.tags && recipe.tags.length > 0 ? `
   recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
 
+  document.body.classList.add('detail-open');
 
-
-  // trava scroll do site e ajusta altura do header
-document.body.classList.add('detail-open');
-
-const header = document.getElementById('header');
-const headerH = header ? header.offsetHeight : 0;
-document.documentElement.style.setProperty('--header-h', `${headerH}px`);
-
-// começa no topo do detalhe (sem “vazar” pra baixo)
-recipeDetail.scrollTop = 0;
-
-
-  
-  
-  // 👇 ROLA ATÉ ONDE COMEÇA A RECEITA (depois do header)
-setTimeout(() => {
   const header = document.getElementById('header');
   const headerH = header ? header.offsetHeight : 0;
+  document.documentElement.style.setProperty('--header-h', `${headerH}px`);
 
-  // topo real do recipeDetail na página
-  const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
+  recipeDetail.scrollTop = 0;
 
-  // joga a receita pra ficar logo abaixo do header (com folga)
-  const target = Math.max(detailTop - headerH - 12, 0);
+  setTimeout(() => {
+    const header2 = document.getElementById('header');
+    const headerH2 = header2 ? header2.offsetHeight : 0;
+    const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
+    const target = Math.max(detailTop - headerH2 - 12, 0);
+    window.scrollTo({ top: target, behavior: 'smooth' });
+  }, 50);
 
-  window.scrollTo({ top: target, behavior: 'smooth' });
-}, 50);
-
-
-  // 👇 INICIALIZA ÍCONES LUCIDE
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
-
-
-
-
-
-
-
-
 
 window.closeRecipeDetail = function() {
   if (!recipeDetail || !recipeGrid) return;
 
   setTimeout(() => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}, 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 100);
 
   recipeDetail.classList.add('hidden');
   recipeGrid.classList.remove('hidden');
@@ -782,25 +716,27 @@ window.closeRecipeDetail = function() {
   if (categories) categories.style.display = 'block';
 
   renderRecipes();
-document.body.classList.remove('detail-open');
-
-
-  
+  document.body.classList.remove('detail-open');
 };
 
+// ==============================
 // LISTA DE COMPRAS
+// ==============================
 window.addToShoppingList = function(recipeId) {
-  const recipe = RECIPES.find(r => r.id === recipeId);
+  const recipe = allRecipes.find(r => r.id === recipeId);
   if (!recipe) return;
 
-(recipe.ingredients || []).forEach(ing => {
-  // Converte ingrediente para string
-  const ingText = typeof ing === 'string' ? ing : `${ing.quantity || ''} ${ing.text || ''}`.trim();
-  
-  const existingItem = shoppingList.find(item => {
-    const itemText = typeof item.text === 'string' ? item.text : `${item.quantity || ''} ${item.text || ''}`.trim();
-    return itemText.toLowerCase() === ingText.toLowerCase();
-  });
+  (recipe.ingredients || []).forEach(ing => {
+    const ingText = typeof ing === 'string'
+      ? ing
+      : `${ing.quantity || ''} ${ing.text || ''}`.trim();
+
+    const existingItem = shoppingList.find(item => {
+      const itemText = typeof item.text === 'string'
+        ? item.text
+        : `${item.quantity || ''} ${item.text || ''}`.trim();
+      return itemText.toLowerCase() === ingText.toLowerCase();
+    });
 
     if (existingItem) {
       if (!existingItem.recipes) existingItem.recipes = [existingItem.recipe];
@@ -817,9 +753,7 @@ window.addToShoppingList = function(recipeId) {
   });
 
   saveShoppingList();
-  
   showNotification('Sucesso!', `Ingredientes de "${recipe.name}" adicionados à lista.`);
-  
 };
 
 function renderShoppingList() {
@@ -834,56 +768,38 @@ function renderShoppingList() {
           <circle cx="20" cy="21" r="1"/>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
-        <p style="font-size: 1.125rem; margin-bottom: 0.5rem;">Sua lista está vazia</p>
-        <p style="font-size: 0.875rem;">Adicione ingredientes das receitas</p>
+        <p style="font-size:1.125rem;margin-bottom:.5rem;">Sua lista está vazia</p>
+        <p style="font-size:.875rem;">Adicione ingredientes das receitas</p>
       </div>
     `;
     return;
   }
 
-
-
-
-  
   content.innerHTML = `
     <div style="max-height: 60vh; overflow-y: auto;">
-      ${shoppingList.map(item => {
-        const recipesList = item.recipes ? item.recipes.join(', ') : item.recipe;
-        return `
-          <div class="shopping-item">
-            <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleShoppingItem('${item.id}')">
+      ${shoppingList.map(item => `
+        <div class="shopping-item">
+          <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleShoppingItem('${item.id}')">
+          <div class="shopping-item-content">
             <div class="shopping-item-content">
-
-
-<div class="shopping-item-content">
-  ${item.text 
-    ? (typeof item.text === 'string' ? item.text : `${item.quantity || ''} ${item.text}`)
-    : (item.quantity && item.text ? `${item.quantity} ${item.text}` : (item.ingredient || item))
-  }
-</div>
-
-           
-              <div class="shopping-item-recipe">${item.recipes ? item.recipes.join(', ') : ''}</div>
+              ${item.text
+                ? (typeof item.text === 'string' ? item.text : `${item.quantity || ''} ${item.text}`)
+                : (item.quantity && item.text ? `${item.quantity} ${item.text}` : (item.ingredient || item))
+              }
             </div>
-            <button class="btn-delete" onclick="removeShoppingItem('${item.id}')" aria-label="Remover item">
-              <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"/>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-              </svg>
-            </button>
+            <div class="shopping-item-recipe">${item.recipes ? item.recipes.join(', ') : ''}</div>
           </div>
-        `;
-      }).join('')}
+          <button class="btn-delete" onclick="removeShoppingItem('${item.id}')" aria-label="Remover item">
+            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </button>
+        </div>
+      `).join('')}
     </div>
 
-
-
-
-
-
-    <button class="btn-clear-list" onclick="clearShoppingList()">
-      Limpar Toda a Lista
-    </button>
+    <button class="btn-clear-list" onclick="clearShoppingList()">Limpar Toda a Lista</button>
   `;
 }
 
@@ -901,10 +817,6 @@ window.removeShoppingItem = function(id) {
   renderShoppingList();
 };
 
-
-
-
-
 window.clearShoppingList = function() {
   showConfirm(
     'Limpar lista',
@@ -919,104 +831,50 @@ window.clearShoppingList = function() {
   );
 };
 
-
-
-
-
-
-
+// ==============================
 // PLANEJADOR SEMANAL
+// ==============================
 let selectedDayForPlanner = null;
 let selectedRecipeForPlanner = null;
 
-window.selectDayForPlanning = function(day, recipeId) {
-  const recipe = RECIPES.find(r => r.id === recipeId);
-  if (!recipe) return;
-
-  const existing = document.getElementById('meal-selector');
-  if (existing) existing.remove();
-
-  selectedDayForPlanner = day;
-  selectedRecipeForPlanner = recipe;
-
-  const modalHTML = `
-    <div class="modal" id="meal-selector" role="dialog" aria-modal="true">
-      <div class="modal-content-medium modal-surface" style="max-width:520px;">
-        <button class="modal-close" onclick="closeMealSelector()" aria-label="Fechar modal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title" style="text-align:center;">Escolha a Refeição</h3>
-        <p style="text-align:center;color:#6b7280;margin:-0.5rem 0 1.25rem 0;">
-          ${day} - ${recipe.name}
-        </p>
-
-        <div style="display:flex;flex-direction:column;gap:0.75rem;">
-          ${['Café da Manhã','Lanche da Manhã','Almoço','Lanche da Tarde','Jantar'].map(m => `
-            <button class="btn-secondary" onclick="addToWeekPlanWithMeal('${m}')" style="display:flex;align-items:center;gap:0.75rem;padding:1rem;border-radius:10px;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:22px;height:22px;">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 6v6l4 2"></path>
-              </svg>
-              <span style="font-weight:600;">${m}</span>
-            </button>
-          `).join('')}
-        </div>
-
-        <button class="btn-secondary" onclick="closeMealSelector()" style="margin-top:1rem;width:100%;border-radius:10px;">
-          Cancelar
-        </button>
-      </div>
-    </div>
-  `;
-
-  document.body.insertAdjacentHTML('beforeend', modalHTML);
-  document.body.classList.add('modal-open');
-};
-
-window.closeMealSelector = function() {
-  const modal = document.getElementById('meal-selector');
-  if (modal) modal.remove();
-  selectedDayForPlanner = null;
-  selectedRecipeForPlanner = null;
-  document.body.classList.remove('modal-open');
-};
-
-// Função que abre o modal de escolha de refeição
+// ✅ B) abre modal existente no HTML (#meal-selector-modal)
 function addToWeekPlan(day, recipeId) {
   selectedDayForPlanner = day;
   selectedRecipeForPlanner = recipeId;
-  
-  const recipe = RECIPES.find(r => r.id === recipeId);
-  const subtitle = document.getElementById('meal-selector-subtitle');
-  if (subtitle && recipe) {
-    subtitle.textContent = `${day} - ${recipe.name}`;
+
+  const recipe = allRecipes.find(r => r.id === recipeId);
+  if (mealSelectorSubtitle && recipe) {
+    mealSelectorSubtitle.textContent = `${day} - ${recipe.name}`;
   }
-  
-  const mealModal = document.getElementById('meal-selector-modal');
-  if (mealModal) {
-    mealModal.classList.remove('hidden');
+
+  if (mealSelectorModal) {
+    mealSelectorModal.classList.remove('hidden');
     document.body.classList.add('modal-open');
   }
 }
 
-// Função que adiciona ao planner depois de escolher a refeição
 window.addToWeekPlanWithMeal = function(meal) {
   if (!selectedDayForPlanner || !selectedRecipeForPlanner) return;
-  
-  const recipe = RECIPES.find(r => r.id === selectedRecipeForPlanner);
+
+  const recipe = allRecipes.find(r => r.id === selectedRecipeForPlanner);
   if (!recipe) return;
-  
+
   const key = `${selectedDayForPlanner}-${meal}`;
   weekPlan[key] = recipe;
-  
+
   saveWeekPlan();
   showNotification('Receita Adicionada!', `${recipe.name} adicionada ao ${selectedDayForPlanner} - ${meal}.`);
-  
+
   window.closeMealSelector();
+};
+
+window.closeMealSelector = function() {
+  if (mealSelectorModal) {
+    mealSelectorModal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+  selectedDayForPlanner = null;
+  selectedRecipeForPlanner = null;
 };
 
 function renderWeekPlanner() {
@@ -1086,18 +944,9 @@ function renderWeekPlanner() {
   `;
 }
 
-
-
-
-
 window.saveWeekPlanConfirm = function() {
   showNotification('Planejamento salvo', 'Planejamento semanal salvo com sucesso.');
 };
-
-
-
-
-
 
 window.removeFromWeekPlan = function(day, meal) {
   const key = `${day}-${meal}`;
@@ -1106,7 +955,9 @@ window.removeFromWeekPlan = function(day, meal) {
   renderWeekPlanner();
 };
 
+// ==============================
 // CALCULADORA
+// ==============================
 window.calculateCalories = function() {
   const weight = parseFloat(document.getElementById('calc-weight')?.value);
   const height = parseFloat(document.getElementById('calc-height')?.value);
@@ -1114,15 +965,11 @@ window.calculateCalories = function() {
   const gender = document.getElementById('calc-gender')?.value;
   const activity = document.getElementById('calc-activity')?.value;
 
-
-  
   if (!weight || !height || !age) {
-   showNotification('Atenção', 'Preencha todos os campos.');
+    showNotification('Atenção', 'Preencha todos os campos.');
     return;
   }
 
-
-  
   let bmr;
   if (gender === 'male') {
     bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
@@ -1185,7 +1032,9 @@ window.calculateCalories = function() {
   `;
 };
 
+// ==============================
 // MODAIS (controle)
+// ==============================
 window.openCalculator = function() {
   if (!isPremium) {
     if (modalMessage) modalMessage.textContent = 'A Calculadora é exclusiva para usuários Premium.';
@@ -1218,15 +1067,22 @@ window.openWeekPlanner = function() {
 };
 window.closeWeekPlanner = function() { closeModal(plannerModal); };
 
+// ==============================
+// PREMIUM (pronto p/ evoluir)
+// ==============================
+async function redeemPremiumCode(code) {
+  // hoje: /api/redeem
+  // amanhã: token/KV/edge -> só troca aqui
+  const res = await fetch('/api/redeem', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code })
+  });
 
+  const data = await res.json();
+  return data; // { ok: true } | { ok:false, error }
+}
 
-
-
-
-
-
-
-// PREMIUM
 async function activatePremium() {
   const input = document.getElementById('premium-code-input');
   const code = input ? input.value.trim().toUpperCase() : '';
@@ -1237,16 +1093,10 @@ async function activatePremium() {
   }
 
   try {
-    const res = await fetch('/api/redeem', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code })
-    });
+    const data = await redeemPremiumCode(code);
 
-    const data = await res.json();
-
-    if (!data.ok) {
-      showNotification('Erro', data.error || 'Código inválido');
+    if (!data || !data.ok) {
+      showNotification('Erro', (data && data.error) ? data.error : 'Código inválido');
       return;
     }
 
@@ -1262,16 +1112,9 @@ async function activatePremium() {
   }
 }
 
-
-
-
-
-
-
-
-
-
+// ==============================
 // EVENTOS
+// ==============================
 if (premiumBtn) {
   premiumBtn.addEventListener('click', () => {
     if (modalMessage) modalMessage.textContent = 'Tenha acesso ilimitado a todas as receitas.';
@@ -1281,25 +1124,16 @@ if (premiumBtn) {
       else warning.classList.add('hidden');
     }
     openModal(premiumModal);
-    
-    // 👇 ADICIONE ESTAS LINHAS
+
     setTimeout(() => {
-      if (premiumCodeInput) {
-        premiumCodeInput.focus();
-      }
+      if (premiumCodeInput) premiumCodeInput.focus();
     }, 100);
   });
 }
 
-
-
-
-
-
-
-
 if (modalCancel) modalCancel.addEventListener('click', () => window.closePremiumModal());
 if (modalActivate) modalActivate.addEventListener('click', activatePremium);
+
 if (premiumCodeInput) {
   premiumCodeInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') activatePremium();
@@ -1317,7 +1151,9 @@ if (calculatorBtn) calculatorBtn.addEventListener('click', window.openCalculator
 if (shoppingBtn) shoppingBtn.addEventListener('click', window.openShoppingList);
 if (plannerBtn) plannerBtn.addEventListener('click', window.openWeekPlanner);
 
+// ==============================
 // FAQ (SEM emoji)
+// ==============================
 const faqData = [
   {
     title: 'Créditos',
@@ -1402,7 +1238,6 @@ function renderFAQ() {
     </div>
   `;
 
-  // marca como "open" pra CSS girar chevron
   document.querySelectorAll('.faq-section').forEach(sec => sec.classList.add('open'));
 }
 
@@ -1424,64 +1259,68 @@ window.closeFAQ = function() { closeModal(faqModal); };
 
 if (faqBtn) faqBtn.addEventListener('click', window.openFAQ);
 
-// START
-loadUserData();
-
-
-
-// Notificação customizada
+// ==============================
+// NOTIFICAÇÃO + CONFIRM
+// ==============================
 function showNotification(title, message) {
   const modal = document.getElementById('notification-modal');
   const titleEl = document.getElementById('notification-title');
   const messageEl = document.getElementById('notification-message');
-  
+
   if (titleEl) titleEl.textContent = title;
   if (messageEl) messageEl.textContent = message;
+
   if (modal) {
     modal.classList.remove('hidden');
-
-
-    
     document.body.classList.add('modal-open');
   }
 }
 
+window.closeNotification = function() {
+  const modal = document.getElementById('notification-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+};
 
 function showConfirm(title, message, onConfirm) {
   const modal = document.getElementById('confirm-modal');
+  if (!modal) return;
+
   const titleEl = modal.querySelector('.confirm-title');
   const messageEl = modal.querySelector('.confirm-message');
   const yesBtn = modal.querySelector('.confirm-yes');
   const noBtn = modal.querySelector('.confirm-no');
 
-  titleEl.textContent = title;
-  messageEl.textContent = message;
+  if (titleEl) titleEl.textContent = title;
+  if (messageEl) messageEl.textContent = message;
 
   const cleanup = () => {
-    yesBtn.onclick = null;
-    noBtn.onclick = null;
+    if (yesBtn) yesBtn.onclick = null;
+    if (noBtn) noBtn.onclick = null;
     modal.classList.add('hidden');
   };
 
-  yesBtn.onclick = () => {
-    cleanup();
-    onConfirm();
-  };
+  if (yesBtn) {
+    yesBtn.onclick = () => {
+      cleanup();
+      onConfirm();
+    };
+  }
 
-  noBtn.onclick = cleanup;
+  if (noBtn) noBtn.onclick = cleanup;
 
   modal.classList.remove('hidden');
 
-  // fechar clicando fora do conteúdo
- modal.onclick = (e) => {
-  if (e.target === modal) {
-  modal.classList.add('hidden');
-  }
-  
-};
+  modal.onclick = (e) => {
+    if (e.target === modal) modal.classList.add('hidden');
+  };
 }
 
-
+// ==============================
+// HAPTIC
+// ==============================
 function haptic(ms = 8) {
   try {
     if (window.matchMedia('(pointer: coarse)').matches) {
@@ -1490,33 +1329,12 @@ function haptic(ms = 8) {
   } catch(e){}
 }
 
-
-
-
-window.closeNotification = function() {
-  const modal = document.getElementById('notification-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
-}
-
-
-
-// Fechar modal de escolha de refeição
-window.closeMealSelector = function() {
-  const modal = document.getElementById('meal-selector-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
-  selectedDayForPlanner = null;
-  selectedRecipeForPlanner = null;
-}
-
-
-
 document.addEventListener('touchstart', (e) => {
   const target = e.target.closest('.tap');
   if (target) haptic(8);
 }, { passive: true });
+
+// ==============================
+// START
+// ==============================
+loadUserData();
