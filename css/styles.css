@@ -2161,3 +2161,30 @@ background: #16a34a !important;
   margin-top: 12px;
 }
 
+
+
+/* ==============================
+   BOTÃO LOCK — texto diferente no mobile
+   ============================== */
+
+.btn-label-mobile { display: none; }
+.btn-label-desktop { display: inline; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .btn-label-desktop { display: none; }
+  .btn-label-mobile { display: inline; }
+
+  /* deixa o botão mais “compacto” no mobile */
+  .recipe-button.locked {
+    padding: 12px 10px;
+    gap: 8px;
+  }
+
+  /* “1 crédito” com cara de etiqueta */
+  .recipe-button.locked .btn-label-mobile {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+}
+
