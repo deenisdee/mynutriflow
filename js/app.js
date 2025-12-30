@@ -720,6 +720,21 @@ ${recipe.tags && recipe.tags.length > 0 ? `
 
   recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
+
+
+
+  // trava scroll do site e ajusta altura do header
+document.body.classList.add('detail-open');
+
+const header = document.getElementById('header');
+const headerH = header ? header.offsetHeight : 0;
+document.documentElement.style.setProperty('--header-h', `${headerH}px`);
+
+// começa no topo do detalhe (sem “vazar” pra baixo)
+recipeDetail.scrollTop = 0;
+
+
+  
   
   // 👇 ROLA ATÉ ONDE COMEÇA A RECEITA (depois do header)
 setTimeout(() => {
@@ -767,6 +782,7 @@ window.closeRecipeDetail = function() {
   if (categories) categories.style.display = 'block';
 
   renderRecipes();
+document.body.classList.remove('detail-open');
 
 
   
