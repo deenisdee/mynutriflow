@@ -2200,7 +2200,15 @@ body.detail-open {
   overflow: hidden;
 }
 
-/* recipe detail vira um painel fixo com scroll próprio */
+.recipe-detail {
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+}
+
+/* recipe detail vira um painel fixo com scroll próprio 
 #recipe-detail {
   position: fixed;
   top: var(--header-h);
@@ -2211,7 +2219,7 @@ body.detail-open {
   -webkit-overflow-scrolling: touch;
   background: #fff;
   z-index: 9999;
-}
+}*/
 
 /* garante que o grid some de verdade */
 #recipe-grid.hidden {
