@@ -2038,5 +2038,8 @@ stroke-width: 2;
 
 
 
+/* garante que popups fiquem acima do modal premium */
+#notification-modal { z-index: 9999 !important; }
+#confirm-modal { z-index: 9998 !important; }
 
 
