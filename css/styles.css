@@ -2080,7 +2080,7 @@ background: #16a34a !important;
 .logo:focus-visible {
   transform: none !important;
   filter: none !important;
-  box-shadow: none !important;
+ box-shadow: 0 6px 18px rgba(0,0,0,.08) !important;
 }
 
 /* remove “selecionar/copiar” no logo (mobile) */
