@@ -870,14 +870,34 @@ window.addToWeekPlanWithMeal = function(meal) {
   window.closeMealSelector();
 };
 
+
+
+
+
 window.closeMealSelector = function() {
-  if (mealSelectorModal) {
-    mealSelectorModal.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
+  const modal = document.getElementById('meal-selector-modal');
+  if (!modal) return;
+
+  // fecha modal
+  modal.classList.add('hidden');
+
+  // reseta seleção
   selectedDayForPlanner = null;
   selectedRecipeForPlanner = null;
+
+  // libera scroll / clique normal
+  document.body.classList.remove('modal-open');
+
+  // força desbloqueio de clique caso algum overlay tenha ficado por cima
+  modal.style.pointerEvents = 'none';
+  requestAnimationFrame(() => {
+    modal.style.pointerEvents = '';
+  });
 };
+
+
+
+
 
 function renderWeekPlanner() {
   const content = document.getElementById('week-planner-content');
