@@ -1902,8 +1902,8 @@ stroke-width: 2;
   .header-tools .tool-btn:not(#premium-btn):not(.btn-premium):not(.premium-btn) {
 
 
-        width: 75px !important;
-        height: 75px !important;
+        width: 72px !important;
+        height: 68px !important;
         background: #DDDDDD !important;
         border-radius: 40px !important;
         box-shadow: 0 8px 18px rgba(17, 24, 39, .10);
