@@ -2188,3 +2188,59 @@ background: #16a34a !important;
   }
 }
 
+
+
+
+
+/* ==========================================
+   MOBILE: badge de bloqueio na imagem
+   ========================================== */
+
+.lock-badge-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Mostra o badge apenas no mobile */
+  .lock-badge-mobile {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 3;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 10px;
+    border-radius: 999px;
+
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    font-weight: 700;
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+
+  .lock-badge-mobile svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* No mobile, some com o botão "Desbloquear (1 crédito)" */
+  .recipe-button.locked {
+    display: none !important;
+  }
+
+  /* Opcional: deixa o CTA do unlocked mais “limpo” também */
+  /* .recipe-button.unlocked { width: 100%; } */
+}
+
+/* Garante que a imagem-container seja referência pra position:absolute */
+.recipe-image-container {
+  position: relative;
+}
