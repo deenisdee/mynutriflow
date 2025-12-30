@@ -1865,8 +1865,7 @@ z-index: 5;
   .btn-calculate:active,
   .meal-option-btn:active,
   .modal-actions button:active,
-  .btn-clear-list:active,
-  a.logo:active{
+  .btn-clear-list:active{
     transform: scale(var(--rf-active-scale));
     box-shadow: var(--rf-shadow);
   }
@@ -2053,9 +2052,5 @@ background: #16a34a !important;
   }
 }
 
-@media (max-width: 768px) {
-  #header {
-    box-shadow: none !important;
-  }
-}
+
 
