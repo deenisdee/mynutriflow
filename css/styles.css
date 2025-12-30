@@ -1,2257 +1,353 @@
-/* ============================================
-   ARQUIVO: css/styles.css (CONSOLIDADO B)
-   - Modais padronizados (Premium / FAQ / Calc / Lista / Planner / Meal selector)
-   - Scroll invisível no conteúdo do modal
-   - Premium input com radius leve (8–10px)
-   - Tipografia mais leve (sem 800/900 inflando)
-   ============================================ */
-
-* { margin:0; padding:0; box-sizing:border-box; }
-
-html, body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  background:#f9fafb;
-  min-height:100vh;
-  font-weight:400;
-  color:#111827;
-}
-
-a { color:inherit; text-decoration:none; }
-.hidden { display:none !important; }
-
-.container { max-width:1280px; margin:0 auto; padding:0 1rem; }
-
-/* ============================================
-   HEADER
-   ============================================ */
-#header{
-  background:#fff;
-  box-shadow:0 1px 3px rgba(0,0,0,.1);
-  position:sticky; top:0; z-index:50;
-  height:105px;
-}
-
-.header-content{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height:105px;
-  gap:1.5rem;
-}
-
-.logo{ display:flex; align-items:center; gap:1rem; }
-.logo h1{ font-size:2rem; font-weight:600; white-space:nowrap; }
-
-.logo-receita{ color:#1f2937; }
-.logo-fit{ color:#1f2937; }
-.logo-app{ color:#16a34a; font-weight:700; }
-
-.logo-icon{
-  width:45px; height:45px;
-  background:#16a34a;
-  border-radius:12px;
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0;
-}
-.logo-icon svg{ width:30px; height:30px; stroke:#fff; stroke-width:2; }
-
-.search-container{ flex:1; max-width:500px; position:relative; }
-.search-input{
-  width:100%;
-  padding:.875rem 3rem .875rem 1rem;
-  border:2px solid #e5e7eb;
-  border-radius:9999px;
-  font-size:1rem;
-  transition:border-color .2s;
-  font-weight:400;
-}
-.search-input:focus{ outline:none; border-color:#16a34a; }
-.search-icon{
-  position:absolute; right:1rem; top:50%;
-  transform:translateY(-50%);
-  width:1.25rem; height:1.25rem;
-  stroke:#9ca3af; stroke-width:2;
-  pointer-events:none;
-}
-
-.header-tools{ display:flex; gap:.5rem; }
-.tool-btn{
-  position:relative;
-  width:48px; height:48px;
-  border-radius:50%;
-  border:none;
-  cursor:pointer;
-  transition:all .2s;
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0;
-}
-
-
-
-
-.tool-btn svg{
-
-width: 20px;
-height: 20px;
-stroke-width: 2;
-
-   
-}
-
-
-
-
-
-.tool-counter{
-  position:absolute; top:-4px; right:-4px;
-  background:#ef4444; color:#fff;
-  font-size:.75rem; font-weight:600;
-  min-width:20px; height:20px;
-  border-radius:10px;
-  display:flex; align-items:center; justify-content:center;
-  padding:0 6px;
-}
-
-.tool-blue, .tool-purple, .tool-orange { background:#dbeafe; color:#2563eb; }
-.tool-blue:hover, .tool-purple:hover, .tool-orange:hover { background:#bfdbfe; }
-
-.header-actions{ display:flex; align-items:center; gap:.75rem; }
-
-.badge{
-  background:#3b82f6;
-  color:#fff;
-  padding:.75rem 1.5rem;
-  border-radius:9999px;
-  display:flex; align-items:center; gap:.5rem;
-  font-weight:600;
-  font-size:1rem;
-  white-space:nowrap;
-  height:48px;
-  flex-shrink:0;
-}
-.badge.premium{
-  background:linear-gradient(135deg,#fbbf24 0%, #f59e0b 100%);
-}
-.icon{ width:1.25rem; height:1.25rem; stroke-width:2; }
-
-.btn-premium{
-  background:#16a34a;
-  color:#fff;
-  padding:.75rem 1.5rem;
-  border-radius:9999px;
-  border:none;
-  font-weight:600;
-  font-size:1rem;
-  cursor:pointer;
-  transition:background .2s;
-  white-space:nowrap;
-  height:48px;
-  flex-shrink:0;
-}
-.btn-premium:hover{ background:#15803d; }
-
-/* ============================================
-   SLIDER HERO
-   ============================================ */
-.hero-slider-fullwidth{
-  width:100%;
-  height:clamp(220px, 34vh, 360px);
-  position:relative;
-  overflow:hidden;
-  margin:0;
-  padding:0;
-  background:#ccc;
-}
-
-.hero-slider-fullwidth.hidden{ display:none; }
-
-.slider-track-new{
-  display:flex;
-  height:100%;
-  width:100%;
-  transition:transform .5s ease;
-}
-.slide-new{
-  min-width:100%;
-  width:100%;
-  height:100%;
-  flex-shrink:0;
-  position:relative;
-  overflow:hidden;
-}
-.slide-new img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-  display:block;
-}
-.slide-overlay-new{
-  position:absolute;
-  bottom:0; left:0; right:0;
-  padding:3rem;
-  color:#fff;
-  background:linear-gradient(to top, rgba(0,0,0,.78) 0%, transparent 100%);
-}
-.slide-title-new{ font-size:2.5rem; font-weight:600; margin-bottom:.5rem; }
-.slide-description-new{ font-size:1.2rem; opacity:.95; font-weight:400; }
-
-.slider-dots-new{
-  position:absolute; bottom:2rem; left:50%;
-  transform:translateX(-50%);
-  display:flex; gap:.5rem; z-index:10;
-}
-.slider-dot-new{
-  width:12px; height:12px;
-  border-radius:50%;
-  background:rgba(255,255,255,.5);
-  border:none; cursor:pointer;
-  transition:all .3s;
-}
-.slider-dot-new.active{ background:#fff; width:32px; border-radius:6px; }
-
-.slider-arrow-new{
-  position:absolute; top:50%;
-  transform:translateY(-50%);
-  background:rgba(255,255,255,.3);
-  color:#fff;
-  border:none;
-  width:55px; height:55px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:2rem;
-  display:flex; align-items:center; justify-content:center;
-  transition:all .3s;
-  backdrop-filter:blur(4px);
-  z-index:10;
-}
-.slider-arrow-new:hover{ background:rgba(255,255,255,.5); }
-.slider-arrow-new.prev{ left:2rem; }
-.slider-arrow-new.next{ right:2rem; }
-
-/* ============================================
-   CATEGORIAS
-   ============================================ */
-.categories-new{ max-width:1200px; margin:2rem auto; padding:0 2rem; }
-.categories-grid-new{
-  display:flex;
-  justify-content:center;
-  gap:.75rem;
-  flex-wrap:wrap;
-  padding:1rem 0;
-
-   
-}
-
-
-
-
-.category-card-new{
-  padding:1rem 1.5rem;
-  
-  border:2px solid #f0f0f0;
-  border-radius:50px;
-  cursor:pointer;
-  transition:all .3s;
-  font-weight:600;
-  font-size:.95rem;
- 
-  white-space:nowrap;
-
-  /*display: inline-flex;*/
-  align-items: center;
-  line-height: 1.2;
-  position: relative; /* ajuda no z-index */
-  z-index: 1;
-}
-
-
-.category-card-new:hover{
-  border-color:#16a34a;
-  color:#16a34a;
-  transform:translateY(-4px);
-  
-  box-shadow:0 8px 16px rgba(22,163,74,.2);
-}
-
-
-.category-card-new.active{
-   
- transform: scale(0.96);
-  opacity: 0.9;
-   
-  background:#16a34a;
- color:#fff;
-  border-color:#16a34a;
-
-  /* 👇 evita corte no mobile */
-  box-shadow: 0 8px 16px rgba(22,163,74,.22);
-  transform: translateY(-2px);
-  z-index: 2;
-  filter: drop-shadow(0 8px 14px rgba(22,163,74,.35));
-}
-
-
-/* Mobile categorias com scroll horizontal */
-@media (max-width:768px){
-.categories-new{ padding:0 1rem; }
-   
-  .categories-grid-new{
-    flex-wrap:nowrap;
-    justify-content:flex-start;
-    overflow-x:auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-    padding:1.25rem 1rem;
-    cursor:grab;
-  }
-  .categories-grid-new::-webkit-scrollbar{ display:none; }
-}
-
-
-/* ============================================
-   RECEITAS (GRID)
-   ============================================ */
-.recipe-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(350px, 1fr));
-  gap:1.5rem;
-  padding:2rem 0;
-}
-.recipe-card{
-  background:#fff;
-  border-radius:1.25rem;
-  overflow:hidden;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  transition:all .3s;
-  cursor:pointer;
-}
-.recipe-card:hover{
-  box-shadow:0 8px 24px rgba(0,0,0,.12);
-  transform:translateY(-4px);
-}
-.recipe-image-container{ position:relative; height:224px; overflow:hidden; }
-.recipe-image{ width:100%; height:100%; object-fit:cover; }
-.recipe-category{
-  position:absolute; top:1rem; left:1rem;
-  background:#16a34a; color:#fff;
-  padding:.375rem 1rem;
-  border-radius:9999px;
-  font-size:.875rem;
-  font-weight:600;
-  z-index:2;
-}
-.recipe-overlay{
-  position:absolute; inset:0;
-  background:rgba(0,0,0,.4);
-  display:flex; align-items:center; justify-content:center;
-}
-.lock-icon{ width:3rem; height:3rem; stroke:#fff; stroke-width:2; }
-
-.recipe-content{ padding:1.5rem; }
-.recipe-title{ font-size:1.25rem; font-weight:600; color:#1f2937; margin-bottom:.75rem; }
-.recipe-meta{
-  display:flex; gap:1rem;
-  margin-bottom:1rem;
-  color:#6b7280;
-  font-size:.875rem;
-  align-items:center;
-  font-weight:400;
-}
-.meta-icon{ width:1rem; height:1rem; stroke:currentColor; flex-shrink:0; }
-.recipe-stats{ display:flex; justify-content:space-between; margin-bottom:1rem; }
-.stat{ text-align:center; }
-.stat-value{ font-size:1.5rem; font-weight:600; }
-.stat-value.calories{ color:#16a34a; }
-.stat-value.protein{ color:#3b82f6; }
-.stat-label{ font-size:.75rem; color:#9ca3af; font-weight:400; }
-
-.recipe-button{
-  width:100%;
-  padding:.875rem;
-  border:none;
-  border-radius:.75rem;
-  font-weight:600;
-  cursor:pointer;
-  transition:all .2s;
-  display:flex; align-items:center; justify-content:center;
-  gap:.5rem;
-  font-size:1rem;
-}
-.recipe-button.unlocked{ background:#16a34a; color:#fff; }
-.recipe-button.unlocked:hover{ background:#15803d; }
-.recipe-button.locked{ background:#3b82f6; color:#fff; }
-.recipe-button.locked:hover{ background:#2563eb; }
-
-
-
-
-
-/* ============================================
-   DETALHE DA RECEITA
-   ============================================ 
-.recipe-detail{
-  background:#fff;
-  border-radius:1.5rem;
-  overflow:hidden;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
-  margin:3rem 0;
-}
-
-*/
-
-
-
-.back-button{
-  margin:1.5rem;
-  padding:.75rem 1.5rem;
-  background:#e5e7eb;
-  border:none;
-  border-radius:.75rem;
-  cursor:pointer;
-  transition:background .2s;
-  font-weight:600;
-  font-size:1rem;
-}
-.back-button:hover{ background:#d1d5db; }
-
-.detail-image{ width:100%; height:384px; object-fit:cover; }
-.detail-content{ padding:2rem; }
-
-.detail-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:2rem;
-  margin-bottom:2rem;
-  flex-wrap:wrap;
-}
-.detail-title{
-  font-size:2.2rem;
-  font-weight:600;
-  color:#1f2937;
-  margin:0;
-  flex:1;
-}
-
-.btn-add-list{
-  padding:.875rem 1.5rem;
-  background:#16a34a;
-  color:#fff;
-  border:none;
-  border-radius:.75rem;
-  font-size:1rem;
-  cursor:pointer;
-  transition:background .2s;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:.5rem;
-  white-space:nowrap;
-}
-.btn-add-list:hover{ background:#15803d; }
-
-.detail-stats{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:1rem;
-  margin-bottom:2rem;
-}
-.detail-stat{
-  padding:1.5rem;
-  border-radius:1rem;
-  text-align:center;
-  background:#f0fdf4;
-}
-.detail-stat-value{ font-size:2rem; font-weight:600; color:#16a34a; margin-bottom:.25rem; }
-.detail-stat-label{ font-size:.875rem; color:#6b7280; font-weight:400; }
-
-.detail-section{ margin-bottom:2rem; }
-.section-title{ font-size:1.5rem; font-weight:600; color:#1f2937; margin-bottom:1rem; }
-
-.ingredients-list, .instructions-list{ list-style:none; }
-.ingredient-item{ display:flex; gap:.75rem; padding:.5rem 0; color:#374151; font-weight:400; }
-.check-icon{ color:#16a34a; margin-top:.25rem; font-weight:600; }
-
-.instruction-item{ display:flex; gap:1rem; margin-bottom:1rem; }
-.instruction-number{
-  flex-shrink:0;
-  width:2rem; height:2rem;
-  background:#16a34a;
-  color:#fff;
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-weight:600;
-}
-.instruction-text{ padding-top:.25rem; color:#374151; font-weight:400; }
-
-/* ============================================
-   MODAIS — PADRÃO ÚNICO
-   ============================================ */
-body.modal-open{ overflow:hidden; height:100vh; }
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:1rem;
-  overflow:auto;
-}
-
-.modal::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.55);
-}
-
-.modal-overlay{ display:none; } /* mantém compatibilidade com seu HTML */
-
-.modal-surface,
-.modal-content,
-.modal-content-medium,
-.modal-content-large,
-.modal-content-xlarge{
-  position:relative;
-  background:#fff;
-  border:1px solid rgba(0,0,0,.08);
-  box-shadow:0 22px 60px rgba(0,0,0,.22);
-  border-radius:14px;
-  padding:1.5rem;
-  max-height:85vh;
-  overflow:auto;
-  width:100%;
-}
-
-/* tamanhos */
-.modal-content{ max-width:28rem; }
-.modal-content-medium{ max-width:36rem; }
-.modal-content-large{ max-width:48rem; }
-.modal-content-xlarge{ max-width:80rem; }
-
-/* Scroll invisível (Chrome/Safari/Firefox) */
-.modal-surface,
-.modal-content,
-.modal-content-medium,
-.modal-content-large,
-.modal-content-xlarge{
-  scrollbar-width:none;
-  -ms-overflow-style:none;
-}
-.modal-surface::-webkit-scrollbar,
-.modal-content::-webkit-scrollbar,
-.modal-content-medium::-webkit-scrollbar,
-.modal-content-large::-webkit-scrollbar,
-.modal-content-xlarge::-webkit-scrollbar{
-  width:0 !important; height:0 !important;
-}
-
-/* “empurra” a área de scroll pro lado (pra nunca aparecer a barra) */
-.modal-surface,
-.modal-content,
-.modal-content-medium,
-.modal-content-large,
-.modal-content-xlarge{
-  padding-right:18px;
-  margin-right:-18px;
-}
-
-.modal-close{
-  position:absolute;
-  top:12px;
-  right:12px;
-  width:40px;
-  height:40px;
-  background:#fff;
-  border:1px solid rgba(0,0,0,.08);
-  border-radius:9999px;
-  cursor:pointer;
-  box-shadow:0 10px 24px rgba(0,0,0,.12);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform .15s ease, background .15s ease;
-  z-index:10;
-}
-.modal-close:hover{
-  background:#f3f4f6;
-  transform:scale(1.06);
-}
-.modal-close svg{ width:20px; height:20px; stroke:#111827; stroke-width:2; }
-
-.modal-title{
-  font-size:1.6rem;
-  font-weight:600;
-  margin-bottom:1.25rem;
-  color:#111827;
-  padding-right:3rem;
-}
-
-/* Botões padrão */
-.btn-secondary,
-.btn-primary{
-  padding:.875rem;
-  border:none;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all .2s;
-  font-size:1rem;
-}
-.btn-secondary{ background:#e5e7eb; color:#374151; }
-.btn-secondary:hover{ background:#d1d5db; }
-.btn-primary{ background:#16a34a; color:#fff; }
-.btn-primary:hover{ background:#15803d; }
-
-/* ============================================
-   CALCULADORA / FORMS
-   ============================================ */
-.calculator-form{ display:flex; flex-direction:column; gap:1rem; }
-.form-row{ display:grid; grid-template-columns:repeat(2, 1fr); gap:1rem; }
-.form-group{ display:flex; flex-direction:column; }
-.form-group label{
-  font-size:.875rem;
-  font-weight:600;
-  margin-bottom:.5rem;
-  color:#374151;
-}
-.form-group input,
-.form-group select{
-  padding:.75rem 1rem;
-  border:2px solid #d1d5db;
-  border-radius:10px;
-  font-size:1rem;
-  transition:border-color .2s;
-  font-weight:400;
-}
-.form-group input:focus,
-.form-group select:focus{
-  outline:none;
-  border-color:#16a34a;
-}
-.btn-calculate{
-  width:100%;
-  padding:.875rem;
-  background:#16a34a;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  font-weight:600;
-  font-size:1rem;
-  cursor:pointer;
-  transition:background .2s;
-}
-.btn-calculate:hover{ background:#15803d; }
-
-.calc-results{ margin-top:1.25rem; }
-.result-box{
-  background:#dbeafe;
-  padding:1.25rem;
-  border-radius:12px;
-  margin-bottom:1rem;
-}
-.result-box h4{ font-size:1.05rem; font-weight:600; margin-bottom:1rem; }
-.result-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem; text-align:center; }
-.result-value{ font-size:1.6rem; font-weight:600; }
-.result-label{ font-size:.875rem; color:#6b7280; font-weight:400; margin-top:.25rem; }
-
-/* ============================================
-   LISTA DE COMPRAS
-   ============================================ */
-.shopping-empty{ text-align:center; padding:3rem 1rem; color:#9ca3af; }
-.shopping-empty svg{ width:4rem; height:4rem; margin:0 auto 1rem; opacity:.5; }
-
-.shopping-item{
-  display:flex;
-  align-items:center;
-  gap:.75rem;
-  padding:.75rem;
-  border:2px solid #e5e7eb;
-  border-radius:12px;
-  margin-bottom:.5rem;
-  transition:background .2s;
-}
-.shopping-item:hover{ background:#f9fafb; }
-.shopping-item input[type="checkbox"]{ width:1.25rem; height:1.25rem; cursor:pointer; }
-
-.shopping-item-content{ flex:1; }
-.shopping-item-text{ color:#374151; font-weight:400; }
-.shopping-item-text.checked{ text-decoration:line-through; color:#9ca3af; }
-.shopping-item-recipe{ font-size:.75rem; color:#9ca3af; font-weight:400; }
-
-.btn-delete{
-  padding:.5rem;
-  background:none;
-  border:none;
-  color:#ef4444;
-  cursor:pointer;
-  border-radius:10px;
-  transition:background .2s;
-}
-.btn-delete:hover{ background:#fee2e2; }
-
-.btn-clear-list{
-  width:100%;
-  margin-top:1rem;
-  padding:.75rem;
-  border:2px solid #fca5a5;
-  background:#fff;
-  color:#dc2626;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-  transition:all .2s;
-}
-.btn-clear-list:hover{ background:#fee2e2; }
-
-/* ============================================
-   PLANEJADOR SEMANAL
-   ============================================ */
-.week-planner-wrapper{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
-.week-table{
-  width:100%;
-  min-width:900px;
-  border-collapse:collapse;
-  margin-top:1rem;
-}
-.week-table th, .week-table td{
-  border:2px solid #e5e7eb;
-  padding:.75rem;
-  text-align:center;
-}
-.week-table th{
-  background:#f3f4f6;
-  font-weight:600;
-  font-size:.875rem;
-}
-.week-table td{ min-width:120px; vertical-align:top; font-weight:400; }
-.week-table tbody tr:last-child td{
-  background:#fffbeb;
-  font-weight:600;
-  color:#ea580c;
-  font-size:1.05rem;
-}
-.planned-meal{ background:#d1fae5; padding:.5rem; border-radius:10px; text-align:left; }
-.planned-meal-name{ font-size:.875rem; font-weight:600; margin-bottom:.25rem; }
-.planned-meal-cal{ font-size:.75rem; color:#6b7280; font-weight:400; margin-bottom:.5rem; }
-.btn-remove-meal{
-  font-size:.75rem;
-  color:#dc2626;
-  background:none;
-  border:none;
-  cursor:pointer;
-  text-decoration:underline;
-  font-weight:600;
-}
-.btn-remove-meal:hover{ color:#991b1b; }
-.empty-slot{ color:#9ca3af; font-size:.875rem; font-weight:400; }
-
-.btn-save-plan{
-  width:100%;
-  margin-top:1.5rem;
-  padding:1rem;
-  background:#16a34a;
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  font-weight:600;
-  font-size:1.05rem;
-  cursor:pointer;
-  transition:background .2s;
-}
-.btn-save-plan:hover{ background:#15803d; }
-.btn-save-plan:disabled{ background:#9ca3af; cursor:not-allowed; }
-
-/* ============================================
-   PREMIUM MODAL (ajuste fino: radius leve + ícones maiores)
-   ============================================ */
-.premium-hero{ text-align:center; margin-bottom:1rem; }
-.premium-badge-icon{
-  width:56px; height:56px;
-  border-radius:9999px;
-  display:flex; align-items:center; justify-content:center;
-  margin:0 auto .75rem;
-  background:linear-gradient(135deg,#16a34a 0%, #15803d 100%);
-}
-.premium-badge-icon svg{ width:28px; height:28px; color:#fff; }
-.premium-title{ font-size:1.45rem; font-weight:600; margin:0 0 .35rem; color:#111827; }
-.premium-subtitle{ color:#6b7280; font-size:.95rem; font-weight:400; margin:0; }
-
-.premium-warning{
-  background:#fffbeb;
-  border-left:4px solid #f59e0b;
-  padding:.875rem;
-  border-radius:10px;
-  margin:1rem 0;
-}
-.premium-warning p{ margin:0; color:#92400e; font-weight:600; font-size:.9rem; }
-
-#premium-modal .input-group label{ font-weight:600; }
-#premium-modal #premium-code-input{
-  border-radius:8px !important;
-  border:2px solid #e5e7eb !important;
-  padding:.75rem 1rem !important;
-  font-size:1rem !important;
-  font-weight:400 !important;
-}
-#premium-modal #premium-code-input:focus{ border-color:#16a34a !important; outline:none !important; }
-
-.premium-footer{ padding-top:1rem; border-top:1px solid #e5e7eb; text-align:center; margin-top:1rem; }
-.premium-footer-text{ color:#6b7280; font-size:.85rem; font-weight:400; margin:0 0 .75rem; }
-
-.premium-links{ display:flex; gap:.625rem; justify-content:center; flex-wrap:wrap; }
-.premium-link{
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-  padding:.55rem 1rem;
-  border-radius:10px;
-  font-weight:600;
-  font-size:.85rem;
-  text-decoration:none;
-}
-.premium-link svg{
-  width:18px; height:18px;
-  stroke-width:2;
-}
-.premium-link.whatsapp{ background:#25D366; color:#fff; }
-.premium-link.instagram{ background:#111; color:#fff; }
-
-/* ============================================
-   FAQ (sem emoji + padrão verde)
-   ============================================ */
-#faq-content{ padding-right:18px; margin-right:-18px; overflow:auto; max-height:calc(85vh - 120px); }
-#faq-content{ scrollbar-width:none; -ms-overflow-style:none; }
-#faq-content::-webkit-scrollbar{ width:0 !important; height:0 !important; }
-
-/* “mata” pesos exagerados dentro do FAQ (inclusive os inline do JS) */
-#faq-content, #faq-content * { font-weight:400 !important; }
-
-.faq-section{
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  overflow:hidden;
-  background:#fff;
-  margin-bottom:12px;
-}
-.faq-header{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:14px 16px;
-  cursor:pointer;
-  border:none;
-
-  color:#111827;
-}
-.faq-title{
-  font-weight:600 !important;
-  font-size:1rem;
-}
-.faq-chevron{
-  width:30px; height:30px;
-  border-radius:9999px;
-  background:#16a34a;
-  display:flex; align-items:center; justify-content:center;
-  color:#fff;
-  transition:transform .2s ease, background .2s ease;
-}
-.faq-chevron svg{ width:18px; height:18px; stroke:#fff; stroke-width:2; }
-.faq-section.open .faq-chevron{ transform:rotate(90deg); background:#15803d; }
-
-.faq-body{ padding:14px 16px; background:#fff; }
-.faq-q{ color:#16a34a; font-weight:600 !important; margin-bottom:6px; }
-.faq-a{ color:#6b7280; font-size:.95rem; line-height:1.45; }
-
-.faq-help{
-  text-align:center;
-  padding:1.25rem;
-  background:#f0fdf4;
-  border-radius:12px;
-  border:1px solid rgba(22,163,74,.15);
-  margin-top:12px;
-}
-.faq-help h4{ margin:0 0 .75rem; font-weight:600 !important; }
-.faq-help-links{ display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap; }
-.faq-help-links a{
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-  padding:.65rem 1.1rem;
-  border-radius:9999px;
-  font-weight:600 !important;
-  text-decoration:none;
-  color:#fff;
-}
-.faq-help-links a svg{ width:18px; height:18px; stroke:#fff; stroke-width:2; }
-.faq-help-links .wa{ background:#25D366; }
-.faq-help-links .ig{ background:linear-gradient(45deg,#f09433,#bc1888); }
-
-/* ============================================
-   RESPONSIVO
-   ============================================ */
-@media (max-width:1024px){
-  .recipe-grid{ grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); }
-}
-
-@media (max-width:768px){
-  #header{ height:auto; }
-  .header-content{
-    flex-direction:column;
-    height:auto;
-    padding:1rem 0;
-    gap:1rem;
-  }
-  .logo h1{ font-size:1.5rem; }
-  .search-container{ width:100%; max-width:100%; }
-  .header-tools, .header-actions{ width:100%; justify-content:center; }
-  .recipe-grid{ grid-template-columns:1fr; }
-  .detail-title{ font-size:1.7rem; }
-  .detail-stats{ grid-template-columns:repeat(2, 1fr); }
-  .form-row{ grid-template-columns:1fr; }
-
-  .hero-slider-fullwidth{ height:300px; }
-  .slide-title-new{ font-size:1.75rem; }
-  .slide-description-new{ font-size:1rem; }
-  .slide-overlay-new{ padding:2rem 1.5rem; }
-  .slider-arrow-new{ width:50px; height:50px; font-size:1.5rem; }
-  .slider-arrow-new.prev{ left:1rem; }
-  .slider-arrow-new.next{ right:1rem; }
-}
-
-
-
-
-@media (max-width:480px){
-  .hero-slider-fullwidth{ height:285px;  }
-  .slide-title-new{ font-size:1.5rem;  }
-  .category-card-new{ padding:1.0rem 1.20rem; font-size:.875rem; border-radius: 50px; }
-}
-
-
-
-
-
-/* ================================
-   PATCH — alinhamento Premium Modal
-   (coloque no FINAL do styles.css)
-   ================================ */
-
-#premium-modal .modal-content{
-  /* anula o “empurra pro lado” usado pra scrollbar invisível */
-  padding-right: 1.5rem !important;
-  margin-right: 0 !important;
-}
-
-/* estrutura mais “reta” (central e limpa) */
-#premium-modal .modal-content{
-  display: grid;
-  gap: 14px;
-}
-
-/* título/sub alinhados */
-#premium-modal .premium-hero{
-  margin-bottom: 0 !important;
-  text-align: center;
-}
-
-#premium-modal .premium-title{
-  line-height: 1.15;
-  font-weight: 650; /* levemente mais “cheio” */
-}
-
-#premium-modal .premium-subtitle{
-  margin-top: 2px;
-  font-weight: 450;
-}
-
-/* label + input alinhados e com largura certinha */
-#premium-modal .input-group{
-  display: grid;
-  gap: 8px;
-  margin-bottom: 0 !important;
-}
-
-#premium-modal .input-group label{
-  font-weight: 600; /* aqui fica melhor mais “firme” */
-}
-
-/* input com radius leve (8–10px) e sem ficar “esquisito” */
-#premium-modal #premium-code-input{
-  width: 100% !important;
-  border-radius: 9px !important;
-}
-
-/* botões sempre alinhados e com mesma altura */
-#premium-modal .modal-actions{
-  display: grid !important;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 12px;
-  align-items: stretch;
-}
-
-#premium-modal .btn-secondary,
-#premium-modal .btn-primary{
-  height: 46px;
-  border-radius: 12px;
-}
-
-/* links (Whats/Instagram) um pouco mais visíveis */
-#premium-modal .premium-link svg{
-  width: 20px;
-  height: 20px;
-}
-
-
-
-/* ================================
-   PATCH — alinhamento Premium Modal
-   (coloque no FINAL do styles.css)
-   ================================ */
-
-#premium-modal .modal-content{
-  /* anula o “empurra pro lado” usado pra scrollbar invisível */
-  padding-right: 1.5rem !important;
-  margin-right: 0 !important;
-}
-
-/* estrutura mais “reta” (central e limpa) */
-#premium-modal .modal-content{
-  display: grid;
-  gap: 14px;
-}
-
-/* título/sub alinhados */
-#premium-modal .premium-hero{
-  margin-bottom: 0 !important;
-  text-align: center;
-}
-
-#premium-modal .premium-title{
-  line-height: 1.15;
-  font-weight: 650; /* levemente mais “cheio” */
-}
-
-#premium-modal .premium-subtitle{
-  margin-top: 2px;
-  font-weight: 450;
-}
-
-/* label + input alinhados e com largura certinha */
-#premium-modal .input-group{
-  display: grid;
-  gap: 8px;
-  margin-bottom: 0 !important;
-}
-
-#premium-modal .input-group label{
-  font-weight: 600; /* aqui fica melhor mais “firme” */
-}
-
-/* input com radius leve (8–10px) e sem ficar “esquisito” */
-#premium-modal #premium-code-input{
-  width: 100% !important;
-  border-radius: 9px !important;
-}
-
-/* botões sempre alinhados e com mesma altura */
-#premium-modal .modal-actions{
-  display: grid !important;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 12px;
-  align-items: stretch;
-}
-
-#premium-modal .btn-secondary,
-#premium-modal .btn-primary{
-  height: 46px;
-  border-radius: 12px;
-}
-
-/* links (Whats/Instagram) um pouco mais visíveis */
-#premium-modal .premium-link svg{
-  width: 20px;
-  height: 20px;
-}
-
-/* Evita a página "balançar" quando a scrollbar aparece/some */
-html { scrollbar-gutter: stable; }
-
-/* fallback para navegadores que não suportam scrollbar-gutter */
-@supports not (scrollbar-gutter: stable) {
-  html { overflow-y: scroll; } /* sempre reserva o espaço do scroll */
-}
-
-
-
-/* ================================
-   ANTI-FLASH com CSS Variables
-   ================================ */
-
-:root {
-  --badge-bg: #3b82f6;
-  --show-premium-btn: block;
-}
-
-/* Badge usa variáveis CSS */
-.badge {
-  min-width: 160px; /* Largura fixa para evitar "pulo" */
-  opacity: 0; /* Começa invisível */
-  transition: opacity 0.5s ease-in-out; /* 👈 0.3s ao invés de 0.2s */
-}
-
-
-
-
-#premium-btn {
-  display: var(--show-premium-btn) !important;
-}
-
-/* Ícone estrela para premium */
-.badge.premium svg {
-  fill: currentColor;
-  stroke: none;
-}
-
-/* Badge premium */
-.badge.premium {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
-}
-
-.badge.ready {
-  opacity: 1; /* Aparece quando JS marcar como pronto */
-}
-
-
-body.premium-active #premium-btn {
-  display: none !important;
-}
-
-
-
-
-
-/* ================================
-   FIX: Centralização Mobile/iPhone
-   ================================ */
-
-/* Garante centralização em mobile */
-@media (max-width:768px){
-
-.slider-arrow-new{
-  position:absolute; top:50%;
-  transform:translateY(-50%);
-  background:rgba(255,255,255,.3);
-  color:#fff;
-  border:none;
-  width:55px; height:55px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:2rem;
-  display:flex; align-items:center; justify-content:center;
-  transition:all .3s;
-  backdrop-filter:blur(4px);
-  z-index:10;
-}
-
-
-   
-  .modal{
-    align-items:center !important;
-    justify-content:center !important;
-    padding:1rem !important;
-  }
-  
-  .modal-content,
-  .modal-content-medium,
-  .modal-content-large,
-  .modal-content-xlarge{
-    max-height:90vh !important;
-    margin:auto !important;
-  }
-}
-
-/* iPhone Safari: fix específico */
-@supports (-webkit-touch-callout: none) {
-  .modal{
-    align-items:center !important;
-    justify-content:center !important;
-  }
-  
-  .modal-surface,
-  .modal-content,
-  .modal-content-medium,
-  .modal-content-large,
-  .modal-content-xlarge{
-    margin:auto !important;
-  }
-}
-
-
-
-
-
-/* ================================
-   FIX: Botões dias da semana - Grid responsivo
-   ================================ */
-
-/* Container dos botões de dia */
-.detail-section div[style*="display:flex"] {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-  gap: 0.75rem !important;
-  width: 100% !important;
-}
-
-/* Estiliza botões de seleção de dia */
-.detail-section button.btn-secondary {
-  background: #e5e7eb !important;
-  color: #374151 !important;
-  border: none !important;
-  border-radius: 12px !important;
-  padding: 0.75rem 1rem !important;
-  font-weight: 600 !important;
-  font-size: 0.95rem !important;
-  transition: all 0.2s ease !important;
-  white-space: nowrap !important;
-  width: 100% !important; /* ocupa toda a célula do grid */
-  text-align: center !important;
-}
-
-.detail-section button.btn-secondary:hover {
-  background: #d1d5db !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
-}
-
-.detail-section button.btn-secondary:active {
-  transform: translateY(0) !important;
-}
-
-/* Mobile: 2 colunas */
-@media (max-width: 640px) {
-  .detail-section div[style*="display:flex"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-
-
-/* ================================
-   FIX: Centralizar categorias verticalmente
-   ================================ */
-
-.categories-new {
-  margin: 1.5rem auto !important; /* espaçamento igual em cima e embaixo */
-  padding: 0 2rem !important;
-}
-
-.categories-grid-new {
-  padding: 22px !important; /* remove padding interno */
-  
-}
-
-/* Remove margem do slider */
-.hero-slider-fullwidth {
-  margin-bottom: 0 !important;
-}
-
-
-
-/* ================================
-   FIX: Remover margem do grid de receitas
-   ================================ */
-
-.recipe-grid {
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* Ajusta container principal */
-.container {
-  padding: 0 1rem !important;
-}
-
-
-/* Garante que categorias mantêm padding lateral */
-/*.categories-new {
- /* padding: 10px 2rem !important;
-/*}
-
-
-/* ================================
-   LAYOUT TURBINADO - RECEITA DETALHADA
-   ================================ */
-
-.detail-hero-image {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-}
-
-.detail-content-wrapper {
-  padding: 2rem;
-  max-width: 1248px;
-  margin: 0 auto;
-}
-
-.detail-title {
-  font-size: 2.2rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 1.5rem;
-}
-
-/* Tags */
-.tags-container {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-}
-
-.tag {
-  padding: 0.5rem 1rem;
-  background: #f0fdf4;
-  color: #16a34a;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: 1px solid #bbf7d0;
-}
-
-/* Stats */
-.detail-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.detail-stat {
-  padding: 1rem;
-  background: #fff;
-  border-radius: 0.75rem;
-  border: 1px solid #bbf7d0;
-  text-align: center;
-}
-
-.detail-stat-value {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #16a34a;
-  margin-bottom: 0.25rem;
-}
-
-.detail-stat-label {
-  font-size: 0.875rem;
-  color: #6b7280;
-}
-
-/* Seções */
-.detail-section {
-  margin-bottom: 2.5rem;
-}
-
-.section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.section-icon {
-  width: 28px;
-  height: 28px;
-  color: #16a34a;
-}
-
-/* Planejamento Semanal */
-.planner-subtitle {
-  font-size: 0.95rem;
-  color: #16a34a;
-  margin-bottom: 1rem;
-}
-
-.planner-days {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 0.75rem;
-}
-
-.planner-day {
-  padding: 0.875rem 1.25rem;
-  background: #e5e7eb;
-  color: #374151;
-  border-radius: 0.75rem;
-  text-align: center;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 2px solid transparent;
-}
-
-.planner-day:hover {
-  background: #d1d5db;
-  transform: translateY(-2px);
-}
-
-/* Benefícios */
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-}
-
-.benefit-item {
-  padding: 1rem;
-  background: #fff;
-  border-radius: 0.75rem;
-  border: 1px solid #bbf7d0;
-  color: #166534;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-}
-
-.benefit-icon {
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  color: #16a34a;
-  margin-top: 0.125rem;
-}
-
-/* Ingredientes em 2 colunas */
-.ingredients-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.ingredient-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 0.75rem;
-  border: 1px solid #bbf7d0;
-  transition: all 0.2s;
-}
-
-.ingredient-item:hover {
-  background: #f0fdf4;
-  border-color: #16a34a;
-  transform: translateX(4px);
-}
-
-.ingredient-icon-wrapper {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid #16a34a;
-}
-
-.ingredient-icon {
-  width: 20px;
-  height: 20px;
-  color: #16a34a;
-}
-
-.ingredient-content {
-  flex: 1;
-}
-
-.ingredient-text {
-  color: #374151;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.ingredient-quantity {
-  display: inline-block;
-  font-weight: 600;
-  color: #16a34a;
-  margin-right: 0.5rem;
-}
-
-.ingredient-optional {
-  display: inline-block;
-  margin-left: 0.5rem;
-  padding: 0.125rem 0.5rem;
-  background: #fef3c7;
-  color: #92400e;
-  border-radius: 0.25rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* Modo de Preparo */
-.instructions-list {
-  list-style: none;
-}
-
-.instruction-item {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-direction: column;
-}
-
-.instruction-header {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.instruction-number {
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  background: #16a34a;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
-
-.instruction-text {
-  padding-top: 0.25rem;
-  color: #374151;
-  flex: 1;
-  line-height: 1.6;
-}
-
-.instruction-image {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  aspect-ratio: 600 / 370;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-top: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  align-self: center;
-}
-
-/* Dicas */
-.tips-list {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.tip-item {
-  padding: 1rem;
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border-left: 4px solid #f59e0b;
-  border-radius: 0.5rem;
-  color: #92400e;
-  font-size: 0.95rem;
-}
-
-/* Alérgenos */
-.allergens-container {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.allergen-badge {
-  padding: 0.5rem 1rem;
-  background: #fee2e2;
-  color: #991b1b;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border: 1px solid #fecaca;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.allergen-icon {
-  width: 16px;
-  height: 16px;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .detail-title {
-    font-size: 1.7rem;
-  }
-
-   .recipe-category{
-  position:absolute; top:1rem; center:1rem;
-   }
-   
-  .detail-hero-image {
-    height: 300px;
-  }
-  
-  .detail-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .benefits-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .ingredients-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .planner-days {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .instruction-image {
-    max-width: 100%;
-  }
-}
-
-
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: #e5e7eb;
-  border: none;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1rem;
-  margin: 1.5rem;
-}
-
-.back-btn svg {
-  width: 20px;
-  height: 20px;
-
-position: relative;
-z-index: 5;
-}
-
-
-/* Botão Adicionar à Lista */
-.btn-add-shopping {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
-  background: #16a34a;
-  color: #fff;
-  border: none;
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 2rem;
-}
-
-.btn-add-shopping:hover {
-  background: #15803d;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
-}
-
-.btn-add-shopping svg {
-  flex-shrink: 0;
-}
-
-
-
-/* Modal de Notificação */
-.modal-content-small {
-  background: #fff;
-  border-radius: 1rem;
-  padding: 2rem;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  position: relative;
-  z-index: 10001;
-}
-
-.modal-content-small .modal-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 1rem;
-}
-
-.modal-content-small .modal-text {
-  font-size: 1rem;
-  color: #6b7280;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.modal-content-small .btn-primary {
-  width: 100%;
-  padding: 0.875rem;
-  background: #16a34a;
-  color: #fff;
-  border: none;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.modal-content-small .btn-primary:hover {
-  background: #15803d;
-  transform: translateY(-2px);
-}
-
-
-/* Modal Escolha de Refeição */
-.meal-options {
-  display: grid;
-  gap: 0.75rem;
-  margin: 1.5rem 0;
-}
-
-.meal-option-btn {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  background: #fff;
-  border: 2px solid #e5e7eb;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #374151;
-  text-align: left;
-}
-
-.meal-option-btn:hover {
-  background: #f0fdf4;
-  border-color: #16a34a;
-  transform: translateX(4px);
-}
-
-.meal-option-btn svg {
-  width: 24px;
-  height: 24px;
-  color: #16a34a;
-  flex-shrink: 0;
-}
-
-.meal-option-btn span {
-  flex: 1;
-}
-
-.btn-cancel {
-  width: 100%;
-  padding: 0.875rem;
-  background: #f3f4f6;
-  color: #6b7280;
-  border: none;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 0.5rem;
-}
-
-.btn-cancel:hover {
-  background: #e5e7eb;
-}
-
-.modal-subtitle {
-  font-size: 0.95rem;
-  color: #16a34a;
-  margin-bottom: 0.5rem;
-  text-align: center;
-}
-
-
-
-
-
-
-
 /* =========================================================
-   RECEITAFIT.APP — UI POLISH (OVERRIDE FINAL)
-   Cole este bloco NO FINAL do styles.css
+   RECEITAFIT.APP — CSS CANÔNICO
+   Arquivo único, limpo, sem patches e sem duplicações
    ========================================================= */
 
-/* Acessibilidade: se o usuário não quer animações */
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
+/* =========================
+   RESET / BASE
+   ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Tokens */
-:root{
+html {
+  scrollbar-gutter: stable;
+}
+
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; }
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f9fafb;
+  min-height: 100vh;
+  font-weight: 400;
+  color: #111827;
+}
+
+a { text-decoration: none; color: inherit; }
+.hidden { display: none !important; }
+
+/* =========================
+   TOKENS / VARIÁVEIS
+   ========================= */
+:root {
+  --rf-green: #16a34a;
+  --rf-green-dark: #15803d;
+  --rf-blue: #3b82f6;
+
   --rf-ease: cubic-bezier(.2,0,.2,1);
   --rf-fast: 140ms;
   --rf-faster: 100ms;
 
-  --rf-lift: -2px;               /* desktop hover = sobe */
-  --rf-lift-strong: -4px;        /* cards */
+  --rf-lift: -2px;
+  --rf-lift-strong: -4px;
+
   --rf-shadow: 0 10px 22px rgba(17,24,39,.12);
   --rf-shadow-strong: 0 14px 30px rgba(17,24,39,.14);
 
-  --rf-active-scale: 1.08;       /* mobile press (exceto cards) */
-}
+  --rf-active-scale: 1.08;
 
-/* Base: transições padronizadas (sem blur no desktop porque não escala) */
-.tool-btn, .category-card-new, .btn-primary, .btn-secondary,
-.btn-premium, .back-btn, .slider-arrow-new, .slider-dot-new,
-.btn-calculate, .meal-option-btn, .modal-actions button,
-.btn-clear-list, .btn-delete, {
-  transition: transform var(--rf-fast) var(--rf-ease),
-              box-shadow var(--rf-fast) var(--rf-ease),
-              background-color var(--rf-fast) var(--rf-ease),
-              border-color var(--rf-fast) var(--rf-ease),
-              filter var(--rf-fast) var(--rf-ease);
-  will-change: transform;
+  --badge-bg: #3b82f6;
+  --show-premium-btn: block;
+
+  --header-h: 0px;
 }
 
 /* =========================
-   DESKTOP HOVER (sem scale → sem “desfocado”)
+   CONTAINER
    ========================= */
-@media (hover: hover) and (pointer: fine) {
-
-  /* Botões e chips: sobe + sombra */
-  .tool-btn:hover,
-  .category-card-new:hover,
-  .btn-primary:hover,
-  .btn-secondary:hover,
-  .btn-premium:hover,
-  .back-btn:hover,
-  .slider-arrow-new:hover,
-  .slider-dot-new:hover,
-  .btn-calculate:hover,
-  .meal-option-btn:hover,
-  .modal-actions button:hover,
-  .btn-clear-list:hover{
-    transform: translateY(var(--rf-lift));
-    box-shadow: var(--rf-shadow);
-  }
-
-  /* Cards: somente subir (como você pediu) */
-  .recipe-card:hover{
-    transform: translateY(var(--rf-lift-strong)) !important;
-    box-shadow: var(--rf-shadow-strong) !important;
-  }
-
-  /* Botão voltar voltou a ter efeito mesmo se for gerado via JS */
-  .back-btn:hover{
-    box-shadow: var(--rf-shadow);
-  }
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 /* =========================
-   MOBILE (toque / remove “copiar”)
+   HEADER
    ========================= */
-@media (pointer: coarse) {
-
-  /* Remove seleção/copy/callout em elementos tocáveis */
-  .tool-btn, .category-card-new, .btn-primary, .btn-secondary,
-  .btn-premium, .back-btn, .slider-arrow-new, .slider-dot-new,
-  .btn-calculate, .meal-option-btn, .modal-actions button,
-  .btn-clear-list, .btn-delete, {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-    touch-action: manipulation;
-    transition-duration: var(--rf-faster) !important;
-  }
-
-  /* Press padrão: scale + sombra (EXCETO cards) */
-  .tool-btn:active,
-  .category-card-new:active,
-  .btn-primary:active,
-  .btn-secondary:active,
-  .btn-premium:active,
-  .back-btn:active,
-  .slider-arrow-new:active,
-  .slider-dot-new:active,
-  .btn-calculate:active,
-  .meal-option-btn:active,
-  .modal-actions button:active,
-  .btn-clear-list:active{
-    transform: scale(var(--rf-active-scale));
-    box-shadow: var(--rf-shadow);
-  }
-
-  /* Cards mobile: só subir, sem scale (pra não “estourar” na borda) */
-  .recipe-card:active{
-    transform: translateY(-3px) !important;
-    box-shadow: var(--rf-shadow-strong) !important;
-  }
+#header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fff;
+  height: 105px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
 }
 
-/* HEADER MOBILE — layout 83x77 SOMENTE nos ícones (não no Premium) */
-@media (max-width: 768px) {
-
-
-.tool-btn svg{
-
-width: 30px;
-height: 25px;
-stroke-width: 2;
-
-   
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 105px;
+  gap: 1.5rem;
 }
 
-
-   
-   
-   
-   
-   
-   /* aplica só nos botões-ícone do header */
-  .header-tools .tool-btn:not(#premium-btn):not(.btn-premium):not(.premium-btn) {
-
-
-        width: 72px !important;
-        height: 68px !important;
-        background: #DDDDDD !important;
-        border-radius: 40px !important;
-        box-shadow: 0 8px 18px rgba(17, 24, 39, .10);
-
-     
-  }
-
-
-
-
-
-   
-  .header-tools .tool-btn:not(#premium-btn):not(.btn-premium):not(.premium-btn):active {
-    background: #AAAAAA !important;
-  }
-
-  /* garante que o botão premium NÃO herda o layout quadrado */
- #premium-btn, .btn-premium, .premium-btn {
-  width: auto !important;
-  height: 48px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
-
-  /* mantém o visual premium bonito */
-background: #16a34a !important;
-  color: #fff !important;
-  border: none !important;
-
-  border-radius: 9999px !important;
-  padding: 0 18px !important;
-
-  box-shadow: 0 12px 26px rgba(245,158,11,.28) !important;
-}
-
-}
-
-
-/* “Pill” do header no desktop (sem quadrado feio) */
-.tool-btn{
-  border-radius: 9999px;
-}
-
-/* Se você usar estado ativo via classe no futuro */
-.tool-btn.is-active{
-  background: #e8fff0 !important;
-  border: 1px solid rgba(22,163,74,.28) !important;
-  box-shadow: 0 10px 22px rgba(22,163,74,.14) !important;
-}
-
-/* =========================
-   MODAIS — hover nos botões internos + scroll invisível
-   ========================= */
-.btn-calculate,
-.modal-actions button{
-  box-shadow: 0 8px 18px rgba(17,24,39,.10);
-}
-
-#shopping-modal .modal-content-medium,
-#planner-modal .modal-content-xlarge,
-#faq-modal .modal-content-xlarge,
-#calculator-modal .modal-content-large,
-#premium-modal .modal-content-large {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-#shopping-modal .modal-content-medium::-webkit-scrollbar,
-#planner-modal .modal-content-xlarge::-webkit-scrollbar,
-#faq-modal .modal-content-xlarge::-webkit-scrollbar,
-#calculator-modal .modal-content-large::-webkit-scrollbar,
-#premium-modal .modal-content-large::-webkit-scrollbar {
-  display: none;
-}
-
-/* Planejador: menor altura no mobile */
-@media (max-width: 768px) {
-  #planner-modal .modal-content-xlarge{
-    max-height: 72vh !important;
-    overflow: auto !important;
-  }
-}
-
-/* Planejador: scroll horizontal/vertical invisível + thumb arredondado (quando suportado) */
-.week-planner-wrapper{
-  overflow: auto !important;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.week-planner-wrapper::-webkit-scrollbar{
-  height: 10px;
-}
-.week-planner-wrapper::-webkit-scrollbar-track{
-  background: transparent;
-}
-.week-planner-wrapper::-webkit-scrollbar-thumb{
-  background: #cfcfcf;
-  border-radius: 9999px;
-}
-.week-planner-wrapper::-webkit-scrollbar{ display:none; } /* invisível como você pediu */
-
-/* =========================
-   LISTA DE COMPRAS — botão Limpar + lixeira 20x20
-   ========================= */
-.btn-clear-list{
-  box-shadow: 0 8px 18px rgba(17,24,39,.10);
-}
-
-/* Lixeira individual 20x20 */
-.btn-delete svg{
-  width: 20px !important;
-  height: 20px !important;
-}
-
-/* =========================
-   VOLTAR / PREMIUM — garantir efeito e remover “copiar”
-   ========================= */
-.back-btn, .btn-premium{
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-/* =========================
-   CARDS MOBILE — manter 2 colunas
-   (se já existe, isso só reforça)
-   ========================= */
-@media (max-width: 768px) {
-  .recipes-grid,
-  .recipes-grid-new{
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
-
-
-
-/* garante que popups fiquem acima do modal premium */
-#notification-modal { z-index: 9999 !important; }
-#confirm-modal { z-index: 9998 !important; }
-
-
-@media (hover: hover) and (pointer: fine) {
-  .site-logo:hover,
-  .header-logo:hover,
-  .logo:hover {
-    opacity: 0.92;
-  }
-}
-
-@media (max-width: 768px) {
-  #header {
-   box-shadow: none !important;
-  }
-}
-
-
-/* =========================================================
-   LOGO — sem animação / sem sombra / sem “tap” visual
-   (cole no FINAL do styles.css)
-   ========================================================= */
-
+/* Logo (sem animação propositalmente) */
 .logo,
 .logo * {
   transition: none !important;
   transform: none !important;
   animation: none !important;
-  filter: none !important;
   box-shadow: none !important;
 }
 
-/* garante que hover/active não aplique nada no logo */
-.logo:hover,
-.logo:active,
-.logo:focus,
-.logo:focus-visible {
-  transform: none !important;
-  filter: none !important;
- box-shadow: none !important;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-/* remove “selecionar/copiar” no logo (mobile) */
-@media (pointer: coarse) {
-  .logo,
-  .logo * {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    user-select: none;
-  }
+.logo h1 {
+  font-size: 2rem;
+  font-weight: 600;
 }
 
-/* =========================================================
-   GRID DE RECEITAS — 2 (mobile) / 3 (tablet) / 4 (desktop)
-   Cole no FINAL do styles.css
-   ========================================================= */
-
-/* Base (desktop) */
-#recipe-grid, .recipe-grid {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  gap: 18px !important;
+.logo-app {
+  color: var(--rf-green);
+  font-weight: 700;
 }
 
-/* Tablet */
-@media (max-width: 1024px) {
-  #recipe-grid, .recipe-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 16px !important;
-  }
+.logo-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: var(--rf-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  #recipe-grid, .recipe-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-  }
+.logo-icon svg {
+  width: 30px;
+  height: 30px;
+  stroke: #fff;
 }
 
+/* =========================
+   SEARCH
+   ========================= */
+.search-container {
+  flex: 1;
+  max-width: 500px;
+  position: relative;
+}
 
-/* =========================================
-   CARD DE RECEITA — ALINHAMENTO MOBILE
-   ========================================= */
+.search-input {
+  width: 100%;
+  padding: .875rem 3rem .875rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 9999px;
+  font-size: 1rem;
+}
 
+.search-input:focus {
+  outline: none;
+  border-color: var(--rf-green);
+}
+
+.search-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  stroke: #9ca3af;
+}
+
+/* =========================
+   HEADER ACTIONS
+   ========================= */
+.header-tools,
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.tool-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  border: none;
+  background: #dbeafe;
+  color: #2563eb;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tool-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.badge {
+  min-width: 160px;
+  height: 48px;
+  padding: .75rem 1.5rem;
+  border-radius: 9999px;
+  background: var(--badge-bg);
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.badge.ready { opacity: 1; }
+
+.badge.premium {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+#premium-btn {
+  display: var(--show-premium-btn);
+  height: 48px;
+  padding: 0 1.25rem;
+  border-radius: 9999px;
+  background: var(--rf-green);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+body.premium-active #premium-btn {
+  display: none !important;
+}
+
+/* =========================
+   GRID DE RECEITAS
+   ========================= */
+#recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 18px;
+}
+
+@media (max-width:1024px) {
+  #recipe-grid { grid-template-columns: repeat(3,1fr); }
+}
+
+@media (max-width:768px) {
+  #recipe-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+/* Card */
 .recipe-card {
+  background: #fff;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  cursor: pointer;
 }
 
-/* Área interna do card */
+/* Botão sempre no fundo */
 .recipe-content {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-/* Título com altura mínima (evita pulo) */
 .recipe-title {
-  min-height: 3.2em; /* ~2 linhas */
+  font-size: 1.25rem;
+  font-weight: 600;
   line-height: 1.6;
-
+  min-height: 3.2em;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* Meta + stats mantêm fluxo natural */
-.recipe-meta,
-.recipe-stats {
-  margin-top: auto;
-}
-
-/* Botão sempre no fundo */
-.recipe-button {
-  margin-top: 12px;
-}
-
-
-
-/* ==============================
-   BOTÃO LOCK — texto diferente no mobile
-   ============================== */
-
-.btn-label-mobile { display: none; }
-.btn-label-desktop { display: inline; }
-
-/* Mobile */
-@media (max-width: 768px) {
-  .btn-label-desktop { display: none; }
-  .btn-label-mobile { display: inline; }
-
-  /* deixa o botão mais “compacto” no mobile */
-  .recipe-button.locked {
-    padding: 12px 10px;
-    gap: 8px;
-  }
-
-  /* “1 crédito” com cara de etiqueta */
-  .recipe-button.locked .btn-label-mobile {
-    font-weight: 700;
-    font-size: 0.95rem;
-  }
-}
-
-/* ================================
-   Recipe Detail = tela independente
-   (não deixa “vazar” outras receitas)
-   ================================ */
-
-:root { --header-h: 0px; }
-
-
-
+/* =========================
+   DETALHE DA RECEITA
+   ========================= */
 .recipe-detail {
-    background: white;
-    border-radius: 1.5rem;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin: 3rem 0;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
 }
 
-/* recipe detail vira um painel fixo com scroll próprio 
-#recipe-detail {
-  position: fixed;
-  top: var(--header-h);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  background: #fff;
-  z-index: 9999;
-}*/
-
-/* garante que o grid some de verdade */
 #recipe-grid.hidden {
   display: none !important;
 }
 
+/* =========================
+   MODAIS (PADRÃO)
+   ========================= */
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+}
+
+.modal-content,
+.modal-content-medium,
+.modal-content-large {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  max-height: 85vh;
+  overflow: auto;
+}
+
+/* =========================
+   PREMIUM MODAL
+   ========================= */
+#premium-modal .modal-content {
+  display: grid;
+  gap: 14px;
+}
+
+#premium-modal #premium-code-input {
+  border-radius: 9px;
+  padding: .75rem 1rem;
+}
+
+/* =========================
+   UI INTERAÇÕES
+   ========================= */
+@media (hover:hover) {
+  .recipe-card:hover {
+    transform: translateY(var(--rf-lift-strong));
+    box-shadow: var(--rf-shadow-strong);
+  }
+}
+
+@media (pointer:coarse) {
+  .recipe-card:active {
+    transform: translateY(-3px);
+  }
+}
+
+/* =========================
+   Z-INDEX
+   ========================= */
+#notification-modal { z-index: 9999; }
+#confirm-modal { z-index: 9998; }
