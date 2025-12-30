@@ -2187,3 +2187,34 @@ background: #16a34a !important;
     font-size: 0.95rem;
   }
 }
+
+/* ================================
+   Recipe Detail = tela independente
+   (não deixa “vazar” outras receitas)
+   ================================ */
+
+:root { --header-h: 0px; }
+
+/* trava scroll do site quando a receita está aberta */
+body.detail-open {
+  overflow: hidden;
+}
+
+/* recipe detail vira um painel fixo com scroll próprio */
+#recipe-detail {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+  z-index: 9999;
+}
+
+/* garante que o grid some de verdade */
+#recipe-grid.hidden {
+  display: none !important;
+}
+
