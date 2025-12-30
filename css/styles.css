@@ -2046,3 +2046,10 @@ background: #16a34a !important;
 #confirm-modal { z-index: 9998 !important; }
 
 
+@media (hover: hover) and (pointer: fine) {
+  .site-logo:hover,
+  .header-logo:hover,
+  .logo:hover {
+    opacity: 0.92;
+  }
+}
