@@ -2120,3 +2120,44 @@ background: #16a34a !important;
     gap: 14px !important;
   }
 }
+
+
+/* =========================================
+   CARD DE RECEITA — ALINHAMENTO MOBILE
+   ========================================= */
+
+.recipe-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Área interna do card */
+.recipe-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Título com altura mínima (evita pulo) */
+.recipe-title {
+  min-height: 3.2em; /* ~2 linhas */
+  line-height: 1.6;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Meta + stats mantêm fluxo natural */
+.recipe-meta,
+.recipe-stats {
+  margin-top: auto;
+}
+
+/* Botão sempre no fundo */
+.recipe-button {
+  margin-top: 12px;
+}
+
