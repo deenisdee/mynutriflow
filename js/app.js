@@ -870,30 +870,20 @@ window.addToWeekPlanWithMeal = function(meal) {
   window.closeMealSelector();
 };
 
-
-
-
-
 window.closeMealSelector = function() {
   const modal = document.getElementById('meal-selector-modal');
-  if (!modal) return;
 
-  // fecha modal
-  modal.classList.add('hidden');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.style.pointerEvents = 'none';
+  }
 
-  // reseta seleção
+  // 🔑 limpeza SEMPRE acontece
   selectedDayForPlanner = null;
   selectedRecipeForPlanner = null;
-
-  // libera scroll / clique normal
   document.body.classList.remove('modal-open');
-
-  // força desbloqueio de clique caso algum overlay tenha ficado por cima
-  modal.style.pointerEvents = 'none';
-  requestAnimationFrame(() => {
-    modal.style.pointerEvents = '';
-  });
 };
+
 
 
 
