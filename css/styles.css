@@ -1844,7 +1844,7 @@ z-index: 5;
   .tool-btn, .category-card-new, .btn-primary, .btn-secondary,
   .btn-premium, .back-btn, .slider-arrow-new, .slider-dot-new,
   .btn-calculate, .meal-option-btn, .modal-actions button,
-  .btn-clear-list, .btn-delete, a.logo {
+  .btn-clear-list, .btn-delete, {
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
