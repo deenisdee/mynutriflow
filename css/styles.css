@@ -1133,6 +1133,25 @@ body.premium-active #premium-btn {
 
 /* Garante centralização em mobile */
 @media (max-width:768px){
+
+.slider-arrow-new{
+  position:absolute; top:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.3);
+  color:#fff;
+  border:none;
+  width:55px; height:55px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:2rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .3s;
+  backdrop-filter:blur(4px);
+  z-index:10;
+}
+
+
+   
   .modal{
     align-items:center !important;
     justify-content:center !important;
