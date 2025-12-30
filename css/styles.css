@@ -384,9 +384,13 @@ stroke-width: 2;
 .recipe-button.locked{ background:#3b82f6; color:#fff; }
 .recipe-button.locked:hover{ background:#2563eb; }
 
+
+
+
+
 /* ============================================
    DETALHE DA RECEITA
-   ============================================ */
+   ============================================ 
 .recipe-detail{
   background:#fff;
   border-radius:1.5rem;
@@ -394,6 +398,9 @@ stroke-width: 2;
   box-shadow:0 4px 12px rgba(0,0,0,.1);
   margin:3rem 0;
 }
+
+*/
+
 
 
 .back-button{
