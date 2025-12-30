@@ -918,7 +918,7 @@ body.modal-open{ overflow:hidden; height:100vh; }
 @media (max-width:480px){
   .hero-slider-fullwidth{ height:285px;  }
   .slide-title-new{ font-size:1.5rem;  }
-  .category-card-new{ padding:.75rem 1.25rem; font-size:.875rem; border-radius: 50px; }
+  .category-card-new{ padding:1.25rem 1.25rem; font-size:.875rem; border-radius: 50px; }
 }
 
 
