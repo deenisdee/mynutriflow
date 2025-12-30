@@ -47,17 +47,7 @@ const recipeDetail = document.getElementById('recipe-detail');
 const premiumModal = document.getElementById('premium-modal');
 const premiumCodeInput = document.getElementById('premium-code-input');
 
-
-
-
-console.log('🔍 premiumBtn encontrado?', premiumBtn); // 👈 ADICIONE AQUI
-
-
-
 const modalMessage = document.getElementById('modal-message');
-
-
-
 const modalCancel = document.getElementById('modal-cancel');
 const modalActivate = document.getElementById('modal-activate');
 
