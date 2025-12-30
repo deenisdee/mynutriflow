@@ -45,6 +45,8 @@ const recipeGrid = document.getElementById('recipe-grid');
 const recipeDetail = document.getElementById('recipe-detail');
 
 const premiumModal = document.getElementById('premium-modal');
+const premiumCodeInput = document.getElementById('premium-code-input');
+
 
 
 
@@ -1237,7 +1239,7 @@ async function activatePremium() {
     await storage.set('fit_premium', 'true');
 
     showNotification('Sucesso', 'Premium ativado com sucesso!');
-    closePremiumModal();
+    window.closePremiumModal();
 
   } catch (e) {
     showNotification('Erro', 'Erro ao validar código');
