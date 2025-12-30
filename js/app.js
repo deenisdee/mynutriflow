@@ -425,14 +425,17 @@ function renderRecipes() {
                onerror="this.src='https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80'">
           <div class="recipe-category">${recipe.category}</div>
 
-          ${showLock ? `
-            <div class="recipe-overlay">
-              <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-            </div>
-          ` : ''}
+
+       ${(!isUnlocked) ? `
+  <div class="lock-badge-mobile" aria-label="Bloqueado: 1 crédito">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+    <span>1 crédito</span>
+  </div>
+` : ''}
+
         </div>
 
         <div class="recipe-content">
@@ -471,21 +474,19 @@ function renderRecipes() {
 
 
 
-          <button class="recipe-button ${isUnlocked ? 'unlocked' : 'locked'}">
+         <button class="recipe-button ${isUnlocked ? 'unlocked' : 'locked'}">
   ${isUnlocked ? `
     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
       <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
     </svg>
-    <span class="btn-label">Ver Receita</span>
+    Ver Receita
   ` : `
     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
       <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
     </svg>
-
-    <span class="btn-label btn-label-desktop">Desbloquear <small>(1 crédito)</small></span>
-    <span class="btn-label btn-label-mobile">1 crédito</span>
+    Desbloquear (1 crédito)
   `}
 </button>
 
