@@ -897,7 +897,7 @@ async function showRecipeDetail(recipeId) {
   // ✅ POR ISSO (scroll animado customizado):
 setTimeout(() => {
   const slider = document.getElementById('heroSlider');
-  const sliderHeight = slider ? slider.offsetHeight : 400;
+  const sliderHeight = slider ? slider.offsetHeight : 900;
   
   // Scroll suave customizado (800ms)
   const start = window.scrollY;
