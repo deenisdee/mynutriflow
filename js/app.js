@@ -1451,8 +1451,18 @@ function _setupPremiumTimers() {
   const now = Date.now();
   const timeLeft = premiumExpires - now;
   
+  // ✅ DEBUG - Ver cálculo
+  console.log('[PREMIUM] Setup timers:', {
+    now: new Date(now).toISOString(),
+    expires: new Date(premiumExpires).toISOString(),
+    timeLeft: timeLeft,
+    timeLeftSeconds: Math.ceil(timeLeft / 1000),
+    timeLeftDays: Math.ceil(timeLeft / (1000 * 60 * 60 * 24))
+  });
+  
   // Se já expirou, executa imediatamente
   if (timeLeft <= 0) {
+    console.log('[PREMIUM] Já expirado ao configurar timer');
     _handlePremiumExpiration();
     return;
   }
