@@ -27,13 +27,22 @@ export default async function handler(req, res) {
   // ✅ CÓDIGOS VÁLIDOS (adicione mais conforme necessário)
   const VALID_CODES = new Map([
     ['684884', 30], 
-    ['1310', 0.0000],
+    ['1310', 0.0007],
     ['TESTE-45P', 30],
     ['FITPR02024', 30],
     ['LANCAMENTO2025', 90],
     ['BETA-TESTER', 365],
   ]);
 
+/*const VALID_CODES = new Map([
+  ['G8A8B4', 30],           // 30 dias
+  ['TESTE-1DIA', 1],        // ← 1 DIA
+  ['TESTE-12H', 0.5],       // 12 horas
+  ['TESTE-1H', 0.042],      // 1 hora
+  ['TESTE-10MIN', 0.007],   // 10 minutos
+  ['TESTE-1MIN', 0.0007],   // 1 minuto
+]);*/
+  
   const normalized = code.trim().toUpperCase();
 
   // Log da tentativa
