@@ -1,8 +1,3 @@
-// ============================================
-// API DE VALIDAÇÃO DE CÓDIGOS PREMIUM
-// Vercel Serverless Function
-// ============================================
-
 export default async function handler(req, res) {
   // CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -24,29 +19,19 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, error: 'Código ausente' });
   }
 
-  // ✅ CÓDIGOS VÁLIDOS (adicione mais conforme necessário)
+  // ✅ CÓDIGOS VÁLIDOS
   const VALID_CODES = new Map([
-    ['684884', 30], 
-    ['1310', 0.0001],
-    ['10', 10],
-    ['30', 30],
-     ['60', 60],
-    ['90', 90],
-    ['365', 365],
+    ['684884', 30],
+    ['TESTE-45P', 30],
+    ['FITPR02024', 30],
+    ['LANCAMENTO2025', 90],
+    ['BETA-TESTER', 365],
   ]);
 
-/*const VALID_CODES = new Map([
-  ['G8A8B4', 30],           // 30 dias
-  ['TESTE-1DIA', 1],        // ← 1 DIA
-  ['TESTE-12H', 0.5],       // 12 horas
-  ['TESTE-1H', 0.042],      // 1 hora
-  ['TESTE-10MIN', 0.007],   // 10 minutos
-  ['TESTE-1MIN', 0.0007],   // 1 minuto
-]);*/
-  
+  // ✅ NORMALIZA O CÓDIGO AQUI (ANTES DO LOG)
   const normalized = code.trim().toUpperCase();
 
-  // Log da tentativa
+  // ✅ AGORA O LOG FUNCIONA
   console.log('[REDEEM]', {
     timestamp: new Date().toISOString(),
     code: normalized,
