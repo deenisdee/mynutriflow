@@ -894,7 +894,15 @@ function showRecipeDetail(recipeId) {
     const headerH2 = header2 ? header2.offsetHeight : 0;
     const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
     const target = Math.max(detailTop - headerH2 - 35, 0);
-    const currentScroll = window.scrollY;
+
+    // Apenas permite rolar para baixo (trava a rolagem para cima)
+window.addEventListener('wheel', function(event) {
+    if (event.deltaY < 0) {
+        // Se a rolagem for para cima (deltaY negativo), previne o comportamento padrão
+        event.preventDefault();
+    }
+});
+    
     
     window.scrollTo({ top: target, behavior: 'smooth' });
   }, 50);
