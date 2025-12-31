@@ -1928,22 +1928,4 @@ body.premium-active #premium-btn {
 }
 
 
-/* Trava scroll quando receita está aberta */
-body.detail-open {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-}
 
-/* Container da receita pode rolar internamente */
-.recipe-detail {
-  overflow-y: auto;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  background: white;
-}
