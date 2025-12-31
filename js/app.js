@@ -1402,7 +1402,6 @@ async function activatePremium() {
 async function _handlePremiumExpiration() {
   console.log('[PREMIUM] Expirado - executando bloqueio');
   
-  // Limpa estado premium
   isPremium = false;
   premiumToken = null;
   premiumExpires = null;
@@ -1411,22 +1410,35 @@ async function _handlePremiumExpiration() {
   await storage.set('fit_premium_token', '');
   await storage.set('fit_premium_expires', '');
   
-  // Atualiza UI
   updateUI();
   renderRecipes();
   
-  // ✅ Mostra popup automática
+  // ✅ FECHA TODOS OS MODAIS ABERTOS
+  const allModals = document.querySelectorAll('.modal:not(.hidden)');
+  allModals.forEach(modal => {
+    modal.classList.add('hidden');
+  });
+  document.body.classList.remove('modal-open');
+  
+  // Fecha modal de refeição especificamente
+  if (typeof window.closeMealSelector === 'function') {
+    window.closeMealSelector();
+  }
+  
+  // Fecha detalhe de receita se estiver aberto
+  if (typeof window.closeRecipeDetail === 'function') {
+    window.closeRecipeDetail();
+  }
+  
   showNotification(
     'Premium Expirado', 
     'Seu acesso premium expirou. Adquira um novo código para continuar.'
   );
   
-  // ✅ Abre modal premium após 2 segundos
   setTimeout(() => {
     openModal(premiumModal);
   }, 2000);
   
-  // Limpa timers
   _clearPremiumTimers();
 }
 
