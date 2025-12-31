@@ -6,6 +6,10 @@
    - Mantém o visual (sem “inventar” layout novo)
    ============================================ */
 
+html {
+  scroll-behavior: smooth;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
 
 html, body {
