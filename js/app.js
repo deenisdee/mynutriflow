@@ -913,7 +913,25 @@ async function showRecipeDetail(recipeId) {
 
 
 
+window.closeRecipeDetail = function() {
+  if (!recipeDetail || !recipeGrid) return;
 
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 100);
+
+  recipeDetail.classList.add('hidden');
+  recipeGrid.classList.remove('hidden');
+  currentRecipe = null;
+
+  const slider = document.getElementById('heroSlider');
+  const categories = document.querySelector('.categories-new');
+  if (slider) slider.classList.remove('hidden');
+  if (categories) categories.style.display = 'block';
+
+  renderRecipes();
+  document.body.classList.remove('detail-open');
+};
 
 
 
