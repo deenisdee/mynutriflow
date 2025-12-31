@@ -700,9 +700,9 @@ window.viewRecipe = function(recipeId) {
 // ==============================
 
 
-function showRecipeDetail(recipeId) {
-  // ❌ NÃO chama ensureRecipeAccess aqui (evita dupla cobrança)
-  const recipe = allRecipes.find(r => r.id === recipeId);
+async function showRecipeDetail(recipeId) {
+  let recipe = allRecipes.find(r => r.id === recipeId);
+  
   if (!recipe) return;
 
   currentRecipe = recipe;
@@ -882,22 +882,43 @@ function showRecipeDetail(recipeId) {
 
   recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
-
   document.body.classList.add('detail-open');
 
-  const header = document.getElementById('header');
-  const headerH = header ? header.offsetHeight : 0;
-  document.documentElement.style.setProperty('--header-h', `${headerH}px`);
+  // Esconde slider e categorias
+  const slider = document.getElementById('heroSlider');
+  const categories = document.querySelector('.categories-new');
+  if (slider) slider.style.display = 'none';
+  if (categories) categories.style.display = 'none';
 
-  recipeDetail.scrollTop = 0;
+  // ✅ scrollTo() para esconder banner
+  setTimeout(() => {
+    const slider = document.getElementById('heroSlider');
+    const sliderHeight = slider ? slider.offsetHeight : 400;
+    
+    window.scrollTo({ 
+      top: sliderHeight + 20, 
+      behavior: 'smooth' 
+    });
+  }, 100);
+
+  // ✅ TRAVA scroll pra não voltar pro banner
+  let scrollLocked = false;
+  const lockScroll = () => {
+    const slider = document.getElementById('heroSlider');
+    const sliderHeight = slider ? slider.offsetHeight : 400;
+    const minScroll = sliderHeight;
+    
+    if (window.scrollY < minScroll && scrollLocked) {
+      window.scrollTo({ top: minScroll, behavior: 'instant' });
+    }
+  };
 
   setTimeout(() => {
-    const header2 = document.getElementById('header');
-    const headerH2 = header2 ? header2.offsetHeight : 0;
-    const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
-    const target = Math.max(detailTop - headerH2 - 35, 0);
-    window.scrollTo({ top: target, behavior: 'smooth' });
-  }, 50);
+    scrollLocked = true;
+    window.addEventListener('scroll', lockScroll);
+    // Guarda referência pra remover depois
+    window._scrollLockHandler = lockScroll;
+  }, 500);
 
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
@@ -907,23 +928,34 @@ function showRecipeDetail(recipeId) {
 
 
 window.closeRecipeDetail = function() {
-  if (!recipeDetail || !recipeGrid) return;
+  const recipeDetailEl = document.getElementById('recipe-detail');
+  const recipeGridEl = document.getElementById('recipe-grid');
+  
+  if (!recipeDetailEl || !recipeGridEl) return;
 
-  setTimeout(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 100);
+  // ✅ DESTRAVA scroll
+  if (window._scrollLockHandler) {
+    window.removeEventListener('scroll', window._scrollLockHandler);
+    window._scrollLockHandler = null;
+  }
 
-  recipeDetail.classList.add('hidden');
-  recipeGrid.classList.remove('hidden');
+  // Esconde detalhe, mostra grid
+  recipeDetailEl.classList.add('hidden');
+  recipeGridEl.classList.remove('hidden');
+  
   currentRecipe = null;
 
+  // Mostra slider e categorias
   const slider = document.getElementById('heroSlider');
   const categories = document.querySelector('.categories-new');
-  if (slider) slider.classList.remove('hidden');
+  if (slider) slider.style.display = 'block';
   if (categories) categories.style.display = 'block';
 
   renderRecipes();
   document.body.classList.remove('detail-open');
+  
+  // ✅ scrollTo() de volta pro topo
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 
