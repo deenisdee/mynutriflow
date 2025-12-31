@@ -1410,15 +1410,12 @@ async function checkPremiumExpiration() {
 
 
     
-    // ✅ Alert nativo (funciona no iOS)
-    alert('⚠️ Premium Expirado\n\nSeu acesso premium expirou. Adquira um novo código para continuar.');
-    
-    // OU mantém showNotification MAS adiciona fallback:
-    if (typeof showNotification === 'function') {
-      showNotification('Premium Expirado', 'Seu acesso premium expirou.');
-    } else {
-      alert('⚠️ Premium Expirado\n\nSeu acesso expirou.');
-    }
+// OU mantém showNotification MAS adiciona fallback:
+if (typeof showNotification === 'function') {
+  showNotification('Premium Expirado', 'Seu acesso premium expirou.');
+} else {
+  alert('⚠️ Premium Expirado\n\nSeu acesso expirou.');
+}
 
     
   }
