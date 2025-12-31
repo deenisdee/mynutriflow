@@ -18,51 +18,49 @@
 // Adicione no INÍCIO do app.js (antes de tudo):
 
 (function() {
-  const devtools = { open: false };
-  const threshold = 160;
-
-  // Detecta DevTools pelo tamanho da janela
-  const checkDevTools = () => {
-    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+  'use strict';
+  
+  setInterval(() => {
+    const premium = localStorage.getItem('fit_premium');
+    const token = localStorage.getItem('fit_premium_token');
     
-    if (widthThreshold || heightThreshold) {
-      if (!devtools.open) {
-        devtools.open = true;
-        handleDevToolsOpen();
+    if (premium === 'true') {
+      
+      if (!token || token.length === 0) {
+        console.warn('🚨 Premium sem token - limpando...');
+        localStorage.clear();
+        location.reload();
+        return;
       }
-    } else {
-      devtools.open = false;
-    }
-  };
 
-  function handleDevToolsOpen() {
-    // ⚠️ Detectou DevTools aberto
-    console.clear();
-    console.log('%c⚠️ ATENÇÃO', 'color: red; font-size: 40px; font-weight: bold;');
-    console.log('%cEsta é uma área técnica.', 'font-size: 16px;');
-    console.log('%cModificar o código pode violar os Termos de Uso.', 'font-size: 14px; color: orange;');
-    
-    // Opcional: limpar storage periodicamente
-    const interval = setInterval(() => {
-      if (devtools.open) {
-        const premium = localStorage.getItem('fit_premium');
-        const token = localStorage.getItem('fit_premium_token');
+      try {
+        const decoded = atob(token);
+        const tokenData = JSON.parse(decoded);
         
-        // Se premium sem token = burla
-        if (premium === 'true' && !token) {
-          console.log('%c🚨 Burla detectada - limpando...', 'color: red; font-weight: bold;');
+        if (!tokenData.code || !tokenData.expires || !tokenData.activated) {
+          throw new Error('Token malformado');
+        }
+        
+        if (Date.now() > tokenData.expires) {
+          console.warn('🚨 Token expirado - limpando...');
           localStorage.clear();
           location.reload();
+          return;
         }
+        
+      } catch (e) {
+        console.warn('🚨 Token inválido - limpando...', e.message);
+        localStorage.clear();
+        location.reload();
       }
-    }, 2000);
-  }
+    }
+  }, 5000);
 
-  // Verifica a cada 500ms
-  setInterval(checkDevTools, 500);
 })();
 
+// FONTE ÚNICA DE DADOS
+const ALL_RECIPES = (typeof RECIPES !== 'undefined' ...
+// ... resto do seu código continua normal
 
 
 
