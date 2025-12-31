@@ -924,7 +924,7 @@ setTimeout(() => {
   }
   
   requestAnimationFrame(animation);
-}, 100);
+}, 10);
 
 
   
