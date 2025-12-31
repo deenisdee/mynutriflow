@@ -1928,4 +1928,7 @@ body.premium-active #premium-btn {
 }
 
 
-
+/* ✅ Trava scroll pra cima quando receita aberta */
+body.detail-open {
+  overflow-y: scroll; /* mantém scroll */
+}
