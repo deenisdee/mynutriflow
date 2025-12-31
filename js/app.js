@@ -882,20 +882,33 @@ function showRecipeDetail(recipeId) {
 
   document.body.classList.add('detail-open');
 
-  const header = document.getElementById('header');
-  const headerH = header ? header.offsetHeight : 0;
-  document.documentElement.style.setProperty('--header-h', `${headerH}px`);
 
-  recipeDetail.scrollTop = 0;
 
+
+
+
+
+
+
+  
+
+  const slider = document.getElementById('heroSlider');
+  const categories = document.querySelector('.categories-new');
+  if (slider) slider.style.display = 'none';
+  if (categories) categories.style.display = 'none';
+  
+  // ✅ NOVO: Scroll até o topo da área de detalhe (sem esconder header)
   setTimeout(() => {
-    const header2 = document.getElementById('header');
-    const headerH2 = header2 ? header2.offsetHeight : 0;
-    const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
-    const target = Math.max(detailTop - headerH2 - 12, 0);
-    window.scrollTo({ top: target, behavior: 'smooth' });
-  }, 50);
-
+    const header = document.getElementById('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+    
+    // Scroll suave até logo abaixo do header
+    window.scrollTo({ 
+      top: headerHeight, 
+      behavior: 'smooth' 
+    });
+  }, 100);
+  
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
@@ -909,15 +922,34 @@ window.closeRecipeDetail = function() {
   recipeDetail.classList.add('hidden');
   recipeGrid.classList.remove('hidden');
   currentRecipe = null;
-
+  
+// ✅ MOSTRA o slider novamente
   const slider = document.getElementById('heroSlider');
   const categories = document.querySelector('.categories-new');
-  if (slider) slider.classList.remove('hidden');
+  if (slider) slider.style.display = 'block';
   if (categories) categories.style.display = 'block';
 
   renderRecipes();
   document.body.classList.remove('detail-open');
+  
+  // ✅ Volta pro topo
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ==============================
 // LISTA DE COMPRAS
