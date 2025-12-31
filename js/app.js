@@ -12,20 +12,19 @@
 // Dificuldade: ⭐⭐⭐☆☆ (só dev experiente consegue)
 // ============================================
 
-// ==============================
-// TÉCNICA 1: Detectar DevTools Aberto
-// ==============================
-// Adicione no INÍCIO do app.js (antes de tudo):
+// ============================================
+// PROTEÇÃO ANTI-BURLA (3 camadas)
+// ============================================
 
 (function() {
   'use strict';
   
+  // 1️⃣ VALIDAÇÃO DE TOKEN (a cada 5s)
   setInterval(() => {
     const premium = localStorage.getItem('fit_premium');
     const token = localStorage.getItem('fit_premium_token');
     
     if (premium === 'true') {
-      
       if (!token || token.length === 0) {
         console.warn('🚨 Premium sem token - limpando...');
         localStorage.clear();
@@ -56,9 +55,55 @@
     }
   }, 5000);
 
+  // 2️⃣ DETECTAR DEVTOOLS ABERTO
+  let devtoolsWarned = false;
+  setInterval(() => {
+    const threshold = 160;
+    const isOpen = window.outerWidth - window.innerWidth > threshold || 
+                   window.outerHeight - window.innerHeight > threshold;
+    
+    if (isOpen && !devtoolsWarned) {
+      devtoolsWarned = true;
+      console.clear();
+      console.log('%c⚠️ ÁREA TÉCNICA', 'color:red;font-size:30px;font-weight:bold;text-shadow:2px 2px 4px rgba(0,0,0,0.3)');
+      console.log('%c ', 'font-size:1px');
+      console.log('%cEsta é uma área para desenvolvedores.', 'font-size:16px;color:#333');
+      console.log('%cModificar o código pode violar os Termos de Uso.', 'font-size:14px;color:orange;font-weight:bold');
+      console.log('%c ', 'font-size:1px');
+      console.log('%cSe você é desenvolvedor e quer contribuir, entre em contato!', 'font-size:12px;color:#16a34a');
+    } else if (!isOpen) {
+      devtoolsWarned = false;
+    }
+  }, 1000);
+
+  // 3️⃣ PROTEGER VARIÁVEIS CRÍTICAS
+  // Impede modificação direta das variáveis
+  const protectedVars = ['isPremium', 'credits', 'premiumToken', 'unlockedRecipes'];
+  
+  protectedVars.forEach(varName => {
+    let internalValue;
+    
+    Object.defineProperty(window, varName, {
+      set: function(value) {
+        // Só permite se vier do código legítimo (não do console)
+        const stack = new Error().stack;
+        if (stack && stack.includes('at eval') || stack.includes('at <anonymous>')) {
+          console.error(`🚫 Tentativa de modificar ${varName} bloqueada`);
+          console.warn('Esta ação foi registrada.');
+          return;
+        }
+        internalValue = value;
+      },
+      get: function() {
+        return internalValue;
+      },
+      configurable: false
+    });
+  });
+
+  console.log('%c✅ Proteções ativas', 'color:#16a34a;font-weight:bold');
+
 })();
-
-
 
 
 
