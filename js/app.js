@@ -906,7 +906,7 @@ function showRecipeDetail(recipeId) {
       const header = document.getElementById('header');
       const headerH = header ? header.offsetHeight : 105;
       const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
-      const minScroll = Math.max(detailTop - headerH - 12, 0);
+      const minScroll = Math.max(detailTop - headerH - 35, 0);
       
       if (window.scrollY < minScroll && scrollLocked) {
         window.scrollTo({ top: minScroll, behavior: 'instant' });
