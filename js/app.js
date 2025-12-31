@@ -133,12 +133,20 @@ let allRecipes = ALL_RECIPES; // compat
 // ==============================
 let credits = 3;
 let unlockedRecipes = [];
+
+
 let isPremium = false;
-let premiumToken = null;        // ⭐ ADICIONAR
-let premiumExpires = null;      // ⭐ ADICIONAR
+let premiumToken = null;
+let premiumExpires = null;
+
+// ⭐ NOVO - Controle de timers de expiração
+let _premiumTimeout = null;
+let _premiumInterval = null;
 
 // UI state
 let currentRecipe = null;
+
+
 let currentSlideIndex = 0;
 let featuredRecipes = [];
 let searchTerm = '';
@@ -327,10 +335,8 @@ async function loadUserData() {
   initSliderAndCategories();
   renderRecipes();
 
-  // Verifica expiração a cada 1 hora
-  setInterval(checkPremiumExpiration, 60 * 60 * 1000);
-  checkPremiumExpiration();
-  
+  // ✅ NOVO - Sistema hybrid de verificação
+  _setupPremiumTimers();
 }
 
 async function saveUserData() {
@@ -1367,6 +1373,9 @@ async function activatePremium() {
     
     updateUI();
 
+    // ✅ NOVO - Configura timers de expiração
+    _setupPremiumTimers();
+
     const daysLeft = data.expiresInDays || 30;
     showNotification(
       'Premium Ativado! 🎉', 
@@ -1384,35 +1393,94 @@ async function activatePremium() {
 }
 
 
+// ==============================
+// SISTEMA HYBRID DE EXPIRAÇÃO PREMIUM
+// ==============================
+
+async function _handlePremiumExpiration() {
+  console.log('[PREMIUM] Expirado - executando bloqueio');
+  
+  // Limpa estado premium
+  isPremium = false;
+  premiumToken = null;
+  premiumExpires = null;
+  
+  await storage.set('fit_premium', 'false');
+  await storage.set('fit_premium_token', '');
+  await storage.set('fit_premium_expires', '');
+  
+  // Atualiza UI
+  updateUI();
+  renderRecipes();
+  
+  // ✅ Mostra popup automática
+  showNotification(
+    'Premium Expirado', 
+    'Seu acesso premium expirou. Adquira um novo código para continuar.'
+  );
+  
+  // ✅ Abre modal premium após 2 segundos
+  setTimeout(() => {
+    openModal(premiumModal);
+  }, 2000);
+  
+  // Limpa timers
+  _clearPremiumTimers();
+}
+
+function _setupPremiumTimers() {
+  // Limpa timers anteriores (se existirem)
+  _clearPremiumTimers();
+  
+  if (!isPremium || !premiumExpires) return;
+  
+  const now = Date.now();
+  const timeLeft = premiumExpires - now;
+  
+  // Se já expirou, executa imediatamente
+  if (timeLeft <= 0) {
+    _handlePremiumExpiration();
+    return;
+  }
+  
+  console.log('[PREMIUM] Timers configurados. Expira em:', Math.ceil(timeLeft / 1000), 'segundos');
+  
+  // ✅ TIMER EXATO (setTimeout)
+  _premiumTimeout = setTimeout(() => {
+    console.log('[PREMIUM] Timeout exato disparado');
+    _handlePremiumExpiration();
+  }, timeLeft);
+  
+  // ✅ VERIFICAÇÃO BACKUP (setInterval a cada 30s)
+  _premiumInterval = setInterval(() => {
+    const now = Date.now();
+    if (now > premiumExpires) {
+      console.log('[PREMIUM] Interval backup detectou expiração');
+      _handlePremiumExpiration();
+    }
+  }, 30000); // 30 segundos
+}
+
+function _clearPremiumTimers() {
+  if (_premiumTimeout) {
+    clearTimeout(_premiumTimeout);
+    _premiumTimeout = null;
+  }
+  
+  if (_premiumInterval) {
+    clearInterval(_premiumInterval);
+    _premiumInterval = null;
+  }
+}
+
+// ✅ Mantém função pública para compatibilidade
 async function checkPremiumExpiration() {
   if (!isPremium || !premiumExpires) return;
   
   const now = Date.now();
   
   if (now > premiumExpires) {
-    console.log('[PREMIUM] Expirado');
-    
-    isPremium = false;
-    premiumToken = null;
-    premiumExpires = null;
-    
-    await storage.set('fit_premium', 'false');
-    await storage.set('fit_premium_token', '');
-    await storage.set('fit_premium_expires', '');
-    
-    updateUI();
-    renderRecipes();
-    
-    // ✅ MOSTRA POPUP + ABRE MODAL PREMIUM AUTOMATICAMENTE
-    showNotification(
-      'Premium Expirado', 
-      'Seu acesso premium expirou. Adquira um novo código para continuar.'
-    );
-    
-    // ✅ Abre modal premium após 2 segundos
-    setTimeout(() => {
-      window.openPremiumModal();
-    }, 2000);
+    await _handlePremiumExpiration();
   }
 }
 
