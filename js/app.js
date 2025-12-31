@@ -899,7 +899,7 @@ recipeGrid.classList.add('hidden');
     
     // Configuração da animação
     const start = window.scrollY;
-    const target = sliderHeight + 10; // ← 🎯 DIMINUI PRA +20 (era +200)
+    const target = sliderHeight + 0; // ← 🎯 DIMINUI PRA +20 (era +200)
     const distance = target - start;
     const duration = 800; // ← 🎯 800ms (era 1000)
     let startTime = null;
@@ -930,7 +930,7 @@ recipeGrid.classList.add('hidden');
     const lockScroll = () => {
       const slider = document.getElementById('heroSlider');
       const sliderHeight = slider ? slider.offsetHeight : 400;
-      const minScroll = sliderHeight + 10; // ← 🎯 MESMO +20
+      const minScroll = sliderHeight + 100; // ← 🎯 MESMO +20
       
       if (window.scrollY < minScroll && scrollLocked) {
         window.scrollTo({ top: minScroll, behavior: 'instant' });
