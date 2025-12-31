@@ -890,12 +890,44 @@ async function showRecipeDetail(recipeId) {
   if (slider) slider.style.display = 'none';
   if (categories) categories.style.display = 'none';
 
-  // ✅ scrollTo() para esconder banner
-  setTimeout(() => {
-    const slider = document.getElementById('heroSlider');
-    const sliderHeight = slider ? slider.offsetHeight : 400;
+
+  
+  
+  
+  // ✅ POR ISSO (scroll animado customizado):
+setTimeout(() => {
+  const slider = document.getElementById('heroSlider');
+  const sliderHeight = slider ? slider.offsetHeight : 400;
+  
+  // Scroll suave customizado (800ms)
+  const start = window.scrollY;
+  const target = sliderHeight + 30;
+  const distance = target - start;
+  const duration = 100; // 800ms = bem suave
+  let startTime = null;
+
+  function animation(currentTime) {
+    if (startTime === null) startTime = currentTime;
+    const timeElapsed = currentTime - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
     
- 
+    // Easing (suaviza início e fim)
+    const ease = progress < 0.5
+      ? 2 * progress * progress
+      : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+    
+    window.scrollTo(0, start + (distance * ease));
+    
+    if (timeElapsed < duration) {
+      requestAnimationFrame(animation);
+    }
+  }
+  
+  requestAnimationFrame(animation);
+}, 100);
+
+
+  
 
   // ✅ TRAVA scroll pra não voltar pro banner
   let scrollLocked = false;
@@ -908,16 +940,13 @@ async function showRecipeDetail(recipeId) {
       window.scrollTo({ top: minScroll, behavior: 'instant' });
     }
   };
-  }
-  recipeDetail.scrollTop = 0;
 
   setTimeout(() => {
-    const header2 = document.getElementById('header');
-    const headerH2 = header2 ? header2.offsetHeight : 0;
-    const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
-    const target = Math.max(detailTop - headerH2 - 12, 0);
-    window.scrollTo({ top: target, behavior: 'smooth' });
-  }, 50);
+    scrollLocked = true;
+    window.addEventListener('scroll', lockScroll);
+    // Guarda referência pra remover depois
+    window._scrollLockHandler = lockScroll;
+  }, 500);
 
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
