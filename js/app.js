@@ -893,7 +893,7 @@ function showRecipeDetail(recipeId) {
     const header2 = document.getElementById('header');
     const headerH2 = header2 ? header2.offsetHeight : 0;
     const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
-    const target = Math.max(detailTop - headerH2 - 12, 0);
+    const target = Math.max(detailTop - headerH2 - 20, 0);
     window.scrollTo({ top: target, behavior: 'smooth' });
   }, 50);
 
