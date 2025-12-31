@@ -700,9 +700,9 @@ window.viewRecipe = function(recipeId) {
 // ==============================
 
 
-async function showRecipeDetail(recipeId) {
-  let recipe = allRecipes.find(r => r.id === recipeId);
-  
+function showRecipeDetail(recipeId) {
+  // ❌ NÃO chama ensureRecipeAccess aqui (evita dupla cobrança)
+  const recipe = allRecipes.find(r => r.id === recipeId);
   if (!recipe) return;
 
   currentRecipe = recipe;
@@ -880,57 +880,33 @@ async function showRecipeDetail(recipeId) {
     </div>
   `;
 
-
-recipeGrid.classList.add('hidden');
+  recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
+
   document.body.classList.add('detail-open');
-  
-  // Esconde slider e categorias
-  const slider = document.getElementById('heroSlider');
-  const categories = document.querySelector('.categories-new');
-  if (slider) slider.style.display = 'none';
-  if (categories) categories.style.display = 'none';
-  
-  // ✅ Scroll animado customizado
+
+  const header = document.getElementById('header');
+  const headerH = header ? header.offsetHeight : 0;
+  document.documentElement.style.setProperty('--header-h', `${headerH}px`);
+
+  recipeDetail.scrollTop = 0;
+
   setTimeout(() => {
-    const slider = document.getElementById('heroSlider');
-    const sliderHeight = slider ? slider.offsetHeight : 400;
-    const headerHeight = 105; // Altura do header fixo
-    
-    // Configuração da animação
-    const start = window.scrollY;
-    const target = sliderHeight + 0; // ← 🎯 DIMINUI PRA +20 (era +200)
-    const distance = target - start;
-    const duration = 800; // ← 🎯 800ms (era 1000)
-    let startTime = null;
-    
-    function animation(currentTime) {
-      if (startTime === null) startTime = currentTime;
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-      
-      // Easing (suaviza início e fim)
-      const ease = progress < 0.5
-        ? 2 * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-      
-      window.scrollTo(0, start + (distance * ease));
-      
-      if (timeElapsed < duration) {
-        requestAnimationFrame(animation);
-      }
-    }
-    
-    requestAnimationFrame(animation);
-  }, 100);
-  
-  // ✅ TRAVA scroll DEPOIS da animação terminar
+    const header2 = document.getElementById('header');
+    const headerH2 = header2 ? header2.offsetHeight : 0;
+    const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
+    const target = Math.max(detailTop - headerH2 - 12, 0);
+    window.scrollTo({ top: target, behavior: 'smooth' });
+  }, 50);
+
+  // ✅ TRAVA SCROLL - Não deixa usuário rolar pra cima
   setTimeout(() => {
     let scrollLocked = true;
     const lockScroll = () => {
-      const slider = document.getElementById('heroSlider');
-      const sliderHeight = slider ? slider.offsetHeight : 400;
-      const minScroll = sliderHeight + 100; // ← 🎯 MESMO +20
+      const header = document.getElementById('header');
+      const headerH = header ? header.offsetHeight : 105;
+      const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
+      const minScroll = Math.max(detailTop - headerH - 12, 0);
       
       if (window.scrollY < minScroll && scrollLocked) {
         window.scrollTo({ top: minScroll, behavior: 'instant' });
@@ -939,8 +915,8 @@ recipeGrid.classList.add('hidden');
     
     window.addEventListener('scroll', lockScroll);
     window._scrollLockHandler = lockScroll;
-  }, 1000); // ← 🎯 Só trava DEPOIS de 1 segundo (após animação)
-  
+  }, 300); // Ativa o lock 300ms depois (após o scroll suave terminar)
+
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
