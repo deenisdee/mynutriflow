@@ -897,16 +897,24 @@ async function showRecipeDetail(recipeId) {
   if (categories) categories.style.display = 'none';
 
   // ✅ Scroll até mostrar o botão Voltar (sem cortar)
+ // ✅ Scroll para ANTES do botão (não esconde ele)
+
+  
+  
   setTimeout(() => {
-    const header = document.getElementById('header');
-    const headerHeight = header ? header.offsetHeight : 105;
-    
-    // Scroll até logo abaixo do header (mostra botão completo)
-    window.scrollTo({ 
-      top: headerHeight + 10, 
-      behavior: 'smooth' 
-    });
-  }, 50);
+  const header = document.getElementById('header');
+  const headerHeight = header ? header.offsetHeight : 105;
+  
+  // Para BEM antes - só esconde slider/categorias
+  window.scrollTo({ 
+    top: 0,  // ✅ Fica no topo mesmo
+    behavior: 'smooth' 
+  });
+}, 50);
+
+
+
+  
 
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
