@@ -883,14 +883,11 @@ async function showRecipeDetail(recipeId) {
   recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
   document.body.classList.add('detail-open');
-
   // Esconde slider e categorias
   const slider = document.getElementById('heroSlider');
   const categories = document.querySelector('.categories-new');
   if (slider) slider.style.display = 'none';
   if (categories) categories.style.display = 'none';
-
-
   
   
   
@@ -901,11 +898,10 @@ setTimeout(() => {
   
   // Scroll suave customizado (800ms)
   const start = window.scrollY;
-  const target = sliderHeight + 30;
+  const target = sliderHeight + 5;  // ← 🎯 SETA 1: DIMINUI ESSE VALOR (ex: -50, 0, 10)
   const distance = target - start;
   const duration = 500; // 800ms = bem suave
   let startTime = null;
-
   function animation(currentTime) {
     if (startTime === null) startTime = currentTime;
     const timeElapsed = currentTime - startTime;
@@ -925,29 +921,24 @@ setTimeout(() => {
   
   requestAnimationFrame(animation);
 }, 100);
-
-
   
-
   // ✅ TRAVA scroll pra não voltar pro banner
   let scrollLocked = false;
   const lockScroll = () => {
     const slider = document.getElementById('heroSlider');
     const sliderHeight = slider ? slider.offsetHeight : 100;
-    const minScroll = sliderHeight;
+    const minScroll = sliderHeight +5;  // ← 🎯 SETA 2: DIMINUI ESSE TAMBÉM (mesmo valor da SETA 1)
     
     if (window.scrollY < minScroll && scrollLocked) {
       window.scrollTo({ top: minScroll, behavior: 'instant' });
     }
   };
-
   setTimeout(() => {
     scrollLocked = true;
     window.addEventListener('scroll', lockScroll);
     // Guarda referência pra remover depois
     window._scrollLockHandler = lockScroll;
   }, 500);
-
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
