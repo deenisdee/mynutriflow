@@ -279,7 +279,11 @@ function updateUI() {
         <span>${badgeText}</span>
       `;
 
-      if (premiumBtn) premiumBtn.style.display = 'none';
+     if (premiumBtn) {
+  premiumBtn.style.display = 'none';
+  // ✅ Força reflow para aplicar mudança imediatamente
+  premiumBtn.offsetHeight;
+}
 
     } else {
       document.body.classList.add('free-user');
@@ -294,7 +298,11 @@ function updateUI() {
         <span id="credits-text">${credits} créditos</span>
       `;
 
-      if (premiumBtn) premiumBtn.style.display = 'block';
+      if (premiumBtn) {
+  premiumBtn.style.display = 'block';
+  // ✅ Força reflow
+  premiumBtn.offsetHeight;
+}
     }
 
     creditsBadge.classList.add('ready');
@@ -551,6 +559,24 @@ window.viewRecipe = function(recipeId) {
   haptic(10);
   // ✅ garante 1 única cobrança aqui
   if (!ensureRecipeAccess(recipeId)) return;
+
+
+
+window.viewRecipe = function(recipeId) {
+  haptic(10);
+  
+  // ✅ FIX: Verifica expiração antes de abrir receita
+  if (premiumExpires && Date.now() > premiumExpires) {
+    checkPremiumExpiration();
+    return; // Bloqueia acesso
+  }
+  
+  if (!ensureRecipeAccess(recipeId)) return;
+  showRecipeDetail(recipeId);
+};
+
+  
+  
   showRecipeDetail(recipeId);
 };
 
@@ -1208,20 +1234,26 @@ async function checkPremiumExpiration() {
   if (now > premiumExpires) {
     console.log('[PREMIUM] Expirado');
     
+    // Limpa estado
     isPremium = false;
     premiumToken = null;
     premiumExpires = null;
     
+    // Limpa storage
     await storage.set('fit_premium', 'false');
     await storage.set('fit_premium_token', '');
     await storage.set('fit_premium_expires', '');
     
+    // ✅ FIX 1: Atualiza UI imediatamente
     updateUI();
+    
+    // ✅ FIX 2: Re-renderiza receitas para bloquear
     renderRecipes();
     
+    // ✅ FIX 3: Mostra modal de expiração
     showNotification(
       'Premium Expirado', 
-      'Seu acesso premium expirou. Adquira um novo código.'
+      'Seu acesso premium expirou. Adquira um novo código para continuar.'
     );
   }
 }
