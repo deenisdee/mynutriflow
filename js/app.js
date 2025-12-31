@@ -914,7 +914,7 @@ setTimeout(() => {
     // Easing (suaviza início e fim)
     const ease = progress < 0.5
       ? 2 * progress * progress
-      : 1 - Math.pow(-2 * progress + 10, 10) / 10;
+      : 1 - Math.pow(-2 * progress + 20, 20) / 2;
     
     window.scrollTo(0, start + (distance * ease));
     
