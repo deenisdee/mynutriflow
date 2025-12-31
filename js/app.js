@@ -897,25 +897,31 @@ setTimeout(() => {
   const sliderHeight = slider ? slider.offsetHeight : 400;
   
   // Scroll suave customizado (800ms)
-  const start = window.scrollY;
-  const target = sliderHeight + 200;  // ← 🎯 SETA 1: DIMINUI ESSE VALOR (ex: -50, 0, 10)
-  const distance = target - start;
-  const duration = 1000; // 800ms = bem suave
-  let startTime = null;
-  function animation(currentTime) {
-    if (startTime === null) startTime = currentTime;
-    const timeElapsed = currentTime - startTime;
-    const progress = Math.min(timeElapsed / duration, 5);
-    
-    // Easing (suaviza início e fim)
-    const ease = progress < 0.5
-      ? 2 * progress * progress
-      : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-    
-    window.scrollTo(0, start + (distance * ease));
-    
-    if (timeElapsed < duration) {
-      requestAnimationFrame(animation);
+// Scroll suave customizado (1000ms)
+const start = window.scrollY;
+const target = sliderHeight + 200;  // ← Para 200px depois do slider
+const distance = target - start;
+const duration = 1000; // 1 segundo
+let startTime = null;
+
+function animation(currentTime) {
+  if (startTime === null) startTime = currentTime;
+  const timeElapsed = currentTime - startTime;
+  const progress = Math.min(timeElapsed / duration, 1); // ← 🔴 CORRIGE PRA 1
+  
+  // Easing (suaviza início e fim)
+  const ease = progress < 0.5
+    ? 2 * progress * progress
+    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+  
+  window.scrollTo(0, start + (distance * ease));
+  
+  if (timeElapsed < duration) {
+    requestAnimationFrame(animation);
+  }
+}
+
+requestAnimationFrame(animation);
     }
   }
   
