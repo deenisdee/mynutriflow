@@ -381,8 +381,9 @@ function updateUI() {
      let badgeText = 'Premium';
       if (premiumExpires) {
         const daysLeft = Math.ceil((premiumExpires - Date.now()) / (1000 * 60 * 60 * 24));
-        if (daysLeft > 0 && daysLeft <= 30) {
-          badgeText = `Premium (${daysLeft}D)`;
+       
+        if (daysLeft > 0) { // ← REMOVE O "&& daysLeft <= 30"
+          badgeText = `PREMIUM (${daysLeft}D)`;
         }
       }
 
@@ -1406,12 +1407,20 @@ async function checkPremiumExpiration() {
     
     // ✅ FIX 2: Re-renderiza receitas para bloquear
     renderRecipes();
+
+
     
-    // ✅ FIX 3: Mostra modal de expiração
-    showNotification(
-      'Premium Expirado', 
-      'Seu acesso premium expirou. Adquira um novo código para continuar.'
-    );
+    // ✅ Alert nativo (funciona no iOS)
+    alert('⚠️ Premium Expirado\n\nSeu acesso premium expirou. Adquira um novo código para continuar.');
+    
+    // OU mantém showNotification MAS adiciona fallback:
+    if (typeof showNotification === 'function') {
+      showNotification('Premium Expirado', 'Seu acesso premium expirou.');
+    } else {
+      alert('⚠️ Premium Expirado\n\nSeu acesso expirou.');
+    }
+
+    
   }
 }
 
