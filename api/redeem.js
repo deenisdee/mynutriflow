@@ -21,8 +21,8 @@ export default async function handler(req, res) {
   
   // ✅ CÓDIGOS VÁLIDOS - CORRIGIDO
   const VALID_CODES = new Map([
-    ['10', 0.0001157],        // 10 segundos
-    ['1MIN', 0.0006944],    // 1 minuto
+    ['10s', 0.0001157],        // 10 segundos
+    ['1m', 0.0006944],    // 1 minuto
     ['684884', 30],           // 30 dias
     ['G8A8B4', 30],           // 30 dias
     ['TESTE-45P', 30],        // 30 dias
