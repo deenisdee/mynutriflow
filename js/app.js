@@ -1360,7 +1360,7 @@ async function activatePremium() {
     const data = await redeemPremiumCode(code);
 
     if (!data || !data.ok) {
-      showNotification('Erro', data?.error || 'Código inválido');
+      showNotification('Código Inválido', data?.error || 'Código inválido ou expirado');
       return;
     }
 
@@ -1374,8 +1374,6 @@ async function activatePremium() {
     await storage.set('fit_premium_expires', data.expiresAt.toString());
     
     updateUI();
-
-    // ✅ NOVO - Configura timers de expiração
     _setupPremiumTimers();
 
     const daysLeft = data.expiresInDays || 30;
@@ -1390,7 +1388,13 @@ async function activatePremium() {
 
   } catch (e) {
     console.error('Erro ao ativar premium:', e);
-    showNotification('Erro', 'Erro ao validar código. Tente novamente.');
+    
+    // ✅ MENSAGEM MAIS ESPECÍFICA
+    if (e.message.includes('fetch')) {
+      showNotification('Erro de Conexão', 'Verifique sua internet e tente novamente.');
+    } else {
+      showNotification('Erro', 'Erro ao validar código. Tente novamente.');
+    }
   }
 }
 
