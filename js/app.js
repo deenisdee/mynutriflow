@@ -1111,6 +1111,9 @@ let selectedRecipeForPlanner = null;
 
 // ✅ B) abre modal existente no HTML (#meal-selector-modal)
 window.addToWeekPlan = function(day, recipeId) {
+  console.log('[PLANNER] Abrindo seletor:', { day, recipeId });
+  
+  // ✅ Salva os valores
   selectedDayForPlanner = day;
   selectedRecipeForPlanner = recipeId;
 
@@ -1121,25 +1124,61 @@ window.addToWeekPlan = function(day, recipeId) {
 
   const mealModal = document.getElementById('meal-selector-modal');
   if (mealModal) {
+    // ✅ Remove hidden e modal-open do body
     mealModal.classList.remove('hidden');
+    mealModal.style.pointerEvents = 'auto'; // ✅ IMPORTANTE
     document.body.classList.add('modal-open');
+    
+    console.log('[PLANNER] Modal aberto');
   }
 };
 
 
 window.addToWeekPlanWithMeal = function(meal) {
-  if (!selectedDayForPlanner || !selectedRecipeForPlanner) return;
+  console.log('[PLANNER] Adicionando:', { 
+    day: selectedDayForPlanner, 
+    recipeId: selectedRecipeForPlanner, 
+    meal 
+  });
+  
+  // ✅ Validação com log de erro
+  if (!selectedDayForPlanner || !selectedRecipeForPlanner) {
+    console.error('[PLANNER] Erro: Variáveis não definidas!', {
+      selectedDay: selectedDayForPlanner,
+      selectedRecipe: selectedRecipeForPlanner
+    });
+    return;
+  }
 
+  // ✅ Busca a receita
   const recipe = allRecipes.find(r => r.id === selectedRecipeForPlanner);
-  if (!recipe) return;
+  
+  if (!recipe) {
+    console.error('[PLANNER] Erro: Receita não encontrada!', {
+      recipeId: selectedRecipeForPlanner
+    });
+    return;
+  }
 
+  // ✅ Adiciona ao planejamento
   const key = `${selectedDayForPlanner}-${meal}`;
   weekPlan[key] = recipe;
 
+  // ✅ Salva
   saveWeekPlan();
-  showNotification('Receita Adicionada!', `${recipe.name} adicionada ao ${selectedDayForPlanner} - ${meal}.`);
+  
+  console.log('[PLANNER] Receita salva:', { key, recipe: recipe.name });
+  
+  // ✅ Notificação
+  showNotification(
+    'Receita Adicionada!', 
+    `${recipe.name} adicionada ao ${selectedDayForPlanner} - ${meal}.`
+  );
 
+  // ✅ FECHA O MODAL (IMPORTANTE!)
   window.closeMealSelector();
+  
+  console.log('[PLANNER] Modal fechado, processo concluído');
 };
 
 window.closeMealSelector = function() {
@@ -1147,13 +1186,17 @@ window.closeMealSelector = function() {
 
   if (modal) {
     modal.classList.add('hidden');
-    modal.style.pointerEvents = 'none';
+    modal.style.pointerEvents = 'auto'; // ✅ MUDOU: 'auto' em vez de 'none'
   }
 
-  // 🔑 limpeza SEMPRE acontece
+  // ✅ Limpa as variáveis
   selectedDayForPlanner = null;
   selectedRecipeForPlanner = null;
+  
+  // ✅ Remove a classe modal-open
   document.body.classList.remove('modal-open');
+  
+  console.log('[MEAL SELECTOR] Modal fechado e variáveis limpas');
 };
 
 
