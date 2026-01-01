@@ -1522,7 +1522,14 @@ function _setupPremiumTimers() {
       const daysLeft = Math.ceil(remaining / (1000 * 60 * 60 * 24));
       console.log(`[PREMIUM] Ainda ativo - ${daysLeft} dias restantes`);
     }
-  }, 30000); // Verifica a cada 30 segundos
+
+
+
+
+    
+  }, 2000); // Verifica a cada 30 segundos
+
+  
   
   console.log('[PREMIUM] Timer de verificação configurado (check a cada 30s)');
 }
