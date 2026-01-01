@@ -708,9 +708,10 @@ window.viewRecipe = function(recipeId) {
 window.viewRecipe = function(recipeId) {
   haptic(10);
   
-  // ✅ FIX: Verifica expiração antes de abrir receita
-  if (premiumExpires && Date.now() > premiumExpires) {
-    checkPremiumExpiration();
+  // ✅ VERIFICA EXPIRAÇÃO ANTES DE ABRIR RECEITA
+  if (isPremium && premiumExpires && Date.now() > premiumExpires) {
+    console.log('[PREMIUM] Expirou ao tentar abrir receita');
+    _handlePremiumExpiration();
     return; // Bloqueia acesso
   }
   
@@ -1500,29 +1501,30 @@ function _setupPremiumTimers() {
     timeLeftDays: Math.ceil(timeLeft / (1000 * 60 * 60 * 24))
   });
   
-  // ✅ CORREÇÃO: Se já expirou, executa imediatamente
+  // ✅ Se já expirou, executa imediatamente
   if (timeLeft <= 0) {
     console.log('[PREMIUM] Já expirado ao configurar timer');
     _handlePremiumExpiration();
     return;
   }
   
-  console.log('[PREMIUM] Timers configurados. Expira em:', Math.ceil(timeLeft / 1000), 'segundos');
-  
-  // ✅ TIMER EXATO (setTimeout)
-  _premiumTimeout = setTimeout(() => {
-    console.log('[PREMIUM] Timeout exato disparado');
-    _handlePremiumExpiration();
-  }, timeLeft);
-  
-  // ✅ VERIFICAÇÃO BACKUP (setInterval a cada 60s) - AUMENTADO DE 30s
+  // ✅ CORREÇÃO: Usar apenas setInterval (não setTimeout para períodos longos)
+  // Verifica a cada 30 segundos se expirou
   _premiumInterval = setInterval(() => {
     const now = Date.now();
+    
     if (now >= premiumExpires) {
-      console.log('[PREMIUM] Interval backup detectou expiração');
+      console.log('[PREMIUM] Interval detectou expiração');
       _handlePremiumExpiration();
+    } else {
+      // ✅ DEBUG: mostra quanto tempo falta
+      const remaining = premiumExpires - now;
+      const daysLeft = Math.ceil(remaining / (1000 * 60 * 60 * 24));
+      console.log(`[PREMIUM] Ainda ativo - ${daysLeft} dias restantes`);
     }
-  }, 60000); // 60 segundos
+  }, 30000); // Verifica a cada 30 segundos
+  
+  console.log('[PREMIUM] Timer de verificação configurado (check a cada 30s)');
 }
 
 
