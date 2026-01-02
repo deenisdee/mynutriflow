@@ -1598,7 +1598,74 @@ body.premium-active #premium-btn {
   color: #16a34a;
   margin-bottom: 0.5rem;
   text-align: center;
+   
 }
+
+
+/* ================================
+   BOTÃO VOLTAR AO TOPO
+   ================================ */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 56px;
+  height: 56px;
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3);
+  transition: all 0.3s ease;
+  z-index: 999;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.back-to-top:hover {
+  background: #15803d;
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(22, 163, 74, 0.4);
+}
+
+.back-to-top:active {
+  transform: scale(0.95);
+}
+
+.back-to-top svg {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  stroke-width: 2.5;
+}
+
+.back-to-top.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .back-to-top {
+    width: 48px;
+    height: 48px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .back-to-top svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+
 
 /* =========================================================
    RECEITAFIT.APP — UI POLISH (OVERRIDE FINAL)
