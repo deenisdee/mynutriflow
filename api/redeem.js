@@ -20,6 +20,7 @@ export default async function handler(req, res) {
   }
   
   // ✅ CÓDIGOS VÁLIDOS - CORRIGIDO
+  // ✅ MANTER CÓDIGOS EM LETRA MAIÚSCULAS
   const VALID_CODES = new Map([
     ['TESTE1', 0.0001157],  // 10 segundos
     ['TESTE2', 0.0006944],   // 1 minuto
