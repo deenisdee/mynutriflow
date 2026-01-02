@@ -24,8 +24,8 @@ export default async function handler(req, res) {
   const VALID_CODES = new Map([
     ['TESTE1', 0.0001157],  // 10 segundos
     ['TESTE2', 0.0006944],   // 1 minuto
-    ['684884', 30],           // 30 dias
-    ['G8A8B4', 30],           // 30 dias
+    ['684884', 1],           // 30 dias
+    ['68488447', 30],           // 30 dias
     ['TESTE-45P', 30],        // 30 dias
     ['FITPR02024', 30],       // 30 dias
     ['LANCAMENTO2026', 90],   // 90 dias
