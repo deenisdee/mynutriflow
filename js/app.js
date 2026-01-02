@@ -1840,20 +1840,7 @@ const backToTopBtn = document.getElementById('back-to-top');
 // Mostra/esconde baseado no scroll
 
 
-window.addEventListener('scroll', () => {
-  const backToTopBtn = document.getElementById('back-to-top');
-  
-  if (backToTopBtn) {
-    const scrollY = window.scrollY;
-    
-    // Aparece depois de 500px, some quando volta pra menos de 200px
-    if (scrollY > 50) {
-      backToTopBtn.classList.remove('hidden');
-    } else if (scrollY < 850) {
-      backToTopBtn.classList.add('hidden');
-    }
-  }
-});
+
 
 
 
@@ -1876,9 +1863,12 @@ window.addEventListener('scroll', () => {
   const backToTopBtn = document.getElementById('back-to-top');
   
   if (backToTopBtn) {
-    if (window.scrollY > 300) {
+    const scrollY = window.scrollY;
+    
+    // Aparece depois de 500px, some quando volta pra menos de 200px
+    if (scrollY > 50) {
       backToTopBtn.classList.remove('hidden');
-    } else {
+    } else if (scrollY < 850) {
       backToTopBtn.classList.add('hidden');
     }
   }
