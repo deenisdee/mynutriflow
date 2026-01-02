@@ -1859,27 +1859,24 @@ window.scrollToTop = function() {
 // ==============================
 loadUserData();
 
-
-  // ✅ BOTÃO VOLTAR AO TOPO
+// ================================
+// BOTÃO VOLTAR AO TOPO
+// ================================
+window.addEventListener('scroll', () => {
   const backToTopBtn = document.getElementById('back-to-top');
   
   if (backToTopBtn) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        backToTopBtn.classList.remove('hidden');
-      } else {
-        backToTopBtn.classList.add('hidden');
-      }
-    });
-    
-    console.log('[BACK TO TOP] Botão configurado');
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.remove('hidden');
+    } else {
+      backToTopBtn.classList.add('hidden');
+    }
   }
-} // ← FECHA loadUserData (SÓ UMA CHAVE!)
+});
 
-// Função de scroll suave (global)
 window.scrollToTop = function() {
   window.scrollTo({
     top: 0,
     behavior: 'smooth'
   });
-};
+};;
