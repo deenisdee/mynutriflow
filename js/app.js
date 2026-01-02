@@ -358,7 +358,41 @@ async function loadUserData() {
 
   // ✅ SETUP TIMERS DEPOIS DE TUDO
   _setupPremiumTimers();
+
+
+
+
+  
+ // ✅ ADICIONE AQUI - BOTÃO VOLTAR AO TOPO
+  const backToTopBtn = document.getElementById('back-to-top');
+  
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('hidden');
+      } else {
+        backToTopBtn.classList.add('hidden');
+      }
+    });
+    
+    console.log('[BACK TO TOP] Botão configurado');
+  }
 }
+
+
+
+  
+}
+
+
+// Função de scroll suave (global)
+window.scrollToTop = function() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
+
 
 async function saveUserData() {
   try {
