@@ -1862,6 +1862,13 @@ loadUserData();
 // ================================
 // BOTÃO VOLTAR AO TOPO
 // ================================
+window.scrollToTop = function() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+};
+
 window.addEventListener('scroll', () => {
   const backToTopBtn = document.getElementById('back-to-top');
   
@@ -1873,10 +1880,3 @@ window.addEventListener('scroll', () => {
     }
   }
 });
-
-window.scrollToTop = function() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-};
