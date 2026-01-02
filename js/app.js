@@ -341,7 +341,7 @@ async function loadUserData() {
       if (creditsResult) credits = parseInt(creditsResult.value || '3', 10);
       if (unlockedResult) unlockedRecipes = JSON.parse(unlockedResult.value || '[]');
     }
-
+    
     const shoppingResult = await storage.get('fit_shopping');
     const weekPlanResult = await storage.get('fit_weekplan');
     if (shoppingResult && shoppingResult.value) shoppingList = JSON.parse(shoppingResult.value);
@@ -358,12 +358,8 @@ async function loadUserData() {
 
   // ✅ SETUP TIMERS DEPOIS DE TUDO
   _setupPremiumTimers();
-
-
-
-
   
- // ✅ ADICIONE AQUI - BOTÃO VOLTAR AO TOPO
+  // ✅ BOTÃO VOLTAR AO TOPO
   const backToTopBtn = document.getElementById('back-to-top');
   
   if (backToTopBtn) {
@@ -377,13 +373,7 @@ async function loadUserData() {
     
     console.log('[BACK TO TOP] Botão configurado');
   }
-}
-
-
-
-  
-}
-
+} // ← FECHA loadUserData (SÓ UMA CHAVE!)
 
 // Função de scroll suave (global)
 window.scrollToTop = function() {
