@@ -764,9 +764,16 @@ body.modal-open{ overflow:hidden; height:100vh; }
 z-index: 999 !important;
 }
 
+
+
+
 #premium-modal {
-  z-index: 1000 !important;
+  z-index: 2000 !important;
 }
+
+
+
+
 
 #premium-modal #premium-code-input{
   border-radius:8px !important;
@@ -802,11 +809,6 @@ z-index: 999 !important;
 
 
 
-/* Header sempre acima dos modais */
-#header {
-  position: relative;
-  z-index: 2000 !important;
-}
 
 
 
