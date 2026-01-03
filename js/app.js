@@ -910,8 +910,14 @@ function showRecipeDetail(recipeId) {
     </div>
   `;
 
-  recipeGrid.classList.add('hidden');
+recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
+
+  // ✅ ESCONDE SLIDER E CATEGORIAS
+  const slider = document.getElementById('heroSlider');
+  const categories = document.querySelector('.categories-new');
+  if (slider) slider.style.display = 'none';
+  if (categories) categories.style.display = 'none';
 
   // ✅ SCROLL SIMPLES - vai pro topo suavemente
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -935,6 +941,12 @@ window.closeRecipeDetail = function() {
   recipeGridEl.classList.remove('hidden');
   
   currentRecipe = null;
+
+  // ✅ MOSTRA SLIDER E CATEGORIAS DE VOLTA
+  const slider = document.getElementById('heroSlider');
+  const categories = document.querySelector('.categories-new');
+  if (slider) slider.style.display = 'block';
+  if (categories) categories.style.display = 'block';
 
   renderRecipes();
   
