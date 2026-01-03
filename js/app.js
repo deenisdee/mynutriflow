@@ -738,15 +738,33 @@ function showRecipeDetail(recipeId) {
   currentRecipe = recipe;
   const heroImage = recipe.images?.hero || recipe.image;
 
-  recipeDetail.innerHTML = `
-    <button class="back-btn" onclick="closeRecipeDetail()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
-      </svg>
-      Início
-    </button>
 
-    <img src="${heroImage}" alt="${recipe.name}" class="detail-hero-image">
+  
+
+ recipeDetail.innerHTML = `
+  <button class="back-btn" onclick="closeRecipeDetail()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Início
+  </button>
+
+  <div class="breadcrumbs">
+    <div class="breadcrumb-item">
+      <span class="breadcrumb-link" onclick="closeRecipeDetailAndFilter('${recipe.category}')">
+        ${recipe.category}
+      </span>
+      <span class="breadcrumb-separator">></span>
+    </div>
+    <div class="breadcrumb-item">
+      <span class="breadcrumb-current">${recipe.name}</span>
+    </div>
+  </div>
+
+  <img src="${heroImage}" alt="${recipe.name}" class="detail-hero-image">
+
+
+    
 
     <div class="detail-content-wrapper">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
@@ -980,6 +998,60 @@ window.closeRecipeDetail = function() {
     }
     
     renderRecipes();
+    
+    // Scroll suave pro topo
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 300);
+};
+
+
+
+
+window.closeRecipeDetailAndFilter = function(category) {
+  const recipeDetailEl = document.getElementById('recipe-detail');
+  const recipeGridEl = document.getElementById('recipe-grid');
+  
+  if (!recipeDetailEl || !recipeGridEl) return;
+
+  const slider = document.getElementById('heroSlider');
+  const categories = document.querySelector('.categories-new');
+  
+  // Fade out: receita
+  recipeDetailEl.classList.add('fade-out');
+  
+  setTimeout(() => {
+    // Esconde receita
+    recipeDetailEl.classList.add('hidden');
+    recipeDetailEl.classList.remove('fade-out', 'fade-in');
+    
+    currentRecipe = null;
+    
+    // Mostra grid, slider, categorias
+    recipeGridEl.classList.remove('hidden');
+    recipeGridEl.classList.add('fade-in');
+    
+    if (slider) {
+      slider.style.display = 'block';
+      slider.classList.add('fade-in');
+    }
+    if (categories) {
+      categories.style.display = 'block';
+      categories.classList.add('fade-in');
+    }
+    
+    // ✅ FILTRA PELA CATEGORIA
+    searchTerm = category;
+    renderRecipes();
+    
+    // ✅ ATIVA O BOTÃO DA CATEGORIA
+    document.querySelectorAll('.category-card-new').forEach(card => {
+      card.classList.remove('active');
+      if (card.textContent.trim() === category) {
+        card.classList.add('active');
+        // Scroll pra categoria ativa
+        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    });
     
     // Scroll suave pro topo
     window.scrollTo({ top: 0, behavior: 'smooth' });
