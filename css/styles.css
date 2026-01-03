@@ -1669,16 +1669,23 @@ body.premium-active #premium-btn {
 
 
 
-
 /* ================================
    BREADCRUMBS
    ================================ */
+.breadcrumbs-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+}
+
 .breadcrumbs {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 1rem 0 1.5rem 0;
-  padding: 0 1rem;
   font-size: 0.875rem;
   color: #6b7280;
   flex-wrap: wrap;
@@ -1711,23 +1718,27 @@ body.premium-active #premium-btn {
 .breadcrumb-current {
   color: #374151;
   font-weight: 400;
-  max-width: 300px;
+  max-width: 400px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 @media (max-width: 768px) {
+  .breadcrumbs-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
   .breadcrumbs {
     font-size: 0.8125rem;
-    margin: 0.75rem 0 1rem 0;
   }
   
   .breadcrumb-current {
-    max-width: 200px;
+    max-width: 250px;
   }
 }
-
 
 
 
