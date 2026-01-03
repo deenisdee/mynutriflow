@@ -257,24 +257,18 @@ function canAccessRecipe(recipeId) {
 function ensureRecipeAccess(recipeId) {
   // Premium ou já liberada
   if (isPremium || unlockedRecipes.includes(recipeId)) return true;
-
-  // Tem crédito: consome e libera
+  
+  // Tem crédito: ABRE MODAL DE CONFIRMAÇÃO (em vez de gastar direto)
   if (credits > 0) {
-    credits--;
-    unlockedRecipes.push(recipeId);
-    saveUserData();     // mantém seu padrão sem await
-    updateUI();
-    renderRecipes();
-    return true;
+    openConfirmCreditModal(recipeId);
+    return false; // ← IMPORTANTE: retorna false para NÃO abrir a receita ainda
   }
-
+  
   // Sem crédito: manda pro premium
   if (modalMessage) modalMessage.textContent =
     'Seus créditos acabaram. Ative o Premium para acesso ilimitado.';
-
   const warning = document.getElementById('credits-warning');
   if (warning) warning.classList.remove('hidden');
-
   openModal(premiumModal);
   return false;
 }
@@ -1911,8 +1905,60 @@ const backToTopBtn = document.getElementById('back-to-top');
 
 
 
-// Mostra/esconde baseado no scroll
 
+// ================================
+// MODAL DE CONFIRMAÇÃO DE CRÉDITO
+// ================================
+let pendingRecipeId = null;
+
+window.openConfirmCreditModal = function(recipeId) {
+  const recipe = allRecipes.find(r => r.id === recipeId);
+  if (!recipe) return;
+  
+  pendingRecipeId = recipeId;
+  
+  // Atualiza o modal com informações
+  const creditsRemaining = document.getElementById('credits-remaining');
+  const recipeNameConfirm = document.getElementById('recipe-name-confirm');
+  
+  if (creditsRemaining) creditsRemaining.textContent = credits;
+  if (recipeNameConfirm) recipeNameConfirm.textContent = recipe.name;
+  
+  // Abre o modal
+  const modal = document.getElementById('confirm-credit-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+  }
+};
+
+window.closeConfirmCreditModal = function() {
+  const modal = document.getElementById('confirm-credit-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+  pendingRecipeId = null;
+};
+
+window.confirmUnlockRecipe = function() {
+  if (!pendingRecipeId) return;
+  
+  // Gasta o crédito e desbloqueia
+  if (credits > 0) {
+    credits--;
+    unlockedRecipes.push(pendingRecipeId);
+    saveUserData();
+    updateUI();
+    renderRecipes();
+    
+    // Fecha modal e abre receita
+    closeConfirmCreditModal();
+    showRecipeDetail(pendingRecipeId);
+    
+    showNotification('Receita Desbloqueada! 🎉', `Você ainda tem ${credits} crédito${credits !== 1 ? 's' : ''}.`);
+  }
+};
 
 
 
