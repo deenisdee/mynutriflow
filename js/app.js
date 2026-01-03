@@ -919,11 +919,13 @@ recipeGrid.classList.add('hidden');
   if (slider) slider.style.display = 'none';
   if (categories) categories.style.display = 'none';
 
-  // ✅ SCROLL SIMPLES - vai pro topo suavemente
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
-  // ✅ Renderiza os ícones Lucide
+  // ✅ Renderiza os ícones Lucide primeiro
   if (typeof lucide !== 'undefined') lucide.createIcons();
+
+  // ✅ SCROLL SUAVE COM DELAY (aguarda o DOM renderizar)
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 50);
 }
 
 
@@ -948,10 +950,12 @@ window.closeRecipeDetail = function() {
   if (slider) slider.style.display = 'block';
   if (categories) categories.style.display = 'block';
 
-  renderRecipes();
+ renderRecipes();
   
-  // ✅ SCROLL SIMPLES - volta pro topo suavemente
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ✅ SCROLL SUAVE COM DELAY
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 50);
 };
 
 
