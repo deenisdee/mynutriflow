@@ -1730,6 +1730,8 @@ body.premium-active #premium-btn {
   
   .breadcrumbs {
     font-size: 0.8125rem;
+   margin: 0.0rem 1.5rem 0.5rem 0.6rem;
+    }
   }
   
   .breadcrumb-current {
