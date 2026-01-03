@@ -784,7 +784,9 @@ z-index: 999 !important;
   
 }
 
-#premium-modal #premium-code-input:focus{ border-color:#16a34a !important; outline:none !important; }
+#premium-modal #premium-code-input:focus{ border-color:#16a34a !important; outline:none !important;
+ z-index: 99999!important;                                        
+}
 
 .premium-footer{ padding-top:1rem; border-top:1px solid #e5e7eb; text-align:center; margin-top:1rem; }
 .premium-footer-text{ color:#6b7280; font-size:.85rem; font-weight:400; margin:0 0 .75rem; }
@@ -924,12 +926,22 @@ z-index: 999 !important;
    PATCH — alinhamento Premium Modal
    (mantido 1x — estava duplicado)
    ================================ */
+
+
+
 #premium-modal .modal-content{
   padding-right: 1.5rem !important;
   margin-right: 0 !important;
   display: grid;
   gap: 14px;
+
+ 
+
+   
 }
+
+
+
 
 #premium-modal .premium-hero{
   margin-bottom: 0 !important;
@@ -970,7 +982,7 @@ z-index: 999 !important;
   gap: 12px;
   align-items: stretch;
 
-   z-index: 99999!important;
+
 
 }
 
