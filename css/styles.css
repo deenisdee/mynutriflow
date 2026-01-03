@@ -800,6 +800,16 @@ z-index: 999 !important;
 .premium-link.whatsapp{ background:#25D366; color:#fff; }
 .premium-link.instagram{ background:#111; color:#fff; }
 
+
+
+/* Header sempre acima dos modais */
+#header {
+  position: relative;
+  z-index: 2000 !important;
+}
+
+
+
 /* ============================================
    FAQ (sem emoji + padrão verde)
    ============================================ */
