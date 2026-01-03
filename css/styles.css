@@ -1667,6 +1667,72 @@ body.premium-active #premium-btn {
 
 
 
+
+
+
+/* ================================
+   BREADCRUMBS
+   ================================ */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 1.5rem 0;
+  padding: 0 1rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.breadcrumb-link {
+  color: #16a34a;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.breadcrumb-link:hover {
+  color: #15803d;
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: #d1d5db;
+  user-select: none;
+}
+
+.breadcrumb-current {
+  color: #374151;
+  font-weight: 400;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .breadcrumbs {
+    font-size: 0.8125rem;
+    margin: 0.75rem 0 1rem 0;
+  }
+  
+  .breadcrumb-current {
+    max-width: 200px;
+  }
+}
+
+
+
+
+
+
 /* =========================================================
    RECEITAFIT.APP — UI POLISH (OVERRIDE FINAL)
    ========================================================= */
