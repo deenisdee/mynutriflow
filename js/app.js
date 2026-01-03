@@ -1906,6 +1906,7 @@ const backToTopBtn = document.getElementById('back-to-top');
 
 
 
+
 // ================================
 // MODAL DE CONFIRMAÇÃO DE CRÉDITO
 // ================================
@@ -1941,9 +1942,6 @@ window.closeConfirmCreditModal = function() {
   pendingRecipeId = null;
 };
 
-
-
-
 window.confirmUnlockRecipe = function() {
   if (!pendingRecipeId) return;
   
@@ -1960,6 +1958,8 @@ window.confirmUnlockRecipe = function() {
     showRecipeDetail(pendingRecipeId);
   }
 };
+
+
 
 
 
