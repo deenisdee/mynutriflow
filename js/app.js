@@ -732,7 +732,6 @@ window.viewRecipe = function(recipeId) {
 
 
 function showRecipeDetail(recipeId) {
-  // ❌ NÃO chama ensureRecipeAccess aqui (evita dupla cobrança)
   const recipe = allRecipes.find(r => r.id === recipeId);
   if (!recipe) return;
 
@@ -914,40 +913,10 @@ function showRecipeDetail(recipeId) {
   recipeGrid.classList.add('hidden');
   recipeDetail.classList.remove('hidden');
 
-  document.body.classList.add('detail-open');
+  // ✅ SCROLL SIMPLES - vai pro topo suavemente
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const header = document.getElementById('header');
-  const headerH = header ? header.offsetHeight : 0;
-  document.documentElement.style.setProperty('--header-h', `${headerH}px`);
-
-  recipeDetail.scrollTop = 0;
-
-  setTimeout(() => {
-    const header2 = document.getElementById('header');
-    const headerH2 = header2 ? header2.offsetHeight : 0;
-    const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
-    const target = Math.max(detailTop - headerH2 - 35, 0);
-    window.scrollTo({ top: target, behavior: 'smooth' });
-  }, 50);
-
-  // ✅ TRAVA SCROLL - Não deixa usuário rolar pra cima
-  setTimeout(() => {
-    let scrollLocked = true;
-    const lockScroll = () => {
-      const header = document.getElementById('header');
-      const headerH = header ? header.offsetHeight : 105;
-      const detailTop = recipeDetail.getBoundingClientRect().top + window.scrollY;
-      const minScroll = Math.max(detailTop - headerH - 35, 0);
-      
-      if (window.scrollY < minScroll && scrollLocked) {
-        window.scrollTo({ top: minScroll, behavior: 'instant' });
-      }
-    };
-    
-    window.addEventListener('scroll', lockScroll);
-    window._scrollLockHandler = lockScroll;
-  }, 300); // Ativa o lock 300ms depois (após o scroll suave terminar)
-
+  // ✅ Renderiza os ícones Lucide
   if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
@@ -961,28 +930,15 @@ window.closeRecipeDetail = function() {
   
   if (!recipeDetailEl || !recipeGridEl) return;
 
-  // ✅ DESTRAVA scroll
-  if (window._scrollLockHandler) {
-    window.removeEventListener('scroll', window._scrollLockHandler);
-    window._scrollLockHandler = null;
-  }
-
   // Esconde detalhe, mostra grid
   recipeDetailEl.classList.add('hidden');
   recipeGridEl.classList.remove('hidden');
   
   currentRecipe = null;
 
-  // Mostra slider e categorias
-  const slider = document.getElementById('heroSlider');
-  const categories = document.querySelector('.categories-new');
-  if (slider) slider.style.display = 'block';
-  if (categories) categories.style.display = 'block';
-
   renderRecipes();
-  document.body.classList.remove('detail-open');
   
-  // ✅ scrollTo() de volta pro topo
+  // ✅ SCROLL SIMPLES - volta pro topo suavemente
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
