@@ -742,26 +742,29 @@ function showRecipeDetail(recipeId) {
   
 
  recipeDetail.innerHTML = `
-  <button class="back-btn" onclick="closeRecipeDetail()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M19 12H5M12 19l-7-7 7-7"/>
-    </svg>
-    Início
-  </button>
+  <div class="breadcrumbs-wrapper">
+    <button class="back-btn" onclick="closeRecipeDetail()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Início
+    </button>
 
-  <div class="breadcrumbs">
-    <div class="breadcrumb-item">
-      <span class="breadcrumb-link" onclick="closeRecipeDetailAndFilter('${recipe.category}')">
-        ${recipe.category}
-      </span>
-      <span class="breadcrumb-separator">></span>
-    </div>
-    <div class="breadcrumb-item">
-      <span class="breadcrumb-current">${recipe.name}</span>
+    <div class="breadcrumbs">
+      <div class="breadcrumb-item">
+        <span class="breadcrumb-link" onclick="closeRecipeDetailAndFilter('${recipe.category}')">
+          ${recipe.category}
+        </span>
+        <span class="breadcrumb-separator">></span>
+      </div>
+      <div class="breadcrumb-item">
+        <span class="breadcrumb-current">${recipe.name}</span>
+      </div>
     </div>
   </div>
 
   <img src="${heroImage}" alt="${recipe.name}" class="detail-hero-image">
+
 
 
     
