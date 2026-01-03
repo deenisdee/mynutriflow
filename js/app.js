@@ -1941,6 +1941,9 @@ window.closeConfirmCreditModal = function() {
   pendingRecipeId = null;
 };
 
+
+
+
 window.confirmUnlockRecipe = function() {
   if (!pendingRecipeId) return;
   
@@ -1955,12 +1958,8 @@ window.confirmUnlockRecipe = function() {
     // Fecha modal e abre receita
     closeConfirmCreditModal();
     showRecipeDetail(pendingRecipeId);
-    
-    showNotification('Receita Desbloqueada! 🎉', `Você ainda tem ${credits} crédito${credits !== 1 ? 's' : ''}.`);
   }
 };
-
-
 
 
 
