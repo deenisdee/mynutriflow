@@ -264,11 +264,11 @@
       </svg>
     </button>
     
-    <div style="width: 64px; height: 64px; background: #dbeafe; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 32px; height: 32px; color: #2563eb;">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-        <line x1="12" y1="17" x2="12.01" y2="17"/>
+    <!-- Ícone de Cadeado Desbloqueado -->
+    <div style="width: 64px; height: 64px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 32px; height: 32px; color: #16a34a;">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
       </svg>
     </div>
     
@@ -276,12 +276,16 @@
       Desbloquear esta receita?
     </h2>
     
-    <p id="confirm-credit-text" style="font-size: 1rem; color: #6b7280; line-height: 1.6; margin-bottom: 0.75rem;">
-      Você tem <strong id="credits-remaining">3</strong> créditos restantes.
+    <p style="font-size: 1rem; color: #6b7280; line-height: 1.6; margin-bottom: 0.75rem;">
+      Você tem <strong id="credits-remaining" style="color: #16a34a;">3</strong> créditos restantes.
     </p>
     
-    <p style="font-size: 0.95rem; color: #374151; margin-bottom: 2rem;">
-      Deseja usar <strong>1 crédito</strong> para desbloquear <strong id="recipe-name-confirm"></strong>?
+    <p style="font-size: 0.95rem; color: #374151; margin-bottom: 0.5rem;">
+      Deseja usar <strong>1 crédito</strong> para desbloquear:
+    </p>
+    
+    <p id="recipe-name-confirm" style="font-size: 1.05rem; font-weight: 600; color: #1f2937; margin-bottom: 2rem; line-height: 1.4;">
+      Salmão Grelhado
     </p>
     
     <div style="display: flex; gap: 0.75rem; flex-direction: column;">
@@ -294,7 +298,6 @@
     </div>
   </div>
 </div>
-
 
 
 
