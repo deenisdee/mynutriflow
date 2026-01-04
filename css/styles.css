@@ -1836,6 +1836,26 @@ body.premium-active #premium-btn {
 
 
 
+
+
+
+/* ================================
+   NOTIFICAÇÃO - QUEBRA DE LINHA E CENTRALIZAÇÃO
+   ================================ */
+#notification-message {
+  white-space: pre-line !important;
+  text-align: center !important;
+  line-height: 1.6 !important;
+}
+
+#notification-title {
+  margin: 0px 0px 14px 51px ! important;
+}
+
+
+
+
+
 /* =========================================================
    RECEITAFIT.APP — UI POLISH (OVERRIDE FINAL)
    ========================================================= */
