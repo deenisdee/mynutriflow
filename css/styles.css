@@ -794,7 +794,60 @@ body.modal-open{ overflow:hidden; height:100vh; }
 
 
 
+/* ================================
+   FIX: BOTÕES MODAL PREMIUM - FORÇAR TAMANHO IGUAL
+   ================================ */
+#premium-modal .btn-cancel,
+#premium-modal .btn-primary {
+  flex: 1 !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+  padding: 0.875rem 1rem !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
 
+#premium-modal .btn-cancel {
+  background: #f3f4f6 !important;
+  color: #374151 !important;
+  border: 2px solid #e5e7eb !important;
+}
+
+#premium-modal .btn-cancel:hover {
+  background: #fff !important;
+  border-color: #d1d5db !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+#premium-modal .btn-primary {
+  background: #16a34a !important;
+  color: #fff !important;
+  border: 2px solid #16a34a !important;
+}
+
+#premium-modal .btn-primary:hover {
+  background: #15803d !important;
+  border-color: #15803d !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3) !important;
+}
+```
+
+---
+
+## 📍 ONDE ADICIONAR:
+```
+linha 784: }
+linha 785:
+linha 786: /* ================================  ← COLE AQUI
+linha 787:    FIX: BOTÕES MODAL PREMIUM
 
 
 
