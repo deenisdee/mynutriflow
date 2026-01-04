@@ -391,12 +391,7 @@
 </div>
 
 
-
-
-
-
-
-<!-- Modal Escolha de Refeição -->
+ <!-- Modal Escolha de Refeição -->
 <div id="meal-selector-modal" class="modal hidden">
   <div class="modal-overlay" onclick="closeMealSelector()"></div>
   <div class="modal-content">
@@ -412,63 +407,40 @@
     <div class="meal-selector-options">
       <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Café da Manhã')">
         <i data-lucide="coffee" class="meal-icon"></i>
-        <div class="meal-info">
-          <div class="meal-name">Café da Manhã</div>
-          <div class="meal-time">6h - 9h</div>
-        </div>
+        <span class="meal-name">Café da Manhã</span>
+        <span class="meal-time">6h - 9h</span>
       </button>
       
       <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Lanche da Manhã')">
         <i data-lucide="apple" class="meal-icon"></i>
-        <div class="meal-info">
-          <div class="meal-name">Lanche da Manhã</div>
-          <div class="meal-time">9h - 11h</div>
-        </div>
+        <span class="meal-name">Lanche da Manhã</span>
+        <span class="meal-time">9h - 11h</span>
       </button>
       
       <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Almoço')">
         <i data-lucide="utensils" class="meal-icon"></i>
-        <div class="meal-info">
-          <div class="meal-name">Almoço</div>
-          <div class="meal-time">12h - 14h</div>
-        </div>
+        <span class="meal-name">Almoço</span>
+        <span class="meal-time">12h - 14h</span>
       </button>
       
       <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Lanche da Tarde')">
         <i data-lucide="cookie" class="meal-icon"></i>
-        <div class="meal-info">
-          <div class="meal-name">Lanche da Tarde</div>
-          <div class="meal-time">15h - 17h</div>
-        </div>
+        <span class="meal-name">Lanche da Tarde</span>
+        <span class="meal-time">15h - 17h</span>
       </button>
       
       <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Jantar')">
         <i data-lucide="moon" class="meal-icon"></i>
-        <div class="meal-info">
-          <div class="meal-name">Jantar</div>
-          <div class="meal-time">19h - 21h</div>
-        </div>
+        <span class="meal-name">Jantar</span>
+        <span class="meal-time">19h - 21h</span>
       </button>
     </div>
-	
-	</button>
     
-    
-    <!-- ✅ ADICIONE AQUI -->
     <button class="btn-cancel tap" onclick="closeMealSelector()" style="margin-top: 1rem; width: 100%;">
       Cancelar
     </button>
-    
   </div>
 </div>
-  </div>
-</div>
-
-
-
-
-
-
 
 <!-- Confirm Modal -->
 <div id="confirm-modal" class="modal hidden">
