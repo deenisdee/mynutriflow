@@ -1276,13 +1276,12 @@ window.addToWeekPlan = function(day, recipeId) {
   }
   
   
-    // ✅ Renderiza ícones Lucide
+  // ✅ Renderiza ícones Lucide
 if (typeof lucide !== 'undefined') {
   lucide.createIcons();
 }
     
 };
-
 
 
 window.addToWeekPlanWithMeal = function(meal) {
@@ -1322,9 +1321,9 @@ window.addToWeekPlanWithMeal = function(meal) {
   
   // ✅ Notificação
   showNotification(
-    'Receita Adicionada!', 
-    `${recipe.name} adicionada ao ${selectedDayForPlanner} - ${meal}.`
-  );
+  'Receita Adicionada!', 
+  `${recipe.name} adicionado para\n${selectedDayForPlanner} - ${meal}`
+   );
 
   // ✅ FECHA O MODAL (IMPORTANTE!)
   window.closeMealSelector();
@@ -1359,7 +1358,7 @@ function renderWeekPlanner() {
   const content = document.getElementById('week-planner-content');
   if (!content) return;
 
-  const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
+  const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo' ];
   const meals = ['Café da Manhã', 'Lanche da Manhã', 'Almoço', 'Lanche da Tarde', 'Jantar'];
 
   const dailyCalories = {};
