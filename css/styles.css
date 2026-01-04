@@ -1111,6 +1111,14 @@ body.premium-active #premium-btn {
 }
 
 @media (max-width: 640px) {
+
+
+#notification-title {
+    font-size: 1.3rem;
+    margin: 0px 0px 14px 51px ! important;
+}
+
+   
   .detail-section div[style*="display:flex"] {
     grid-template-columns: repeat(2, 1fr) !important;
   }
