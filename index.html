@@ -250,6 +250,55 @@
       </div>
     </div>
 
+
+
+<!-- Modal Confirmação de Crédito -->
+<div id="confirm-credit-modal" class="modal hidden">
+  <div class="modal-overlay" onclick="closeConfirmCreditModal()"></div>
+  <div class="modal-content" style="max-width: 420px; text-align: center;">
+    <button class="modal-close tap" onclick="closeConfirmCreditModal()" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    
+    <!-- Ícone de Cadeado Desbloqueado -->
+    <div style="width: 64px; height: 64px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 32px; height: 32px; color: #16a34a;">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+      </svg>
+    </div>
+    
+    <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">
+      Desbloquear esta receita?
+    </h2>
+    
+    <p style="font-size: 1rem; color: #6b7280; line-height: 1.6; margin-bottom: 0.75rem;">
+      Você tem <strong id="credits-remaining" style="color: #16a34a;">3</strong> créditos restantes.
+    </p>
+    
+    <p style="font-size: 0.95rem; color: #374151; margin-bottom: 0.5rem;">
+      Deseja usar <strong>1 crédito</strong> para desbloquear:
+    </p>
+    
+    <p id="recipe-name-confirm" style="font-size: 1.05rem; font-weight: 600; color: #1f2937; margin-bottom: 2rem; line-height: 1.4;">
+      Nome da Receita
+    </p>
+    
+    <div style="display: flex; gap: 0.75rem; flex-direction: column;">
+      <button class="btn-primary" onclick="confirmUnlockRecipe()" style="width: 100%; padding: 0.875rem;">
+        Sim, desbloquear receita
+      </button>
+      <button class="btn-cancel" onclick="closeConfirmCreditModal()" style="width: 100%; padding: 0.875rem;">
+        Não, voltar
+      </button>
+    </div>
+  </div>
+</div>
+
+   
+
     <!-- PREMIUM MODAL -->
     <div id="premium-modal" class="modal hidden">
       <div class="modal-overlay"></div>
