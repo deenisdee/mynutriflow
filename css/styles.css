@@ -562,6 +562,7 @@ body.modal-open{ overflow:hidden; height:100vh; }
 /* Botões padrão */
 .btn-secondary,
 .btn-primary{
+
   padding:.875rem;
   border:none;
   border-radius:10px;
@@ -570,8 +571,8 @@ body.modal-open{ overflow:hidden; height:100vh; }
   transition:all .2s;
   font-size:1rem;
 }
-.btn-secondary{ background:#e5e7eb; color:#374151; }
-.btn-secondary:hover{ background:#d1d5db; }
+.btn-secondary{ background:#d1d5db;  color:#374151; }
+.btn-secondary:hover{ background:#ddd; }
 .btn-primary{ background:#16a34a; color:#fff; }
 .btn-primary:hover{ background:#15803d; }
 
@@ -777,9 +778,9 @@ body.modal-open{ overflow:hidden; height:100vh; }
 /* Botão "Agora não" - HOVER (fica branco com borda) */
 #premium-modal .btn-cancel:hover,
 .btn-cancel:hover {
-  background: #15803d;       /* ← Branco no hover (invertido) */
-  border-color: none;
-  transform: translateY(-4px);
+  background: #fff;       /* ← Branco no hover (invertido) */
+  border-color: #d1d5db;
+  transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -1591,7 +1592,6 @@ body.premium-active #premium-btn {
   border: 2px solid #e5e7eb;
   border-radius: 0.75rem;
   cursor: pointer;
-  
   transition: all 0.2s;
   font-size: 1rem;
   font-weight: 500;
@@ -1621,9 +1621,9 @@ body.premium-active #premium-btn {
 .btn-cancel {
   width: 100%;
   padding: 0.875rem;      /* ← MESMO padding do Ativar Premium */
-  background: #16a34a;    /* ← Cinza claro (invertido) */
-  color: #fff;
-  border: none;
+  background: #f3f4f6;    /* ← Cinza claro (invertido) */
+  color: #374151;
+  border: 2px solid #e5e7eb;
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
@@ -1780,8 +1780,10 @@ body.premium-active #premium-btn {
 
 
 
+
+
 /* ================================
-   MODAL REFEIÇÕES - ÍCONES E HORÁRIOS NA MESMA LINHA
+   MODAL REFEIÇÕES - ÍCONES E HORÁRIOS
    ================================ */
 .meal-selector-options {
   display: flex;
@@ -1793,8 +1795,7 @@ body.premium-active #premium-btn {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 10px;
-  padding: 1rem 1.25rem;
+padding: 1.25rem 1.5rem !important;  /* ← AUMENTADO ainda mais */
   background: #fff;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
@@ -1802,6 +1803,11 @@ body.premium-active #premium-btn {
   transition: all 0.2s;
   text-align: left;
   width: 100%;
+  
+  
+  
+  
+  
 }
 
 .meal-option:hover {
@@ -1820,7 +1826,7 @@ body.premium-active #premium-btn {
 .meal-name {
   flex: 1;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #1f2937;
   text-align: left;
 }
@@ -1832,6 +1838,8 @@ body.premium-active #premium-btn {
   white-space: nowrap;
   margin-left: auto;
 }
+
+
 
 
 
@@ -2221,4 +2229,11 @@ body.detail-open {
 .categories-new.fade-in {
   opacity: 1;
   transform: translateY(0);
+}
+
+
+
+/* FORÇA PADDING MAIOR NOS BOTÕES DE REFEIÇÃO */
+#meal-selector-modal button.meal-option.tap {
+  padding: 1.5rem 1.75rem !important;
 }
