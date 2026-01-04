@@ -526,6 +526,7 @@ body.modal-open{ overflow:hidden; height:100vh; }
 .modal-content-xlarge{
   padding-right:18px;
   margin-right:-18px;
+   max-width: 80%;
 }
 
 .modal-close{
