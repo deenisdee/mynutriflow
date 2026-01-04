@@ -977,6 +977,7 @@ body.modal-open{ overflow:hidden; height:100vh; }
 
 #premium-modal .btn-secondary,
 #premium-modal .btn-primary{
+   flex: 1;
   height: 46px;
   border-radius: 12px;
 }
