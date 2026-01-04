@@ -761,15 +761,12 @@ body.modal-open{ overflow:hidden; height:100vh; }
 #premium-modal .input-group label{ font-weight:600; }
 
 #confirm-credit-modal {
- z-index: 99999!important;
+ z-index: 999!important;
 }
 
 
 
 
-#premium-modal {
- z-index: 99999!important;
-}
 
 
 
@@ -2168,3 +2165,37 @@ body.detail-open {
   opacity: 1;
   transform: translateY(0);
 }
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   MODAIS — sempre acima de qualquer overlay
+   (fix para Premium não aparecer)
+========================================= */
+.modal {
+  position: fixed !important;
+  inset: 0 !important;              /* top/right/bottom/left = 0 */
+  z-index: 999999 !important;
+  display: none;                    /* padrão: escondido */
+  align-items: center;
+  justify-content: center;
+}
+
+/* quando o modal está aberto (sem .hidden), garante que aparece */
+.modal:not(.hidden) {
+  display: flex !important;
+}
+
+/* garante que nenhum “painel” ou overlay passe por cima */
+#recipe-detail {
+  position: relative;
+  z-index: 1 !important;
+}
+
