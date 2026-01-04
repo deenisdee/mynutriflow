@@ -1274,6 +1274,13 @@ window.addToWeekPlan = function(day, recipeId) {
     
     console.log('[PLANNER] Modal aberto');
   }
+  
+  
+  // ✅ Renderiza ícones Lucide
+if (typeof lucide !== 'undefined') {
+  lucide.createIcons();
+}
+    
 };
 
 
