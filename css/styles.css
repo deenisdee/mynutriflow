@@ -1463,6 +1463,29 @@ body.premium-active #premium-btn {
 
 /* Mobile */
 @media (max-width: 768px) {
+
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 65px !important;
+    height: 65px !important;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(22, 163, 74, 0.3);
+    transition: all 0.3s ease;
+    z-index: 999;
+    opacity: 1;
+    transform: scale(1);
+}
+
+   
   .detail-title {
     font-size: 1.7rem;
   }
