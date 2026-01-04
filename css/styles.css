@@ -2182,7 +2182,7 @@ body.detail-open {
 .modal {
   position: fixed !important;
   inset: 0 !important;
-  z-index: 999999 !important;
+  z-index: 999999999999 !important;
   display: none;
   align-items: center;
   justify-content: center;
