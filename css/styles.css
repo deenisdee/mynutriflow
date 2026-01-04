@@ -552,7 +552,7 @@ body.modal-open{ overflow:hidden; height:100vh; }
 .modal-close svg{ width:20px; height:20px; stroke:#111827; stroke-width:2; }
 
 .modal-title{
-  font-size:1.6rem;
+  font-size:1.3rem;
   font-weight:600;
   margin-bottom:1.25rem;
   color:#111827;
