@@ -977,7 +977,7 @@ body.modal-open{ overflow:hidden; height:100vh; }
 
 #premium-modal .btn-secondary,
 #premium-modal .btn-primary{
-   flex: 1;
+   flex: 1 !important;
   height: 46px;
   border-radius: 12px;
 }
@@ -1619,7 +1619,7 @@ body.premium-active #premium-btn {
 /* Botão "Agora não" - ESTADO NORMAL (background cinza) */
 #premium-modal .btn-cancel,
 #premium-modal .btn-primary {
-  flex: 1;              /* ← DIVIDE ESPAÇO IGUALMENTE */
+   flex: 1 !important;       /* ← DIVIDE ESPAÇO IGUALMENTE */
   padding: 0.875rem;
   font-size: 1rem;
   font-weight: 600;
