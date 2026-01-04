@@ -1781,6 +1781,44 @@ body.premium-active #premium-btn {
 
 
 
+/* ================================
+   AJUSTES FINAIS - BOTÕES E HEADER
+   ================================ */
+
+/* Botão "Ativar Premium" no header - igualar fonte com badge créditos */
+.premium-btn {
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  padding: 0.625rem 1.5rem !important;
+}
+
+/* Modal Premium - Botão "Agora não" com hover invertido */
+#premium-modal .btn-cancel {
+  background: #f3f4f6 !important;
+  color: #374151 !important;
+  border: 2px solid #e5e7eb !important;
+}
+
+#premium-modal .btn-cancel:hover {
+  background: #fff !important;
+  border-color: #d1d5db !important;
+}
+
+/* Modal de Confirmação - Botão "Não, voltar" com hover invertido */
+#confirm-credit-modal .btn-cancel {
+  background: #f3f4f6 !important;
+  color: #374151 !important;
+  border: 2px solid #e5e7eb !important;
+}
+
+#confirm-credit-modal .btn-cancel:hover {
+  background: #fff !important;
+  border-color: #d1d5db !important;
+}
+
+
+
+
 
 
 
