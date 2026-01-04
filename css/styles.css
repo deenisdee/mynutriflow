@@ -968,11 +968,11 @@ body.modal-open{ overflow:hidden; height:100vh; }
   border-radius: 9px !important;
 }
 
-#premium-modal .modal-actions{
-  display: grid !important;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 12px;
-  align-items: stretch;
+#premium-modal .modal-actions,
+#premium-modal > div > div:last-child {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
 }
 
 #premium-modal .btn-secondary,
@@ -1617,17 +1617,15 @@ body.premium-active #premium-btn {
 
 /* Botão "Agora não" - ESTADO NORMAL (background cinza) */
 #premium-modal .btn-cancel,
-.btn-cancel {
-  width: 100%;
-  padding: 0.875rem;      /* ← MESMO padding do Ativar Premium */
-  background: #f3f4f6;    /* ← Cinza claro (invertido) */
-  color: #374151;
-  border: 2px solid #e5e7eb;
-  border-radius: 12px;
+#premium-modal .btn-primary {
+  flex: 1;              /* ← DIVIDE ESPAÇO IGUALMENTE */
+  padding: 0.875rem;
   font-size: 1rem;
   font-weight: 600;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;  /* ← Evita quebra de texto */
 }
 
 .modal-subtitle {
