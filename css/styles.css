@@ -2175,27 +2175,27 @@ body.detail-open {
 
 
 
-/* =========================================
-   MODAIS — sempre acima de qualquer overlay
-   (fix para Premium não aparecer)
-========================================= */
+/* =========================================================
+   FIX DEFINITIVO — MODAIS SEMPRE ACIMA DE TUDO
+========================================================= */
+
 .modal {
   position: fixed !important;
-  inset: 0 !important;              /* top/right/bottom/left = 0 */
+  inset: 0 !important;
   z-index: 999999 !important;
-  display: none;                    /* padrão: escondido */
+  display: none;
   align-items: center;
   justify-content: center;
 }
 
-/* quando o modal está aberto (sem .hidden), garante que aparece */
 .modal:not(.hidden) {
   display: flex !important;
 }
 
-/* garante que nenhum “painel” ou overlay passe por cima */
+/* recipe-detail NÃO pode competir com modal */
 #recipe-detail {
   position: relative;
   z-index: 1 !important;
 }
+
 
