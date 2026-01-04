@@ -756,34 +756,17 @@ body.modal-open{ overflow:hidden; height:100vh; }
   border-radius:10px;
   margin:1rem 0;
 }
-.premium-warning p{ margin:0; color:#92400e; font-weight:600; font-size:.9rem; } 
+.premium-warning p{ margin:0; color:#92400e; font-weight:600; font-size:.9rem; }
 
 #premium-modal .input-group label{ font-weight:600; }
-
-#confirm-credit-modal {
- z-index: 999!important;
-}
-
-
-
-
-
-
-
-
-
 #premium-modal #premium-code-input{
   border-radius:8px !important;
   border:2px solid #e5e7eb !important;
   padding:.75rem 1rem !important;
   font-size:1rem !important;
   font-weight:400 !important;
-  
 }
-
-#premium-modal #premium-code-input:focus{ border-color:#16a34a !important; outline:none !important;
-                                   
-}
+#premium-modal #premium-code-input:focus{ border-color:#16a34a !important; outline:none !important; }
 
 .premium-footer{ padding-top:1rem; border-top:1px solid #e5e7eb; text-align:center; margin-top:1rem; }
 .premium-footer-text{ color:#6b7280; font-size:.85rem; font-weight:400; margin:0 0 .75rem; }
@@ -805,11 +788,6 @@ body.modal-open{ overflow:hidden; height:100vh; }
 }
 .premium-link.whatsapp{ background:#25D366; color:#fff; }
 .premium-link.instagram{ background:#111; color:#fff; }
-
-
-
-
-
 
 /* ============================================
    FAQ (sem emoji + padrão verde)
@@ -923,22 +901,12 @@ body.modal-open{ overflow:hidden; height:100vh; }
    PATCH — alinhamento Premium Modal
    (mantido 1x — estava duplicado)
    ================================ */
-
-
-
 #premium-modal .modal-content{
   padding-right: 1.5rem !important;
   margin-right: 0 !important;
   display: grid;
   gap: 14px;
-
- 
-
-   
 }
-
-
-
 
 #premium-modal .premium-hero{
   margin-bottom: 0 !important;
@@ -970,21 +938,12 @@ body.modal-open{ overflow:hidden; height:100vh; }
   border-radius: 9px !important;
 }
 
-
-
-
 #premium-modal .modal-actions{
   display: grid !important;
   grid-template-columns: 1fr 1.4fr;
   gap: 12px;
   align-items: stretch;
-
-
-
 }
-
-
-
 
 #premium-modal .btn-secondary,
 #premium-modal .btn-primary{
@@ -2165,13 +2124,3 @@ body.detail-open {
   opacity: 1;
   transform: translateY(0);
 }
-
-
-
-
-
-
-
-
-
-
