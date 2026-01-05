@@ -2957,7 +2957,11 @@ body.modal-open .bottom-tab-bar {
   
   .categories-new {
     margin: 0.5rem auto !important
-  
+	
+ 
 }
 
-
+@media (max-width: 768px) {
+	.container {
+    margin: -10px auto !important;
+	}
