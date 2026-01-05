@@ -2924,9 +2924,40 @@ body.modal-open .bottom-tab-bar {
     margin-top: 30px !important;
     stroke: #fff;
     stroke-width: 2;
-	
-
-  
+	  
 }
-	
+
+	/* =========================================
+   PATCH — Botão Premium ativo centralizado (mobile)
+   ========================================= */
+@media (max-width: 768px) {
+
+  /* Container dos botões no header */
+  .header-actions {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  /* Quando estiver Premium, só existe um botão:
+     centraliza ele de verdade */
+  body.premium-active .header-actions {
+    justify-content: center !important;
+  }
+
+  /* Garante que o botão não empurre pro lado */
+  body.premium-active .header-actions > * {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Ajuste fino de largura (opcional, fica mais elegante) */
+  body.premium-active .header-actions button,
+  body.premium-active .header-actions .premium-btn,
+  body.premium-active .header-actions .btn-premium {
+    width: fit-content !important;
+    min-width: 160px;
+  }
+}
+
 
