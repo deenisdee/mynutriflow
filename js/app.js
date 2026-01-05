@@ -1033,7 +1033,7 @@ function showRecipeDetail(recipeId) {
     
     // Scroll suave pro topo
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 300);
+  }, 500);
 }
 
 
