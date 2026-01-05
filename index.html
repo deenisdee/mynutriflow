@@ -1,479 +1,545 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<!-- <script defer data-domain="receitafit.app" src="https://plausible.io/js/script.js"></script> -->
- 
-</script>
-  
-<head>
-  <meta charset="UTF-8" />
-
-  <!-- Meta Tags -->
-  <meta name="description" content="ReceitaFit - Receitas fitness com macros detalhados, calculadora de calorias e planejador semanal. Transforme sua alimentação!">
-  <meta name="keywords" content="receitas fit, receitas fitness, dieta, macros, proteína,低caloria, receitas saudáveis">
-  <meta name="author" content="ReceitaFit">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Open Graph (Facebook/WhatsApp) -->
-  <meta property="og:title" content="ReceitaFit - Receitas Fitness Premium">
-  <meta property="og:description" content="40+ receitas fitness com informações nutricionais completas">
-  <meta property="og:image" content="https://receitafit.app/og-image.jpg">
-  <meta property="og:url" content="https://receitafit.app">
-  
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ReceitaFit">
-  <meta name="twitter:description" content="Receitas fitness com macros detalhados">
-  
-  <title>Receitafit.App - Receitas Fit Premium</title>
-  <link rel="stylesheet" href="css/styles.css" />
-
-
-  
-  <!-- 👇 SCRIPT QUE RODA ANTES DE TUDO -->
-<script>
-  (function() {
-    const isPremium = localStorage.getItem('fit_premium') === 'true';
-    const credits = parseInt(localStorage.getItem('fit_credits') || '3', 10);
-    
-
-    
-    if (isPremium) {
-      // PREMIUM
-      document.documentElement.style.setProperty('--badge-bg', 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)');
-      document.documentElement.style.setProperty('--show-premium-btn', 'none');
-      
-    
-      
-    } else {
-      // FREE
-      document.documentElement.style.setProperty('--badge-bg', '#3b82f6');
-      document.documentElement.style.setProperty('--show-premium-btn', 'block');
-      
-    
-    }
-  })();
-</script>
-
-<!-- Lucide Icons CDN -->
-<script src="https://unpkg.com/lucide@latest"></script>
-  
-  
-</head>
-
-<body>
-  <div id="app">
-    <!-- Header -->
-    <header id="header">
-      <div class="container">
-        <div class="header-content">
-          <a href="index.html" class="logo" style="text-decoration:none; display:flex; align-items:center; gap:0.75rem;">
-            <div class="logo-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
-                <line x1="6" y1="17" x2="18" y2="17"/>
-              </svg>
-            </div>
-            
-            <h1><span class="logo-receita">Receita</span><span class="logo-fit">fit.</span><span class="logo-app">App</span></h1>
+   <!-- <script defer data-domain="receitafit.app" src="https://plausible.io/js/script.js"></script> -->
+   </script>
+   <head>
+      <meta charset="UTF-8" />
+      <!-- Meta Tags -->
+      <meta name="description" content="ReceitaFit - Receitas fitness com macros detalhados, calculadora de calorias e planejador semanal. Transforme sua alimentação!">
+      <meta name="keywords" content="receitas fit, receitas fitness, dieta, macros, proteína,低caloria, receitas saudáveis">
+      <meta name="author" content="ReceitaFit">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- Open Graph (Facebook/WhatsApp) -->
+      <meta property="og:title" content="ReceitaFit - Receitas Fitness Premium">
+      <meta property="og:description" content="40+ receitas fitness com informações nutricionais completas">
+      <meta property="og:image" content="https://receitafit.app/og-image.jpg">
+      <meta property="og:url" content="https://receitafit.app">
+      <!-- Twitter Card -->
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="ReceitaFit">
+      <meta name="twitter:description" content="Receitas fitness com macros detalhados">
+      <title>Receitafit.App - Receitas Fit Premium</title>
+      <link rel="stylesheet" href="css/styles.css" />
+      <!-- 👇 SCRIPT QUE RODA ANTES DE TUDO -->
+      <script>
+         (function() {
+           const isPremium = localStorage.getItem('fit_premium') === 'true';
+           const credits = parseInt(localStorage.getItem('fit_credits') || '3', 10);
            
-          </a>
-
-          <div class="search-container">
-            <input type="text" id="search-input" placeholder="Buscar receitas..." class="search-input" />
-            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.35-4.35"></path>
-            </svg>
-          </div>
-
-          <div class="header-tools">
-            <button id="calculator-btn" class="tool-btn tool-blue tap" title="Calculadora de Calorias">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <rect x="4" y="2" width="16" height="20" rx="2"></rect>
-                <line x1="8" y1="6" x2="16" y2="6"></line>
-                <line x1="8" y1="10" x2="16" y2="10"></line>
-                <line x1="8" y1="14" x2="16" y2="14"></line>
-                <line x1="8" y1="18" x2="12" y2="18"></line>
-              </svg>
-            </button>
-
-            <button id="shopping-btn" class="tool-btn tool-purple tap" title="Lista de Compras">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span id="shopping-counter" class="tool-counter hidden">0</span>
-            </button>
-
-            <button id="planner-btn" class="tool-btn tool-orange tap" title="Planejador Semanal">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-            </button>
-
-            <button id="faq-btn" class="tool-btn tool-purple tap" title="Ajuda">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-            </button>
-          </div>
-
-          <div class="header-actions">
-
-
-            
-<div id="credits-badge" class="badge">
-  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-    <circle cx="12" cy="12" r="3"></circle>
-  </svg>
-  <span>3 Créditos</span>
-</div>
-
-            <button id="premium-btn" class="btn-premium tap">Ativar Premium</button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- SLIDER HERO FULL-WIDTH -->
-    <div class="hero-slider-fullwidth" id="heroSlider">
-      <div class="slider-track-new" id="sliderTrack"></div>
-      <button class="slider-arrow-new prev tap" onclick="changeSlideNew(-1)">‹</button>
-      <button class="slider-arrow-new next tap" onclick="changeSlideNew(1)">›</button>
-      <div class="slider-dots-new" id="sliderDots"></div>
-    </div>
-
-    <!-- CATEGORIAS -->
-    <div class="categories-new">
-      <div class="categories-grid-new" id="categoriesGrid"></div>
-    </div>
-
-    <!-- Main Content -->
-    <main class="container">
-      <div id="recipe-detail" class="recipe-detail hidden"></div>
-      <div id="recipe-grid" class="recipe-grid"></div>
-    </main>
-
-    <!-- Modal Calculadora -->
-    <div id="calculator-modal" class="modal hidden">
-      <div class="modal-overlay"></div>
-      <div class="modal-content-large modal-surface">
-        <button class="modal-close tap" onclick="closeCalculator()" aria-label="Fechar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title">Calculadora de Calorias</h3>
-
-        <div class="calculator-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Peso (kg)</label>
-              <input type="number" id="calc-weight" placeholder="70" />
+         
+           
+           if (isPremium) {
+             // PREMIUM
+             document.documentElement.style.setProperty('--badge-bg', 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)');
+             document.documentElement.style.setProperty('--show-premium-btn', 'none');
+             
+           
+             
+           } else {
+             // FREE
+             document.documentElement.style.setProperty('--badge-bg', '#3b82f6');
+             document.documentElement.style.setProperty('--show-premium-btn', 'block');
+             
+           
+           }
+         })();
+      </script>
+      <!-- Lucide Icons CDN -->
+      <script src="https://unpkg.com/lucide@latest"></script>
+   </head>
+   <body>
+      <div id="app">
+         <!-- Header -->
+         <header id="header">
+            <div class="container">
+               <div class="header-content">
+                  <!-- Logo -->
+                  <a href="index.html" class="logo" style="text-decoration:none; display:flex; align-items:center; gap:0.75rem;">
+                     <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                           <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
+                           <line x1="6" y1="17" x2="18" y2="17"/>
+                        </svg>
+                     </div>
+                     <h1><span class="logo-receita">Receita</span><span class="logo-fit">fit.</span><span class="logo-app">App</span></h1>
+                  </a>
+                  <div class="search-container">
+                     <input type="text" id="search-input" placeholder="Buscar receitas..." class="search-input" />
+                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                     </svg>
+                  </div>
+                  <div class="header-tools">
+                     <button id="calculator-btn" class="tool-btn tool-blue tap" title="Calculadora de Calorias">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                           <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                           <line x1="8" y1="6" x2="16" y2="6"></line>
+                           <line x1="8" y1="10" x2="16" y2="10"></line>
+                           <line x1="8" y1="14" x2="16" y2="14"></line>
+                           <line x1="8" y1="18" x2="12" y2="18"></line>
+                        </svg>
+                     </button>
+                     <button id="shopping-btn" class="tool-btn tool-purple tap" title="Lista de Compras">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                           <circle cx="9" cy="21" r="1"></circle>
+                           <circle cx="20" cy="21" r="1"></circle>
+                           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                        </svg>
+                        <span id="shopping-counter" class="tool-counter hidden">0</span>
+                     </button>
+                     <button id="planner-btn" class="tool-btn tool-orange tap" title="Planejador Semanal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                           <line x1="16" y1="2" x2="16" y2="6"></line>
+                           <line x1="8" y1="2" x2="8" y2="6"></line>
+                           <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                     </button>
+                     <button id="faq-btn" class="tool-btn tool-purple tap" title="Ajuda">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                           <circle cx="12" cy="12" r="10"></circle>
+                           <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                           <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                     </button>
+                  </div>
+                  <div class="header-actions">
+                     <div id="credits-badge" class="badge">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                           <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                        <span>3 Créditos</span>
+                     </div>
+                     <button id="premium-btn" class="btn-premium tap">Ativar Premium</button>
+                  </div>
+                  <button class="hamburger-btn" onclick="openHamburgerMenu()" aria-label="Menu">
+                  <i data-lucide="menu"></i>
+                  </button> 
+               </div>
             </div>
-            <div class="form-group">
-              <label>Altura (cm)</label>
-              <input type="number" id="calc-height" placeholder="170" />
+         </header>
+         <!-- SLIDER HERO FULL-WIDTH -->
+         <div class="hero-slider-fullwidth" id="heroSlider">
+            <div class="slider-track-new" id="sliderTrack"></div>
+            <button class="slider-arrow-new prev tap" onclick="changeSlideNew(-1)">‹</button>
+            <button class="slider-arrow-new next tap" onclick="changeSlideNew(1)">›</button>
+            <div class="slider-dots-new" id="sliderDots"></div>
+         </div>
+         <!-- CATEGORIAS -->
+         <div class="categories-new">
+            <div class="categories-grid-new" id="categoriesGrid"></div>
+         </div>
+         <!-- Main Content -->
+         <main class="container">
+            <div id="recipe-detail" class="recipe-detail hidden"></div>
+            <div id="recipe-grid" class="recipe-grid"></div>
+         </main>
+         <!-- Modal Calculadora -->
+         <div id="calculator-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content-large modal-surface">
+               <button class="modal-close tap" onclick="closeCalculator()" aria-label="Fechar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                     <line x1="18" y1="6" x2="6" y2="18"></line>
+                     <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+               </button>
+               <h3 class="modal-title">Calculadora de Calorias</h3>
+               <div class="calculator-form">
+                  <div class="form-row">
+                     <div class="form-group">
+                        <label>Peso (kg)</label>
+                        <input type="number" id="calc-weight" placeholder="70" />
+                     </div>
+                     <div class="form-group">
+                        <label>Altura (cm)</label>
+                        <input type="number" id="calc-height" placeholder="170" />
+                     </div>
+                  </div>
+                  <div class="form-row">
+                     <div class="form-group">
+                        <label>Idade</label>
+                        <input type="number" id="calc-age" placeholder="25" />
+                     </div>
+                     <div class="form-group">
+                        <label>Sexo</label>
+                        <select id="calc-gender">
+                           <option value="male">Masculino</option>
+                           <option value="female">Feminino</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label>Nível de Atividade</label>
+                     <select id="calc-activity">
+                        <option value="sedentary">Sedentário (pouco ou nenhum exercício)</option>
+                        <option value="light">Leve (exercício 1-3 dias/semana)</option>
+                        <option value="moderate">Moderado (exercício 3-5 dias/semana)</option>
+                        <option value="active">Ativo (exercício 6-7 dias/semana)</option>
+                        <option value="veryActive">Muito Ativo (exercício intenso diário)</option>
+                     </select>
+                  </div>
+                  <button onclick="calculateCalories()" class="btn-calculate tap">Calcular</button>
+                  <div id="calc-results" class="calc-results hidden"></div>
+               </div>
             </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Idade</label>
-              <input type="number" id="calc-age" placeholder="25" />
+         </div>
+         <!-- Modal Lista de Compras -->
+         <div id="shopping-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content-medium modal-surface">
+               <button class="modal-close tap" onclick="closeShoppingList()" aria-label="Fechar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                     <line x1="18" y1="6" x2="6" y2="18"></line>
+                     <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+               </button>
+               <h3 class="modal-title">Lista de Compras</h3>
+               <div id="shopping-list-content"></div>
             </div>
-            <div class="form-group">
-              <label>Sexo</label>
-              <select id="calc-gender">
-                <option value="male">Masculino</option>
-                <option value="female">Feminino</option>
-              </select>
+         </div>
+         <!-- Modal Planejador Semanal -->
+         <div id="planner-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content-xlarge modal-surface">
+               <button class="modal-close tap" onclick="closeWeekPlanner()" aria-label="Fechar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                     <line x1="18" y1="6" x2="6" y2="18"></line>
+                     <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+               </button>
+               <h3 class="modal-title">Planejador Semanal</h3>
+               <div id="week-planner-content"></div>
             </div>
-          </div>
-
-          <div class="form-group">
-            <label>Nível de Atividade</label>
-            <select id="calc-activity">
-              <option value="sedentary">Sedentário (pouco ou nenhum exercício)</option>
-              <option value="light">Leve (exercício 1-3 dias/semana)</option>
-              <option value="moderate">Moderado (exercício 3-5 dias/semana)</option>
-              <option value="active">Ativo (exercício 6-7 dias/semana)</option>
-              <option value="veryActive">Muito Ativo (exercício intenso diário)</option>
-            </select>
-          </div>
-
-          <button onclick="calculateCalories()" class="btn-calculate tap">Calcular</button>
-          <div id="calc-results" class="calc-results hidden"></div>
-        </div>
+         </div>
+         <!-- Modal Confirmação de Crédito -->
+         <div id="confirm-credit-modal" class="modal hidden">
+            <div class="modal-overlay" onclick="closeConfirmCreditModal()"></div>
+            <div class="modal-content" style="max-width: 420px; text-align: center;">
+               <button class="modal-close tap" onclick="closeConfirmCreditModal()" aria-label="Fechar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                     <path d="M18 6L6 18M6 6l12 12"/>
+                  </svg>
+               </button>
+               <!-- Ícone de Cadeado Desbloqueado -->
+               <div style="width: 64px; height: 64px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 32px; height: 32px; color: #16a34a;">
+                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                     <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+                  </svg>
+               </div>
+               <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">
+                  Desbloquear esta receita?
+               </h2>
+               <p style="font-size: 1rem; color: #6b7280; line-height: 1.6; margin-bottom: 0.75rem;">
+                  Você tem <strong id="credits-remaining" style="color: #16a34a;">3</strong> créditos restantes.
+               </p>
+               <p style="font-size: 0.95rem; color: #374151; margin-bottom: 0.5rem;">
+                  Deseja usar <strong>1 crédito</strong> para desbloquear:
+               </p>
+               <p id="recipe-name-confirm" style="font-size: 1.05rem; font-weight: 600; color: #1f2937; margin-bottom: 2rem; line-height: 1.4;">
+                  Nome da Receita
+               </p>
+               <div style="display: flex; gap: 0.75rem; flex-direction: column;">
+                  <button class="btn-primary" onclick="confirmUnlockRecipe()" style="width: 100%; padding: 0.875rem;">
+                  Sim, desbloquear receita
+                  </button>
+                  <button class="btn-cancel" onclick="closeConfirmCreditModal()" style="width: 100%; padding: 0.875rem;">
+                  Não, voltar
+                  </button>
+               </div>
+            </div>
+         </div>
+         <!-- PREMIUM MODAL -->
+         <div id="premium-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content modal-surface" style="max-width: 480px;">
+               <button class="modal-close tap" onclick="closePremiumModal()" aria-label="Fechar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                     <line x1="18" y1="6" x2="6" y2="18"></line>
+                     <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+               </button>
+               <div class="premium-hero">
+                  <div class="premium-badge-icon" aria-hidden="true">
+                     <svg viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                     </svg>
+                  </div>
+                  <h2 class="premium-title">Desbloqueie as melhores receitas</h2>
+                  <p id="modal-message" class="premium-subtitle">Acesso ilimitado a todas as receitas</p>
+               </div>
+               <div id="credits-warning" class="premium-warning hidden">
+                  <p>Seus 3 créditos acabaram</p>
+               </div>
+               <div class="input-group">
+                  <label for="premium-code-input">Já tem um código Premium?</label>
+                  <input type="text" id="premium-code-input" placeholder="Digite seu código (ex: FIT-ABC-123-XYZ)">
+               </div>
+               <div class="modal-actions">
+                  <button id="modal-cancel" class="btn-secondary">Agora não</button>
+                  <button id="modal-activate" class="btn-primary">Ativar Premium</button>
+               </div>
+               <div class="premium-footer">
+                  <p class="premium-footer-text">Ainda não tem um código?</p>
+                  <div class="premium-links">
+                     <a class="premium-link whatsapp" href="https://wa.me/5511999999999?text=Quero%20virar%20Premium%20no%20receitafit.app!" target="_blank" rel="noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                           <path d="M22 16.92V21a1 1 0 0 1-1.09 1A19.8 19.8 0 0 1 3 5.09 1 1 0 0 1 4 4h4.09a1 1 0 0 1 1 .75l1.14 4.57a1 1 0 0 1-.27.95l-2.2 2.2a16 16 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 .95-.27l4.57 1.14a1 1 0 0 1 .75 1z"/>
+                        </svg>
+                        WhatsApp
+                     </a>
+                     <a class="premium-link instagram" href="https://instagram.com/receitafit.app" target="_blank" rel="noreferrer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                           <path d="M16 11.37a4 4 0 1 1-7.88 1.26 4 4 0 0 1 7.88-1.26z"/>
+                           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                        Instagram
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- FAQ MODAL -->
+         <div id="faq-modal" class="modal hidden">
+            <div class="modal-overlay"></div>
+            <div class="modal-content-large modal-surface">
+               <button class="modal-close" onclick="closeFAQ()" aria-label="Fechar">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                     <line x1="18" y1="6" x2="6" y2="18"></line>
+                     <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+               </button>
+               <h3 class="modal-title">Central de Ajuda</h3>
+               <div id="faq-content"></div>
+            </div>
+         </div>
       </div>
-    </div>
-
-    <!-- Modal Lista de Compras -->
-    <div id="shopping-modal" class="modal hidden">
-      <div class="modal-overlay"></div>
-      <div class="modal-content-medium modal-surface">
-        <button class="modal-close tap" onclick="closeShoppingList()" aria-label="Fechar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title">Lista de Compras</h3>
-        <div id="shopping-list-content"></div>
+      <!-- Scripts -->
+      <script src="js/data.js"></script>
+      <script src="js/app.js"></script>
+      <!-- Modal de Notificação -->
+      <div id="notification-modal" class="modal hidden">
+         <div class="modal-overlay"></div>
+         <div class="modal-content-small">
+            <h3 id="notification-title" class="modal-title">Sucesso!</h3>
+            <p id="notification-message" class="modal-text"></p>
+            <button class="btn-primary tap" onclick="closeNotification()">OK</button>
+         </div>
       </div>
-    </div>
-
-    <!-- Modal Planejador Semanal -->
-    <div id="planner-modal" class="modal hidden">
-      <div class="modal-overlay"></div>
-      <div class="modal-content-xlarge modal-surface">
-        <button class="modal-close tap" onclick="closeWeekPlanner()" aria-label="Fechar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title">Planejador Semanal</h3>
-        <div id="week-planner-content"></div>
+      <!-- Modal Escolha de Refeição -->
+      <div id="meal-selector-modal" class="modal hidden">
+         <div class="modal-overlay" onclick="closeMealSelector()"></div>
+         <div class="modal-content">
+            <button class="modal-close tap" onclick="closeMealSelector()" aria-label="Fechar">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+               </svg>
+            </button>
+            <h3 class="modal-title">Qual o horário desta refeição?</h3>
+            <p class="modal-subtitle" id="meal-selector-subtitle"></p>
+            <div class="meal-selector-options">
+               <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Café da Manhã')">
+               <i data-lucide="coffee" class="meal-icon"></i>
+               <span class="meal-name">Café da Manhã</span>
+               <span class="meal-time">6h - 9h</span>
+               </button>
+               <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Lanche da Manhã')">
+               <i data-lucide="apple" class="meal-icon"></i>
+               <span class="meal-name">Lanche da Manhã</span>
+               <span class="meal-time">9h - 11h</span>
+               </button>
+               <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Almoço')">
+               <i data-lucide="utensils" class="meal-icon"></i>
+               <span class="meal-name">Almoço</span>
+               <span class="meal-time">12h - 14h</span>
+               </button>
+               <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Lanche da Tarde')">
+               <i data-lucide="cookie" class="meal-icon"></i>
+               <span class="meal-name">Lanche da Tarde</span>
+               <span class="meal-time">15h - 17h</span>
+               </button>
+               <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Jantar')">
+               <i data-lucide="moon" class="meal-icon"></i>
+               <span class="meal-name">Jantar</span>
+               <span class="meal-time">19h - 21h</span>
+               </button>
+            </div>
+            <button class="btn-cancel tap" onclick="closeMealSelector()" style="margin-top: 1rem; width: 100%;">
+            Cancelar
+            </button>
+         </div>
       </div>
-    </div>
-
-
-
-<!-- Modal Confirmação de Crédito -->
-<div id="confirm-credit-modal" class="modal hidden">
-  <div class="modal-overlay" onclick="closeConfirmCreditModal()"></div>
-  <div class="modal-content" style="max-width: 420px; text-align: center;">
-    <button class="modal-close tap" onclick="closeConfirmCreditModal()" aria-label="Fechar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
-    
-    <!-- Ícone de Cadeado Desbloqueado -->
-    <div style="width: 64px; height: 64px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 32px; height: 32px; color: #16a34a;">
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-        <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
-      </svg>
-    </div>
-    
-    <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 1rem;">
-      Desbloquear esta receita?
-    </h2>
-    
-    <p style="font-size: 1rem; color: #6b7280; line-height: 1.6; margin-bottom: 0.75rem;">
-      Você tem <strong id="credits-remaining" style="color: #16a34a;">3</strong> créditos restantes.
-    </p>
-    
-    <p style="font-size: 0.95rem; color: #374151; margin-bottom: 0.5rem;">
-      Deseja usar <strong>1 crédito</strong> para desbloquear:
-    </p>
-    
-    <p id="recipe-name-confirm" style="font-size: 1.05rem; font-weight: 600; color: #1f2937; margin-bottom: 2rem; line-height: 1.4;">
-      Nome da Receita
-    </p>
-    
-    <div style="display: flex; gap: 0.75rem; flex-direction: column;">
-      <button class="btn-primary" onclick="confirmUnlockRecipe()" style="width: 100%; padding: 0.875rem;">
-        Sim, desbloquear receita
-      </button>
-      <button class="btn-cancel" onclick="closeConfirmCreditModal()" style="width: 100%; padding: 0.875rem;">
-        Não, voltar
-      </button>
-    </div>
-  </div>
-</div>
-
-   
-
-    <!-- PREMIUM MODAL -->
-    <div id="premium-modal" class="modal hidden">
-      <div class="modal-overlay"></div>
-      <div class="modal-content modal-surface" style="max-width: 480px;">
-        <button class="modal-close tap" onclick="closePremiumModal()" aria-label="Fechar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <div class="premium-hero">
-          <div class="premium-badge-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-            </svg>
-          </div>
-          <h2 class="premium-title">Desbloqueie as melhores receitas</h2>
-          <p id="modal-message" class="premium-subtitle">Acesso ilimitado a todas as receitas</p>
-        </div>
-
-        <div id="credits-warning" class="premium-warning hidden">
-          <p>Seus 3 créditos acabaram</p>
-        </div>
-
-        <div class="input-group">
-          <label for="premium-code-input">Já tem um código Premium?</label>
-          <input type="text" id="premium-code-input" placeholder="Digite seu código (ex: FIT-ABC-123-XYZ)">
-        </div>
-
-        <div class="modal-actions">
-          <button id="modal-cancel" class="btn-secondary">Agora não</button>
-          <button id="modal-activate" class="btn-primary">Ativar Premium</button>
-        </div>
-
-        <div class="premium-footer">
-          <p class="premium-footer-text">Ainda não tem um código?</p>
-          <div class="premium-links">
-            <a class="premium-link whatsapp" href="https://wa.me/5511999999999?text=Quero%20virar%20Premium%20no%20receitafit.app!" target="_blank" rel="noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M22 16.92V21a1 1 0 0 1-1.09 1A19.8 19.8 0 0 1 3 5.09 1 1 0 0 1 4 4h4.09a1 1 0 0 1 1 .75l1.14 4.57a1 1 0 0 1-.27.95l-2.2 2.2a16 16 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 .95-.27l4.57 1.14a1 1 0 0 1 .75 1z"/>
-              </svg>
-              WhatsApp
-            </a>
-
-            <a class="premium-link instagram" href="https://instagram.com/receitafit.app" target="_blank" rel="noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <path d="M16 11.37a4 4 0 1 1-7.88 1.26 4 4 0 0 1 7.88-1.26z"/>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-              </svg>
-              Instagram
-            </a>
-          </div>
-        </div>
-
+      <!-- Confirm Modal -->
+      <div id="confirm-modal" class="modal hidden">
+         <div class="modal-content" style="max-width: 420px;">
+            <h3 class="confirm-title" style="margin:0 0 10px 0;">Confirmar</h3>
+            <p class="confirm-message" style="margin:0 0 16px 0; opacity:.9;"></p>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+               <button class="confirm-no btn-secondary tap">Não, prefiro confirmar</button>
+               <button class="confirm-yes btn-primary tap">Sim, tenho certeza</button>
+            </div>
+         </div>
       </div>
-    </div>
-
-    <!-- FAQ MODAL -->
-    <div id="faq-modal" class="modal hidden">
-      <div class="modal-overlay"></div>
-      <div class="modal-content-large modal-surface">
-        <button class="modal-close" onclick="closeFAQ()" aria-label="Fechar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <h3 class="modal-title">Central de Ajuda</h3>
-        <div id="faq-content"></div>
+      <!-- Botão Voltar ao Topo -->
+      <button id="back-to-top" class="back-to-top hidden" onclick="scrollToTop()" aria-label="Voltar ao topo">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+         </svg>
+      </button>
+      <!-- TAB BAR MOBILE -->
+      <nav class="tab-bar">
+         <button class="tab-item" onclick="tabGoHome()" aria-label="Início">
+         <i data-lucide="home" class="tab-icon"></i>
+         <span class="tab-label">Início</span>
+         </button>
+         <button class="tab-item" onclick="tabGoSearch()" aria-label="Buscar">
+         <i data-lucide="search" class="tab-icon"></i>
+         <span class="tab-label">Buscar</span>
+         </button>
+         <button class="tab-item" onclick="togglePlannerDropdown()" aria-label="Planner">
+         <i data-lucide="calendar-days" class="tab-icon"></i>
+         <span class="tab-label">Planner</span>
+         </button>
+         <button class="tab-item" onclick="tabGoPremium()" aria-label="Premium">
+         <i data-lucide="star" class="tab-icon"></i>
+         <span class="tab-label">Premium</span>
+         </button>
+      </nav>
+      <!-- DROPDOWN PLANNER (abre pra cima) -->
+      <div id="planner-dropdown" class="planner-dropdown hidden">
+         <div class="planner-dropdown-overlay" onclick="closePlannerDropdown()"></div>
+         <div class="planner-dropdown-content">
+            <button class="planner-dropdown-item tap" onclick="openCalorieCalculator()">
+            <i data-lucide="calculator" class="planner-dropdown-icon"></i>
+            <span>Calculadora de Calorias</span>
+            </button>
+            <button class="planner-dropdown-item tap" onclick="openShoppingList()">
+            <i data-lucide="shopping-cart" class="planner-dropdown-icon"></i>
+            <span>Lista de Compras</span>
+            </button>
+            <button class="planner-dropdown-item tap" onclick="openWeekPlanner()">
+            <i data-lucide="calendar-check" class="planner-dropdown-icon"></i>
+            <span>Planejador Semanal</span>
+            </button>
+         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
-
-
-  <!-- Modal de Notificação -->
-<div id="notification-modal" class="modal hidden">
-  <div class="modal-overlay"></div>
-  <div class="modal-content-small">
-    <h3 id="notification-title" class="modal-title">Sucesso!</h3>
-    <p id="notification-message" class="modal-text"></p>
-    <button class="btn-primary tap" onclick="closeNotification()">OK</button>
-  </div>
-</div>
-
-
-
-
-
-
-<!-- Modal Escolha de Refeição -->
-<div id="meal-selector-modal" class="modal hidden">
-  <div class="modal-overlay" onclick="closeMealSelector()"></div>
-  <div class="modal-content">
-    <button class="modal-close tap" onclick="closeMealSelector()" aria-label="Fechar">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"/>
-      </svg>
-    </button>
-    
-    <h3 class="modal-title">Qual o horário desta refeição?</h3>
-    <p class="modal-subtitle" id="meal-selector-subtitle"></p>
-    
-    <div class="meal-selector-options">
-      <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Café da Manhã')">
-        <i data-lucide="coffee" class="meal-icon"></i>
-        <span class="meal-name">Café da Manhã</span>
-        <span class="meal-time">6h - 9h</span>
+      <!-- MENU HAMBÚRGUER -->
+      <div id="hamburger-menu" class="hamburger-menu hidden">
+         <div class="hamburger-overlay" onclick="closeHamburgerMenu()"></div>
+         <div class="hamburger-content">
+            <!-- Header do Menu -->
+            <div class="hamburger-header">
+               <div class="hamburger-logo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hamburger-logo-icon">
+                     <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 7V2M17 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M21 7V2"/>
+                  </svg>
+                  <span>Receita<span style="color: #16a34a;">Fit</span></span>
+               </div>
+               <button class="hamburger-close tap" onclick="closeHamburgerMenu()" aria-label="Fechar menu">
+               <i data-lucide="x"></i>
+               </button>
+            </div>
+            <!-- Links do Menu -->
+            <nav class="hamburger-nav">
+               <!-- Planner com submenu -->
+               <div class="hamburger-section">
+                  <div class="hamburger-section-title">
+                     <i data-lucide="calendar-days"></i>
+                     <span>Planner</span>
+                  </div>
+                  <button class="hamburger-link hamburger-sublink tap" onclick="openCalorieCalculator(); closeHamburgerMenu();">
+                  <i data-lucide="calculator"></i>
+                  <span>Calculadora de Calorias</span>
+                  </button>
+                  <button class="hamburger-link hamburger-sublink tap" onclick="openShoppingList(); closeHamburgerMenu();">
+                  <i data-lucide="shopping-cart"></i>
+                  <span>Lista de Compras</span>
+                  </button>
+                  <button class="hamburger-link hamburger-sublink tap" onclick="openWeekPlanner(); closeHamburgerMenu();">
+                  <i data-lucide="calendar-check"></i>
+                  <span>Planejador Semanal</span>
+                  </button>
+               </div>
+               <div class="hamburger-divider"></div>
+               <!-- Links principais -->
+               <a href="quem-somos.html" class="hamburger-link tap">
+               <i data-lucide="users"></i>
+               <span>Quem Somos</span>
+               </a>
+               <button class="hamburger-link tap" onclick="openFAQModal(); closeHamburgerMenu();">
+               <i data-lucide="help-circle"></i>
+               <span>Ajuda</span>
+               </button>
+               <a href="https://instagram.com/receitafit.app" target="_blank" rel="noopener noreferrer" class="hamburger-link tap">
+               <i data-lucide="instagram"></i>
+               <span>Instagram</span>
+               </a>
+               <div class="hamburger-divider"></div>
+               <!-- Botão Premium destacado -->
+               <button class="hamburger-premium-btn tap" onclick="openPremiumModal(); closeHamburgerMenu();">
+               <i data-lucide="star"></i>
+               <span>Seja Premium</span>
+               </button>
+            </nav>
+         </div>
+      </div>
+      <!-- RODAPÉ DESKTOP -->
+      <footer class="footer">
+         <div class="footer-container">
+            <!-- Logo e Descrição -->
+            <div class="footer-section">
+               <div class="footer-logo">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="footer-logo-icon">
+                     <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 7V2M17 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M21 7V2"/>
+                  </svg>
+                  <span>Receita<span style="color: #16a34a;">Fit</span></span>
+               </div>
+               <p class="footer-description">
+                  Receitas saudáveis e nutritivas para você atingir seus objetivos fitness.
+               </p>
+            </div>
+            <!-- Navegação -->
+            <div class="footer-section">
+               <h4 class="footer-title">Navegação</h4>
+               <ul class="footer-links">
+                  <li><a href="quem-somos.html" class="footer-link">Quem Somos</a></li>
+                  <li><a href="#" onclick="openFAQModal(); return false;" class="footer-link">Ajuda</a></li>
+                  <li><a href="#" onclick="openPremiumModal(); return false;" class="footer-link">Seja Premium</a></li>
+               </ul>
+            </div>
+            <!-- Redes Sociais -->
+            <div class="footer-section">
+               <h4 class="footer-title">Redes Sociais</h4>
+               <ul class="footer-links">
+                  <li>
+                     <a href="https://instagram.com/receitafit.app" target="_blank" rel="noopener noreferrer" class="footer-link footer-social">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="footer-social-icon">
+                           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" fill="white"/>
+                           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/>
+                        </svg>
+                        @ReceitaFit.App
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+         <!-- Copyright -->
+         <div class="footer-bottom">
+            <p class="footer-copyright">
+               © 2026 ReceitaFit - Todos os direitos reservados
+            </p>
+         </div>
+      </footer>
+      <!-- Botão Voltar ao Topo -->
+      <button id="back-to-top" class="back-to-top hidden" onclick="scrollToTop()" aria-label="Voltar ao topo">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+         </svg>
       </button>
-      
-      <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Lanche da Manhã')">
-        <i data-lucide="apple" class="meal-icon"></i>
-        <span class="meal-name">Lanche da Manhã</span>
-        <span class="meal-time">9h - 11h</span>
-      </button>
-      
-      <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Almoço')">
-        <i data-lucide="utensils" class="meal-icon"></i>
-        <span class="meal-name">Almoço</span>
-        <span class="meal-time">12h - 14h</span>
-      </button>
-      
-      <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Lanche da Tarde')">
-        <i data-lucide="cookie" class="meal-icon"></i>
-        <span class="meal-name">Lanche da Tarde</span>
-        <span class="meal-time">15h - 17h</span>
-      </button>
-      
-      <button class="meal-option tap" onclick="addToWeekPlanWithMeal('Jantar')">
-        <i data-lucide="moon" class="meal-icon"></i>
-        <span class="meal-name">Jantar</span>
-        <span class="meal-time">19h - 21h</span>
-      </button>
-    </div>
-    
-    <button class="btn-cancel tap" onclick="closeMealSelector()" style="margin-top: 1rem; width: 100%;">
-      Cancelar
-    </button>
-  </div>
-</div>
-
-
-
-
-
-
-
-<!-- Confirm Modal -->
-<div id="confirm-modal" class="modal hidden">
-  <div class="modal-content" style="max-width: 420px;">
-    <h3 class="confirm-title" style="margin:0 0 10px 0;">Confirmar</h3>
-    <p class="confirm-message" style="margin:0 0 16px 0; opacity:.9;"></p>
-
-    <div style="display:flex; gap:10px; justify-content:flex-end;">
-      <button class="confirm-no btn-secondary tap">Não, prefiro confirmar</button>
-      <button class="confirm-yes btn-primary tap">Sim, tenho certeza</button>
-    </div>
-  </div>
-</div>
-
-
- <!-- Botão Voltar ao Topo -->
-  <button id="back-to-top" class="back-to-top hidden" onclick="scrollToTop()" aria-label="Voltar ao topo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M12 19V5M5 12l7-7 7 7"/>
-    </svg>
-  </button>
-  
-
-  
-</body>
+   </body>
 </html>
