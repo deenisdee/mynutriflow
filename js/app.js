@@ -2074,13 +2074,14 @@ window.tabGoPremium = function() {
 	  openPremiumModal();
 	  setActiveTab(3);
 
-    }
+    };
 	
-	if closePremiumModal() {
+	if window.closePremiumModal() {
 		
       setActiveTab(0);
 	
-	}
+	};
+	
 };
 
 
