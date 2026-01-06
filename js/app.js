@@ -2062,12 +2062,14 @@ window.tabGoPremium = function() {
     if (modalMessage) modalMessage.textContent = 'Tenha acesso ilimitado a todas as receitas.';
     openModal(premiumModal);
     return;
+	
+	  haptic(10);
+  openPremiumModal();
+  setActiveTab(3);
 
   }
   
-  haptic(10);
-  openPremiumModal();
-  setActiveTab(3);
+
   
 };
 
