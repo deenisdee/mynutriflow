@@ -2256,70 +2256,66 @@ body .hamburger-btn,
 
 
 
-/* ================================
-   TAB BAR - PREMIUM DESTACADO
-   ================================ */
-.tab-item-premium .tab-icon-premium {
-  color: #fbbf24 !important; /* Amarelo/dourado */
-}
 
-.tab-label-premium {
-  color: #fbbf24 !important; /* Amarelo/dourado */
-}
 
-.tab-item-premium:active .tab-icon-premium,
-.tab-item-premium.active .tab-icon-premium {
-  color: #f59e0b !important; /* Amarelo mais escuro ao clicar */
-}
 
-.tab-item-premium:active .tab-label-premium,
-.tab-item-premium.active .tab-label-premium {
-  color: #f59e0b !important;
-}
 
 /* ================================
-   MENU HAMBÚRGUER - PREMIUM AMARELO
+   TAB BAR - PREMIUM CONDICIONAL
    ================================ */
-.hamburger-premium-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important; /* Gradiente dourado */
+/* Premium ATIVO - Amarelo */
+.tab-item-premium.has-premium .tab-icon {
+  color: #fbbf24 !important;
+}
+
+.tab-item-premium.has-premium .tab-label {
+  color: #fbbf24 !important;
+}
+
+/* Premium INATIVO - Verde normal */
+.tab-item-premium .tab-icon {
+  color: #6b7280;
+}
+
+.tab-item-premium .tab-label {
+  color: #6b7280;
+}
+
+/* ================================
+   MENU HAMBÚRGUER - PREMIUM CONDICIONAL
+   ================================ */
+/* Premium ATIVO - Amarelo com dias */
+.hamburger-premium-btn.has-premium {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
   color: #fff !important;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: all 0.2s;
-  margin-top: 0.5rem;
   box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+  animation: shine 2s ease-in-out infinite;
+}
+
+.hamburger-premium-btn.has-premium:active {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  transform: scale(0.98);
+}
+
+/* Premium INATIVO - Verde */
+.hamburger-premium-btn {
+  background: #16a34a !important;
+  color: #fff !important;
 }
 
 .hamburger-premium-btn:active {
-  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  background: #15803d !important;
   transform: scale(0.98);
-  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
 }
 
-.hamburger-premium-btn svg {
-  width: 20px;
-  height: 20px;
-  color: #fff;
-}
-
-/* Animação de brilho no botão premium */
 @keyframes shine {
   0% { opacity: 0.8; }
   50% { opacity: 1; }
   100% { opacity: 0.8; }
 }
 
-.hamburger-premium-btn {
-  animation: shine 2s ease-in-out infinite;
-}
+
+
 
 
 
