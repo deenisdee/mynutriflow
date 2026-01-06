@@ -2055,38 +2055,11 @@ window.closePlannerDropdown = function() {
   }
 };
 
-
-
-
-
-
-
 window.tabGoPremium = function() {
-    if (!isPremium) {
-     	
-	const warning = document.getElementById('credits-warning');
-    if (warning) warning.classList.add('hidden');
-
-      	
-	  haptic(10);
-	  openPremiumModal();
-	  setActiveTab(3);
-
-    };
-	
-    if (typeof closeModal(premiumModal); === 'function') {
-    setActiveTab(0); // volta para "Início"
-    }
-	
+  haptic(10);
+  openPremiumModal();
+  setActiveTab(3);
 };
-
-
-
-
-
-
-
-
 
 function setActiveTab(index) {
   const tabs = document.querySelectorAll('.tab-item');
