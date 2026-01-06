@@ -2223,12 +2223,23 @@ window.openFAQModal = function() {
 
 window.openPremiumModal = function() {
   haptic(10);
+
   const premiumModal = document.getElementById('premium-modal');
-  if (premiumModal) {
-    premiumModal.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-  }
+  if (!premiumModal) return;
+
+  premiumModal.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  // 🎯 Foco automático no input do código
+  setTimeout(() => {
+    const input = document.getElementById('premium-code-input');
+    if (input) {
+      input.focus();
+      input.select();
+    }
+  }, 150);
 };
+
 
 
 
