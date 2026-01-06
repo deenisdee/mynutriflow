@@ -2063,18 +2063,30 @@ window.tabGoPremium = function() {
 
 
 
+
+
+
+
 window.tabGoPremium = function() {
     if (!isPremium) {
- 
-      	
+     	
 	  haptic(10);
 	  openPremiumModal();
 	  setActiveTab(3);
-	  
+
+    }
+	
+	if closePremiumModal() {
+		
+      setActiveTab(0);
+	
+	}
+};
 
 
-	  }
-	 };
+
+
+
 
 
 
