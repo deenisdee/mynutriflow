@@ -2957,8 +2957,7 @@ body.modal-open .bottom-tab-bar {
   
   .categories-new {
     margin: 0.5rem auto !important
-
-	  
+	
  
 }
 
@@ -2966,3 +2965,18 @@ body.modal-open .bottom-tab-bar {
 	.container {
     margin: -10px auto !important;
 	}
+
+
+
+/* ============================= */
+/* TAB BAR – PREMIUM ATIVO */
+/* ============================= */
+
+body.premium-active .tab-bar .tab-item:nth-child(4) {
+  color: #ffcc00;
+}
+
+body.premium-active .tab-bar .tab-item:nth-child(4) .tab-icon,
+body.premium-active .tab-bar .tab-item:nth-child(4) .tab-label {
+  color: #ffcc00;
+}
