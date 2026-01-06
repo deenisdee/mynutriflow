@@ -2055,16 +2055,20 @@ window.closePlannerDropdown = function() {
   }
 };
 
-/* window.tabGoPremium = function() {
+ window.tabGoPremium = function() {
   if (!isPremium) {
     if (modalMessage) modalMessage.textContent = 'Tenha acesso ilimitado a todas as receitas.';
     openModal(premiumModal);
     return;
   }
+   setTimeout(() => {
+      if (premiumCodeInput) premiumCodeInput.focus();
+    }, 100);
 
-}; */
+}; 
 
-window.tabGoPremium = function() {
+
+/* window.tabGoPremium = function() {
 if (premiumBtn) {
   premiumBtn.addEventListener('click', () => {
     if (modalMessage) modalMessage.textContent = 'Tenha acesso ilimitado a todas as receitas.';
@@ -2080,7 +2084,7 @@ if (premiumBtn) {
     }, 100);
   });
  }
-}
+} */
 
 
 
