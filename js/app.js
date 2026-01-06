@@ -233,12 +233,24 @@ function closeModal(el) {
   document.body.classList.remove('modal-open');
 }
 
+
+
+
+
 window.closePremiumModal = function () {
   if (premiumCodeInput) premiumCodeInput.value = '';
   const warning = document.getElementById('credits-warning');
   if (warning) warning.classList.add('hidden');
+
   closeModal(premiumModal);
+
+  // 🔁 volta a tab para Início (cinza)
+  setActiveTab(0);
 };
+
+
+
+
 
 // ==============================
 // CORE BUSINESS RULES (fonte da verdade)
