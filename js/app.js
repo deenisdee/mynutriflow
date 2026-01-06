@@ -2064,19 +2064,23 @@ window.closePlannerDropdown = function() {
 window.tabGoPremium = function() {
     if (!isPremium) {
      	
+	const warning = document.getElementById('credits-warning');
+    if (warning) warning.classList.add('hidden');
+
+      closeModal(premiumModal);	
+		
 	  haptic(10);
 	  openPremiumModal();
 	  setActiveTab(3);
 
     };
 	
-	if window.closePremiumModal() {
-		
-      setActiveTab(0);
-	
-	};
+    if (typeof setActiveTab === 'function') {
+    setActiveTab(0); // volta para "Início"
+    }
 	
 };
+
 
 
 
