@@ -420,16 +420,25 @@
     <span class="tab-label">Planner</span>
   </button>
   
+  
+  
+  
+  
+  
   <!-- ✅ PREMIUM DESTACADO -->
-  <button class="tab-item tab-item-premium" onclick="tabGoPremium()" aria-label="Premium">
-    <i data-lucide="star" class="tab-icon tab-icon-premium"></i>
-    <span class="tab-label tab-label-premium">Premium</span>
-  </button>
+<button class="tab-item tab-item-premium" id="tab-premium-btn" onclick="tabGoPremium()" aria-label="Premium">
+  <i data-lucide="star" class="tab-icon"></i>
+  <span class="tab-label" id="tab-premium-label">Premium</span>
+</button>
+
+
+
+
+
+
+
 </nav>
-	  
-	  
-	  
-	  
+
       <!-- DROPDOWN PLANNER (abre pra cima) -->
       <div id="planner-dropdown" class="planner-dropdown hidden">
          <div class="planner-dropdown-overlay" onclick="closePlannerDropdown()"></div>
@@ -507,13 +516,23 @@
                </a>
                <div class="hamburger-divider"></div>
 			   
-			   
+
+
+		
+
+		
                <!-- Botão Premium destacado -->
-               <button class="hamburger-premium-btn tap" onclick="openPremiumModal(); closeHamburgerMenu();">
-               <i data-lucide="star"></i>
-               <span>Seja Premium</span>
-               </button>
-			   
+<button class="hamburger-premium-btn tap" id="hamburger-premium-btn" onclick="openPremiumModal(); closeHamburgerMenu();">
+  <i data-lucide="star"></i>
+  <span id="hamburger-premium-text">Seja Premium</span>
+</button>
+			 
+
+
+
+
+
+			 
 			   
             </nav>
          </div>
