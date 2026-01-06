@@ -2071,7 +2071,7 @@ window.tabGoPremium = function() {
 	  openPremiumModal();
 	  setActiveTab(3);
 	  
-	  window.closePremiumModal() {
+	 if window.closePremiumModal() {
 		  setActiveTab();
 	  }
 
