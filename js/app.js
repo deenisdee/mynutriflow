@@ -500,6 +500,87 @@ async function saveWeekPlan() {
 
 
 
+
+// ==============================
+// HAMBURGER PREMIUM (INDEX) - VALIDA + UI
+// ==============================
+
+function _calcDaysLeft(expiresTs) {
+  try {
+    const diff = expiresTs - Date.now();
+    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  } catch (e) {
+    return 0;
+  }
+}
+
+function updateHamburgerPremiumUI() {
+  const btn = document.getElementById('hamburger-premium-btn');
+  const label = document.getElementById('hamburger-premium-label');
+  if (!btn || !label) return;
+
+  // Usa as variáveis globais do app.js (isPremium/premiumExpires)
+  if (isPremium) {
+    const daysLeft = premiumExpires ? _calcDaysLeft(premiumExpires) : 0;
+
+    // Classe opcional (se você quiser estilizar via CSS)
+    btn.classList.add('premium-on');
+
+    // Texto
+    label.textContent = daysLeft > 0 ? `PREMIUM (${daysLeft}D)` : 'PREMIUM';
+
+    // Fundo amarelo com degradê no botão (não no texto)
+    btn.style.background = 'linear-gradient(135deg, #fbbf24, #f59e0b)';
+    btn.style.color = '#ffffff';
+
+    // Força o ícone ficar "cheio"
+    const svg = btn.querySelector('svg');
+    if (svg) {
+      svg.setAttribute('fill', '#ffffff');
+      svg.setAttribute('stroke', '#ffffff');
+    }
+
+  } else {
+    btn.classList.remove('premium-on');
+
+    // Volta ao normal (deixe o CSS mandar)
+    label.textContent = 'Seja Premium';
+    btn.style.background = '';
+    btn.style.color = '';
+
+    const svg = btn.querySelector('svg');
+    if (svg) {
+      svg.setAttribute('fill', 'none');
+      svg.setAttribute('stroke', 'currentColor');
+    }
+  }
+}
+
+// Clique do botão "Seja Premium" do hambúrguer
+window.hamburgerPremiumClick = function() {
+  haptic(10);
+
+  // ✅ Se já for premium, NÃO abre modal
+  if (isPremium) {
+    closeHamburgerMenu();
+    return;
+  }
+
+  // ✅ Se não for premium, abre modal e foca no input (igual você quer)
+  openPremiumModal();
+  closeHamburgerMenu();
+
+  setTimeout(() => {
+    const input = document.getElementById('premium-code-input');
+    if (input) input.focus();
+  }, 120);
+};
+
+
+
+
+
+
 // ==============================
 // UI (Badge / Premium)
 // ==============================
