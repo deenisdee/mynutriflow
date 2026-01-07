@@ -2994,7 +2994,7 @@ body.premium-active .tab-bar .tab-item:nth-child(4) .tab-label {
 
 .hamburger-premium-btn.premium i,
 .hamburger-premium-btn.premium span {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  /* background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); */
   color: #fff;
   font-weight: 600;
 }
@@ -3015,7 +3015,7 @@ body.premium-active .tab-bar .tab-item:nth-child(4) .tab-label {
 
 /* Premium ativo - botão hambúrguer */
 .hamburger-premium-btn.is-premium {
-  background: linear-gradient(135deg, #fbbf24, #facc15);
+  /* background: linear-gradient(135deg, #fbbf24, #facc15); */
   color: #ffffff;
 
   /* garante que o gradiente é do FUNDO */
