@@ -2974,10 +2974,38 @@ body.modal-open .bottom-tab-bar {
 /* ============================= */
 
 body.premium-active .tab-bar .tab-item:nth-child(4) .tab-icon {
-  color: #ffcc00;
-  fill: #ffcc00;
+  color: #f6a20e;
+  fill: #f6a20e;
 }
 
 body.premium-active .tab-bar .tab-item:nth-child(4) .tab-label {
   color: #9ca3af; /* cinza neutro (melhor leitura) */
+}
+
+
+/* ============================= */
+/* HAMBURGER – PREMIUM ATIVO */
+/* ============================= */
+
+.hamburger-premium-btn.premium {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #1f2937;
+}
+
+.hamburger-premium-btn.premium i,
+.hamburger-premium-btn.premium span {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* estrela preenchida */
+.hamburger-premium-btn.premium svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* estado free (mantém verde atual) */
+.hamburger-premium-btn.free {
+  background: #16a34a;
+  color: #ffffff;
 }
