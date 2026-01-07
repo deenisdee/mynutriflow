@@ -222,54 +222,23 @@ const mealSelectorSubtitle = document.getElementById('meal-selector-subtitle');
 // ==============================
 // MODAL HELPERS
 // ==============================
-
-
-
 function openModal(el) {
   if (!el) return;
-
   el.classList.remove('hidden');
   document.body.classList.add('modal-open');
-
-  // ✅ Foco automático se for o modal Premium (cobre TODOS os caminhos)
-  if (el.id === 'premium-modal') {
-    setTimeout(() => {
-      const input = document.getElementById('premium-code-input');
-      if (input) {
-        input.focus();
-        input.select();
-      }
-    }, 150);
-  }
 }
-
-
-
-
 function closeModal(el) {
   if (!el) return;
   el.classList.add('hidden');
   document.body.classList.remove('modal-open');
 }
 
-
-
-
-
 window.closePremiumModal = function () {
   if (premiumCodeInput) premiumCodeInput.value = '';
   const warning = document.getElementById('credits-warning');
   if (warning) warning.classList.add('hidden');
-
   closeModal(premiumModal);
-
-  // 🔁 volta a tab para Início (cinza)
-  setActiveTab(0);
 };
-
-
-
-
 
 // ==============================
 // CORE BUSINESS RULES (fonte da verdade)
@@ -495,92 +464,6 @@ async function saveWeekPlan() {
   } catch (e) {}
 }
 
-
-
-
-
-
-
-// ==============================
-// HAMBURGER PREMIUM (INDEX) - VALIDA + UI
-// ==============================
-
-function _calcDaysLeft(expiresTs) {
-  try {
-    const diff = expiresTs - Date.now();
-    return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
-  } catch (e) {
-    return 0;
-  }
-}
-
-function updateHamburgerPremiumUI() {
-  const btn = document.getElementById('hamburger-premium-btn');
-  const label = document.getElementById('hamburger-premium-label');
-  if (!btn || !label) return;
-
-  // Usa as variáveis globais do app.js (isPremium/premiumExpires)
-  if (isPremium) {
-    const daysLeft = premiumExpires ? _calcDaysLeft(premiumExpires) : 0;
-
-    // Classe opcional (se você quiser estilizar via CSS)
-    btn.classList.add('premium-on');
-
-    // Texto
-    label.textContent = daysLeft > 0 ? `PREMIUM (${daysLeft}D)` : 'PREMIUM';
-
-    // Fundo amarelo com degradê no botão (não no texto)
-    btn.style.background = 'linear-gradient(135deg, #fbbf24, #f59e0b)';
-    btn.style.color = '#ffffff';
-
-    // Força o ícone ficar "cheio"
-    const svg = btn.querySelector('svg');
-    if (svg) {
-      svg.setAttribute('fill', '#ffffff');
-      svg.setAttribute('stroke', '#ffffff');
-    }
-
-  } else {
-    btn.classList.remove('premium-on');
-
-    // Volta ao normal (deixe o CSS mandar)
-    label.textContent = 'Seja Premium';
-    btn.style.background = '';
-    btn.style.color = '';
-
-    const svg = btn.querySelector('svg');
-    if (svg) {
-      svg.setAttribute('fill', 'none');
-      svg.setAttribute('stroke', 'currentColor');
-    }
-  }
-}
-
-// Clique do botão "Seja Premium" do hambúrguer
-window.hamburgerPremiumClick = function() {
-  haptic(10);
-
-  // ✅ Se já for premium, NÃO abre modal
-  if (isPremium) {
-    closeHamburgerMenu();
-    return;
-  }
-
-  // ✅ Se não for premium, abre modal e foca no input (igual você quer)
-  openPremiumModal();
-  closeHamburgerMenu();
-
-  setTimeout(() => {
-    const input = document.getElementById('premium-code-input');
-    if (input) input.focus();
-  }, 120);
-};
-
-
-
-
-
-
 // ==============================
 // UI (Badge / Premium)
 // ==============================
@@ -588,20 +471,16 @@ function updateUI() {
   try {
     if (!creditsBadge) return;
 
-    let badgeText = 'Premium';
-
     if (isPremium) {
       document.body.classList.remove('free-user');
       document.body.classList.add('premium-active');
 
       creditsBadge.classList.add('premium');
-
+     let badgeText = 'Premium';
       if (premiumExpires) {
-        const daysLeft = Math.ceil(
-          (premiumExpires - Date.now()) / (1000 * 60 * 60 * 24)
-        );
-
-        if (daysLeft > 0) {
+        const daysLeft = Math.ceil((premiumExpires - Date.now()) / (1000 * 60 * 60 * 24));
+       
+        if (daysLeft > 0) { // ← REMOVE O "&& daysLeft <= 30"
           badgeText = `PREMIUM (${daysLeft}D)`;
         }
       }
@@ -613,10 +492,11 @@ function updateUI() {
         <span>${badgeText}</span>
       `;
 
-      if (premiumBtn) {
-        premiumBtn.style.display = 'none';
-        premiumBtn.offsetHeight; // força reflow
-      }
+     if (premiumBtn) {
+  premiumBtn.style.display = 'none';
+  // ✅ Força reflow para aplicar mudança imediatamente
+  premiumBtn.offsetHeight;
+}
 
     } else {
       document.body.classList.add('free-user');
@@ -632,132 +512,17 @@ function updateUI() {
       `;
 
       if (premiumBtn) {
-        premiumBtn.style.display = 'block';
-        premiumBtn.offsetHeight; // força reflow
-      }
+  premiumBtn.style.display = 'block';
+  // ✅ Força reflow
+  premiumBtn.offsetHeight;
+}
     }
 
     creditsBadge.classList.add('ready');
-
-    // ===============================
-    // 🔶 PREMIUM NO MENU HAMBÚRGUER
-    // ===============================
-    const hamburgerLabel = document.getElementById('hamburger-premium-label');
-    const hamburgerBtn = document.querySelector('.hamburger-premium-btn');
-
-    if (hamburgerLabel && hamburgerBtn) {
-      if (isPremium) {
-        hamburgerLabel.textContent = badgeText;
-        hamburgerBtn.classList.add('premium');
-        hamburgerBtn.classList.remove('free');
-      } else {
-        hamburgerLabel.textContent = 'Seja Premium';
-        hamburgerBtn.classList.remove('premium');
-        hamburgerBtn.classList.add('free');
-      }
-    }
-
   } catch (error) {
     console.error('Erro em updateUI:', error);
   }
-  updateHamburgerPremiumUI();
-  updateHamburgerPremiumLabel();
-
 }
-
-
-
-
-function updateHamburgerPremiumLabel() {
-  const label = document.getElementById('hamburger-premium-label');
-  const link = document.getElementById('hamburger-premium-link');
-  if (!label || !link) return;
-
-  if (isPremium) {
-    const daysLeft = premiumExpires
-      ? Math.ceil((premiumExpires - Date.now()) / (1000 * 60 * 60 * 24))
-      : 0;
-
-    label.textContent = daysLeft > 0 ? `PREMIUM (${daysLeft}D)` : 'PREMIUM';
-
-    // ✅ opcional: se quiser impedir clique total
-    link.addEventListener('click', (e) => {
-      if (isPremium) e.preventDefault();
-    }, { once: true });
-
-  } else {
-    label.textContent = 'Seja Premium';
-  }
-}
-
-
-
-
-
-function updateHamburgerPremiumUI() {
-  const btn = document.querySelector('.hamburger-premium-btn');
-  const label = document.getElementById('hamburger-premium-label');
-  const icon = btn?.querySelector('[data-lucide="star"]');
-
-  if (!btn || !label || !icon) return;
-
-  // -------------------------
-  // PREMIUM ATIVO
-  // -------------------------
-  if (isPremium) {
-    const daysLeft = premiumExpires
-      ? Math.ceil((premiumExpires - Date.now()) / (1000 * 60 * 60 * 24))
-      : null;
-
-    // visual
-    btn.style.background = '#ffcc00';
-    btn.style.borderColor = '#ffcc00';
-    btn.style.color = '#ffffff';
-
-    label.textContent = daysLeft && daysLeft > 0
-      ? `PREMIUM (${daysLeft}D)`
-      : 'PREMIUM';
-
-    // estrela preenchida
-    icon.outerHTML = `
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-        <path d="M12 2l2.9 6.6 7.1.6-5.4 4.6 1.6 6.9L12 17.8 5.8 20.7 7.4 13.8 2 9.2l7.1-.6L12 2z"/>
-      </svg>
-    `;
-
-    // desativa clique
-    btn.style.pointerEvents = 'none';
-    btn.setAttribute('aria-disabled', 'true');
-  }
-
-  // -------------------------
-  // NÃO PREMIUM
-  // -------------------------
-  else {
-    btn.style.background = '';
-    btn.style.borderColor = '';
-    btn.style.color = '';
-
-    label.textContent = 'Seja Premium';
-
-    icon.outerHTML = `
-      <i data-lucide="star"></i>
-    `;
-
-    btn.style.pointerEvents = 'auto';
-    btn.removeAttribute('aria-disabled');
-  }
-
-  // re-render ícones lucide
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
-}
-
-
-
-
-
 
 function updateShoppingCounter() {
   if (!shoppingCounter) return;
@@ -2290,37 +2055,11 @@ window.closePlannerDropdown = function() {
   }
 };
 
-
-
-
-
 window.tabGoPremium = function() {
   haptic(10);
-
-  // 1) Se premium e expirou, derruba premium e sai
-  if (isPremium && premiumExpires && Date.now() > premiumExpires) {
-    _handlePremiumExpiration();
-    return;
-  }
-
-  // 2) Se já é premium válido: NÃO abre modal.
-  //    Só marca a tab ativa (e o updateUI já cuida das cores do badge e do botão premium)
-  if (isPremium) {
-    setActiveTab(3);
-    return;
-  }
-
-  // 3) Se não é premium: abre o modal (comportamento atual)
   openPremiumModal();
   setActiveTab(3);
 };
-
-
-
-
-
-
-
 
 function setActiveTab(index) {
   const tabs = document.querySelectorAll('.tab-item');
@@ -2444,30 +2183,14 @@ window.openFAQModal = function() {
   }
 };
 
-
-
-
-
 window.openPremiumModal = function() {
   haptic(10);
-
-  // ✅ Se já é premium, NÃO abre modal
-  if (isPremium) return;
-
   const premiumModal = document.getElementById('premium-modal');
   if (premiumModal) {
     premiumModal.classList.remove('hidden');
     document.body.classList.add('modal-open');
-
-    // ✅ foco sempre
-    setTimeout(() => {
-      const input = document.getElementById('premium-code-input');
-      if (input) input.focus();
-    }, 120);
   }
 };
-
-
 
 
 
@@ -2568,22 +2291,10 @@ window.addEventListener('DOMContentLoaded', function() {
           const faqBtn = document.getElementById('faq-btn');
           if (faqBtn) faqBtn.click();
           break;
-		  
-		  
-		  
         case 'premium':
-  // ✅ Se já é premium, não abre modal
-  if (isPremium) {
-    // opcional: fecha dropdown/menu e volta pro home
-    if (typeof setActiveTab === 'function') setActiveTab(0);
-  } else {
-    // abre modal de premium
-    if (typeof window.openPremiumModal === 'function') window.openPremiumModal();
-  }
-  break;
-
-
-
+          const premBtn = document.getElementById('premium-btn');
+          if (premBtn) premBtn.click();
+          break;
       }
       
       // Limpa URL depois de abrir
