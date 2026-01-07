@@ -16,6 +16,9 @@
 // PROTEÇÃO ANTI-BURLA (3 camadas) - V2
 // ============================================
 
+
+/* 
+
 (function() {
   'use strict';
   
@@ -118,6 +121,76 @@
 
 })();
 
+ */
+
+
+
+
+// =====================================================
+// Premium — estado único + sync de UI (Header/Tab/Hamb)
+// =====================================================
+window.RF = window.RF || {};
+
+RF.premium = {
+  isActive() {
+    return localStorage.getItem('fit_premium') === 'true';
+  },
+
+  // opcional: se você já usa token/prazo, depois a gente liga aqui
+  // isValid() { ... }
+
+  setActive(active) {
+    localStorage.setItem('fit_premium', active ? 'true' : 'false');
+    RF.premium.syncUI();
+  },
+
+  syncUI() {
+    const active = RF.premium.isActive();
+
+    // 1) Classe no body (CSS já usa isso em alguns pontos)
+    document.body.classList.toggle('premium-active', active);
+
+    // 2) Header: botão "Ativar Premium"
+    const headerBtn = document.getElementById('premium-btn');
+    if (headerBtn) {
+      // Se premium ativo: trava clique e some (mantendo consistência com seu CSS)
+      headerBtn.disabled = active;
+      headerBtn.style.pointerEvents = active ? 'none' : 'auto';
+      headerBtn.style.opacity = active ? '0.6' : '1';
+      headerBtn.setAttribute('aria-disabled', active ? 'true' : 'false');
+    }
+
+    // 3) Tab bar: botão Premium (ícone estrela)
+    // (seleciona tanto <button> quanto <a> com .tab-premium)
+    const tabPremium = document.querySelectorAll('.tab-premium');
+    tabPremium.forEach((el) => {
+      el.dataset.premiumActive = active ? 'true' : 'false';
+      el.style.pointerEvents = active ? 'none' : 'auto';
+      el.style.opacity = active ? '0.7' : '1';
+      el.setAttribute('aria-disabled', active ? 'true' : 'false');
+    });
+
+    // 4) Hambúrguer: botão "Seja Premium"
+    const hambPremium = document.querySelectorAll('.hamburger-premium-btn');
+    hambPremium.forEach((el) => {
+      el.dataset.premiumActive = active ? 'true' : 'false';
+      el.style.pointerEvents = active ? 'none' : 'auto';
+      el.style.opacity = active ? '0.7' : '1';
+      el.setAttribute('aria-disabled', active ? 'true' : 'false');
+    });
+  }
+};
+
+// Atalho para chamar de qualquer lugar
+window.rfSyncPremiumUI = RF.premium.syncUI;
+
+
+
+// ✅ Mantém o body em sincronia com o status Premium (CSS/UI)
+RF.premium.syncUI = function() {
+  const active = RF.premium.isActive();
+  document.body.classList.toggle('premium-active', !!active);
+};
 
 
 
@@ -2057,7 +2130,7 @@ window.closePlannerDropdown = function() {
 
 window.tabGoPremium = function() {
   haptic(10);
-  openPremiumModal();
+  openPremiumModal('tab');
   setActiveTab(3);
 };
 
@@ -2183,14 +2256,31 @@ window.openFAQModal = function() {
   }
 };
 
-window.openPremiumModal = function() {
+
+
+
+
+window.openPremiumModal = function(origin) {
+  if (!origin) origin = 'tab'; // fallback seguro (nunca "unknown")
+
   haptic(10);
+  console.log('[Premium] Aberto por:', origin);
+
   const premiumModal = document.getElementById('premium-modal');
-  if (premiumModal) {
-    premiumModal.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-  }
+  if (!premiumModal) return;
+
+  premiumModal.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  // foco automático no campo do código
+  setTimeout(() => {
+    const input = document.getElementById('premium-code-input');
+    if (input) input.focus();
+  }, 50);
 };
+
+
+
 
 
 
@@ -2269,6 +2359,8 @@ document.addEventListener('click', (e) => {
 // AUTO-ABRIR FERRAMENTAS VIA URL
 // ================================
 window.addEventListener('DOMContentLoaded', function() {
+	
+  RF.premium.syncUI();
   const urlParams = new URLSearchParams(window.location.search);
   const tool = urlParams.get('tool');
   
@@ -2291,10 +2383,11 @@ window.addEventListener('DOMContentLoaded', function() {
           const faqBtn = document.getElementById('faq-btn');
           if (faqBtn) faqBtn.click();
           break;
+		  
+		  
         case 'premium':
-          const premBtn = document.getElementById('premium-btn');
-          if (premBtn) premBtn.click();
-          break;
+		openPremiumModal('url');
+		break;
       }
       
       // Limpa URL depois de abrir
@@ -2302,3 +2395,42 @@ window.addEventListener('DOMContentLoaded', function() {
     }, 500);
   }
 });
+
+
+
+// ============================================
+// PREMIUM — PONTO ÚNICO DE CONTROLE (BASE)
+// ============================================
+/* document.addEventListener('DOMContentLoaded', () => {
+  const premiumHeaderBtn = document.getElementById('premium-btn');
+  const premiumTabBtn = document.getElementById('tab-premium-btn');
+  const premiumHamburgerBtn = document.getElementById('hamburger-premium-btn');
+
+
+  function handleOpenPremium(origin) {
+    console.log('[Premium] Aberto por:', origin);
+
+    if (typeof openPremiumModal === 'function') {
+      openPremiumModal(origin);
+    }
+  }
+
+  if (premiumHeaderBtn) {
+    premiumHeaderBtn.addEventListener('click', () => handleOpenPremium('header'));
+  }
+
+  if (premiumTabBtn) {
+    premiumTabBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleOpenPremium('tab');
+    });
+  }
+
+  if (premiumHamburgerBtn) {
+    premiumHamburgerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleOpenPremium('hamburger');
+    });
+  }
+});
+ */
