@@ -285,7 +285,35 @@
       width: 20px;
       height: 20px;
     }
-    
+
+    /* ================================
+       PREMIUM (Quem-somos) - NOVO
+       ================================ */
+    /* Estado default do botão do hambúrguer (não-premium) já vem do seu CSS.
+       Aqui só garantimos o estado premium amarelo SEM “degradê no texto”. */
+    .hamburger-premium-btn.premium-on {
+      background: linear-gradient(135deg, #fbbf24, #f59e0b) !important; /* amarelo */
+      color: #ffffff !important;
+      border: 0 !important;
+    }
+    .hamburger-premium-btn.premium-on span {
+      color: #ffffff !important;
+      background: transparent !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+    }
+    .hamburger-premium-btn.premium-on svg,
+    .hamburger-premium-btn.premium-on i {
+      color: #ffffff !important;
+    }
+
+    /* Faz a estrela “preenchida” (lucide) quando premium */
+    .hamburger-premium-btn.premium-on svg[data-lucide],
+    .hamburger-premium-btn.premium-on svg.lucide {
+      fill: #ffffff !important;
+      stroke: #ffffff !important;
+    }
+
     @media (max-width: 768px) {
       .about-hero {
         height: 250px;
@@ -342,8 +370,6 @@
             <h1><span class="logo-receita">Receita</span><span class="logo-fit">fit.</span><span class="logo-app">App</span></h1>
           </a>
           
-        
-          
          <!-- Ferramentas (Desktop) -->
 <div class="header-tools">
   <a href="index.html?tool=calculator" class="tool-btn tool-blue" title="Calculadora de Calorias">
@@ -378,8 +404,6 @@
     </svg>
   </a>
 </div>
-          
-         
           
           <!-- BOTÃO HAMBÚRGUER (Mobile) -->
           <button class="hamburger-btn" onclick="openHamburgerMenu()" aria-label="Menu">
@@ -526,61 +550,51 @@
           </button>
         </div>
    
-
-
-
-   
         <nav class="hamburger-nav">
-  <div class="hamburger-section">
-    <div class="hamburger-section-title">
-      <i data-lucide="calendar-days"></i>
-      <span>Planner</span>
-    </div>
-    <a href="index.html?tool=calculator" class="hamburger-link hamburger-sublink tap">
-      <i data-lucide="calculator"></i>
-      <span>Calculadora de Calorias</span>
-    </a>
-    <a href="index.html?tool=shopping" class="hamburger-link hamburger-sublink tap">
-      <i data-lucide="shopping-cart"></i>
-      <span>Lista de Compras</span>
-    </a>
-    <a href="index.html?tool=planner" class="hamburger-link hamburger-sublink tap">
-      <i data-lucide="calendar-check"></i>
-      <span>Planejador Semanal</span>
-    </a>
-  </div>
-  
-  <div class="hamburger-divider"></div>
-  
-  <a href="quem-somos.html" class="hamburger-link tap">
-    <i data-lucide="users"></i>
-    <span>Quem Somos</span>
-  </a>
-  
-  
-  
-  <a href="index.html?tool=faq" class="hamburger-link tap">
-    <i data-lucide="help-circle"></i>
-    <span>Ajuda</span>
-  </a>
-  
-  
-  
-  <a href="https://instagram.com/receitafit.app" target="_blank" rel="noopener noreferrer" class="hamburger-link tap">
-    <i data-lucide="instagram"></i>
-    <span>Instagram</span>
-  </a>
-  
-  <div class="hamburger-divider"></div>
-  
-  <a href="index.html?tool=premium" class="hamburger-premium-btn tap">
-    <i data-lucide="star"></i>
-    <span>Seja Premium</span>
-  </a>
-</nav>
-
-
-
+          <div class="hamburger-section">
+            <div class="hamburger-section-title">
+              <i data-lucide="calendar-days"></i>
+              <span>Planner</span>
+            </div>
+            <a href="index.html?tool=calculator" class="hamburger-link hamburger-sublink tap">
+              <i data-lucide="calculator"></i>
+              <span>Calculadora de Calorias</span>
+            </a>
+            <a href="index.html?tool=shopping" class="hamburger-link hamburger-sublink tap">
+              <i data-lucide="shopping-cart"></i>
+              <span>Lista de Compras</span>
+            </a>
+            <a href="index.html?tool=planner" class="hamburger-link hamburger-sublink tap">
+              <i data-lucide="calendar-check"></i>
+              <span>Planejador Semanal</span>
+            </a>
+          </div>
+          
+          <div class="hamburger-divider"></div>
+          
+          <a href="quem-somos.html" class="hamburger-link tap">
+            <i data-lucide="users"></i>
+            <span>Quem Somos</span>
+          </a>
+          
+          <a href="index.html?tool=faq" class="hamburger-link tap">
+            <i data-lucide="help-circle"></i>
+            <span>Ajuda</span>
+          </a>
+          
+          <a href="https://instagram.com/receitafit.app" target="_blank" rel="noopener noreferrer" class="hamburger-link tap">
+            <i data-lucide="instagram"></i>
+            <span>Instagram</span>
+          </a>
+          
+          <div class="hamburger-divider"></div>
+          
+          <!-- ✅ PREMIUM: vamos validar aqui também (sem depender de “ativar por ele”) -->
+          <a href="index.html?tool=premium" id="hamburger-premium-link" class="hamburger-premium-btn tap">
+            <i data-lucide="star"></i>
+            <span id="hamburger-premium-label">Seja Premium</span>
+          </a>
+        </nav>
       </div>
     </div>
     
@@ -601,7 +615,8 @@
         <span class="tab-label">Planner</span>
       </a>
       
-      <a href="index.html" class="tab-item">
+      <!-- ✅ Premium tab: valida antes de abrir -->
+      <a href="index.html?tool=premium" id="tab-premium-link" class="tab-item">
         <i data-lucide="star" class="tab-icon"></i>
         <span class="tab-label">Premium</span>
       </a>
@@ -612,7 +627,6 @@
       <div class="footer-container">
         <div class="footer-section">
           <div class="footer-logo">
-           
             <span>Receita<span style="color: #16a34a;">Fit</span></span>
           </div>
           <p class="footer-description">
@@ -623,11 +637,8 @@
         <div class="footer-section">
           <h4 class="footer-title">Navegação</h4>
           <ul class="footer-links">
-		  <li><a href="quem-somos.html" class="footer-link">Quem Somos</a></li>
+		    <li><a href="quem-somos.html" class="footer-link">Quem Somos</a></li>
             <li><a href="index.html?tool=faq" class="footer-link">Ajuda</a></li>
-			
-			
-            
           </ul>
         </div>
         
@@ -666,6 +677,7 @@
   
   <!-- Scripts (do index.html) -->
   <script src="js/app.js"></script>
+
   <script>
     // Renderiza ícones Lucide
     if (typeof lucide !== 'undefined') {
@@ -693,6 +705,119 @@
         }
       }
     });
+
+    // =========================================================
+    // ✅ PREMIUM: mesma validação do index ao clicar "Seja Premium"
+    // - Se já é premium (token + expires válido): não navega pro modal
+    //   e pinta o botão do hambúrguer como PREMIUM (xD).
+    // - Se NÃO é premium: manda para index.html?tool=premium (como já estava)
+    // =========================================================
+    (function() {
+      'use strict';
+
+      function _getPremiumFromStorage() {
+        try {
+          const premiumFlag = localStorage.getItem('fit_premium'); // 'true'/'false'
+          const token = localStorage.getItem('fit_premium_token') || '';
+          const expiresStr = localStorage.getItem('fit_premium_expires') || '';
+          const expires = expiresStr ? parseInt(expiresStr, 10) : null;
+
+          // Se existe expires e já expirou -> força limpar (igual sua lógica)
+          if (expires && Date.now() > expires) {
+            localStorage.setItem('fit_premium', 'false');
+            localStorage.setItem('fit_premium_token', '');
+            localStorage.setItem('fit_premium_expires', '');
+            return { isPremium: false, daysLeft: 0 };
+          }
+
+          // Considera premium se:
+          // - token existe e tem “tamanho mínimo”
+          // - e tem expires válido no futuro
+          const isPremium = !!(token && token.length >= 20 && expires && Date.now() <= expires)
+            || (premiumFlag === 'true' && token && token.length >= 20 && expires && Date.now() <= expires);
+
+          const daysLeft = (isPremium && expires)
+            ? Math.max(0, Math.ceil((expires - Date.now()) / (1000 * 60 * 60 * 24)))
+            : 0;
+
+          return { isPremium, daysLeft };
+        } catch (e) {
+          return { isPremium: false, daysLeft: 0 };
+        }
+      }
+
+      function _setHamburgerPremiumUI(isPremium, daysLeft) {
+        const link = document.getElementById('hamburger-premium-link');
+        const label = document.getElementById('hamburger-premium-label');
+        if (!link || !label) return;
+
+        if (isPremium) {
+          link.classList.add('premium-on');
+          label.textContent = `PREMIUM (${daysLeft}D)`;
+
+          // garante estrela “cheia” (lucide -> svg)
+          const svg = link.querySelector('svg');
+          if (svg) {
+            svg.setAttribute('fill', '#ffffff');
+            svg.setAttribute('stroke', '#ffffff');
+          }
+
+          // Se premium: não faz sentido abrir tool=premium
+          link.setAttribute('href', 'index.html');
+        } else {
+          link.classList.remove('premium-on');
+          label.textContent = 'Seja Premium';
+
+          const svg = link.querySelector('svg');
+          if (svg) {
+            svg.setAttribute('fill', 'none');
+            svg.setAttribute('stroke', 'currentColor');
+          }
+
+          link.setAttribute('href', 'index.html?tool=premium');
+        }
+      }
+
+      function _setTabPremiumHref(isPremium) {
+        const tabLink = document.getElementById('tab-premium-link');
+        if (!tabLink) return;
+        tabLink.setAttribute('href', isPremium ? 'index.html' : 'index.html?tool=premium');
+      }
+
+      function _attachPremiumClickGuard() {
+        const link = document.getElementById('hamburger-premium-link');
+        const tabLink = document.getElementById('tab-premium-link');
+
+        const handler = function(e) {
+          const { isPremium } = _getPremiumFromStorage();
+          if (isPremium) {
+            // Já é premium -> evita abrir o modal (vai só pra home)
+            e.preventDefault();
+            if (typeof closeHamburgerMenu === 'function') closeHamburgerMenu();
+            window.location.href = 'index.html';
+          } else {
+            // Não é premium -> deixa seguir para index.html?tool=premium
+            if (typeof closeHamburgerMenu === 'function') closeHamburgerMenu();
+          }
+        };
+
+        if (link) link.addEventListener('click', handler);
+        if (tabLink) tabLink.addEventListener('click', handler);
+      }
+
+      // Inicializa UI premium nesta página
+      const { isPremium, daysLeft } = _getPremiumFromStorage();
+      _setHamburgerPremiumUI(isPremium, daysLeft);
+      _setTabPremiumHref(isPremium);
+      _attachPremiumClickGuard();
+
+      // Re-renderiza ícones (por segurança) e reaplica fill
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+        const { isPremium: p2, daysLeft: d2 } = _getPremiumFromStorage();
+        _setHamburgerPremiumUI(p2, d2);
+      }
+    })();
   </script>
   
 </body>
