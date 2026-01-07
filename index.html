@@ -24,10 +24,10 @@
 	  <!-- 👇FAVICON -->
 	  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 	  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	  <link rel="shortcut icon" href="image/favicon.ico" />
-	  <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png" />
-	  <meta name="image/apple-mobile-web-app-title" content="ReceitaFit" />
-	  <link rel="manifest" href="image/site.webmanifest" />
+	  <link rel="shortcut icon" href="/favicon.ico" />
+	  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+	  <meta name="apple-mobile-web-app-title" content="ReceitaFit" />
+	  <link rel="manifest" href="/site.webmanifest" />
 	  
       <!-- 👇 SCRIPT QUE RODA ANTES DE TUDO -->
       <script>
@@ -413,14 +413,10 @@
          <i data-lucide="calendar-days" class="tab-icon"></i>
          <span class="tab-label">Planner</span>
          </button>
-		 
-		 
          <button class="tab-item" onclick="tabGoPremium()" aria-label="Premium">
          <i data-lucide="star" class="tab-icon"></i>
          <span class="tab-label">Premium</span>
          </button>
-		 
-		 
       </nav>
       <!-- DROPDOWN PLANNER (abre pra cima) -->
       <div id="planner-dropdown" class="planner-dropdown hidden">
@@ -498,22 +494,11 @@
                <span>Instagram</span>
                </a>
                <div class="hamburger-divider"></div>
-			   
-			   
-			   
-			   
-			   
-			   
-<!-- ✅ PREMIUM: igual quem-somos -->
-<a href="index.html?tool=premium" id="hamburger-premium-link" class="hamburger-premium-btn tap">
-  <i data-lucide="star"></i>
-  <span id="hamburger-premium-label">Seja Premium</span>
-</a>
-
-
-			   
-			   
-			   
+               <!-- Botão Premium destacado -->
+               <button class="hamburger-premium-btn tap" onclick="openPremiumModal(); closeHamburgerMenu();">
+               <i data-lucide="star"></i>
+               <span>Seja Premium</span>
+               </button>
             </nav>
          </div>
       </div>
