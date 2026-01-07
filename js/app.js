@@ -495,6 +495,11 @@ async function saveWeekPlan() {
   } catch (e) {}
 }
 
+
+
+
+
+
 // ==============================
 // UI (Badge / Premium)
 // ==============================
@@ -502,16 +507,20 @@ function updateUI() {
   try {
     if (!creditsBadge) return;
 
+    let badgeText = 'Premium';
+
     if (isPremium) {
       document.body.classList.remove('free-user');
       document.body.classList.add('premium-active');
 
       creditsBadge.classList.add('premium');
-     let badgeText = 'Premium';
+
       if (premiumExpires) {
-        const daysLeft = Math.ceil((premiumExpires - Date.now()) / (1000 * 60 * 60 * 24));
-       
-        if (daysLeft > 0) { // ← REMOVE O "&& daysLeft <= 30"
+        const daysLeft = Math.ceil(
+          (premiumExpires - Date.now()) / (1000 * 60 * 60 * 24)
+        );
+
+        if (daysLeft > 0) {
           badgeText = `PREMIUM (${daysLeft}D)`;
         }
       }
@@ -523,11 +532,10 @@ function updateUI() {
         <span>${badgeText}</span>
       `;
 
-     if (premiumBtn) {
-  premiumBtn.style.display = 'none';
-  // ✅ Força reflow para aplicar mudança imediatamente
-  premiumBtn.offsetHeight;
-}
+      if (premiumBtn) {
+        premiumBtn.style.display = 'none';
+        premiumBtn.offsetHeight; // força reflow
+      }
 
     } else {
       document.body.classList.add('free-user');
@@ -543,17 +551,42 @@ function updateUI() {
       `;
 
       if (premiumBtn) {
-  premiumBtn.style.display = 'block';
-  // ✅ Força reflow
-  premiumBtn.offsetHeight;
-}
+        premiumBtn.style.display = 'block';
+        premiumBtn.offsetHeight; // força reflow
+      }
     }
 
     creditsBadge.classList.add('ready');
+
+    // ===============================
+    // 🔶 PREMIUM NO MENU HAMBÚRGUER
+    // ===============================
+    const hamburgerLabel = document.getElementById('hamburger-premium-label');
+    const hamburgerBtn = document.querySelector('.hamburger-premium-btn');
+
+    if (hamburgerLabel && hamburgerBtn) {
+      if (isPremium) {
+        hamburgerLabel.textContent = badgeText;
+        hamburgerBtn.classList.add('premium');
+        hamburgerBtn.classList.remove('free');
+      } else {
+        hamburgerLabel.textContent = 'Seja Premium';
+        hamburgerBtn.classList.remove('premium');
+        hamburgerBtn.classList.add('free');
+      }
+    }
+
   } catch (error) {
     console.error('Erro em updateUI:', error);
   }
 }
+
+
+
+
+
+
+
 
 function updateShoppingCounter() {
   if (!shoppingCounter) return;
