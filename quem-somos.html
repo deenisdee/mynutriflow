@@ -381,10 +381,8 @@
           
          
           
-          <!-- BOTÃO HAMBÚRGUER (Mobile) -->
-          <button class="hamburger-btn" onclick="openHamburgerMenu()" aria-label="Menu">
-            <i data-lucide="menu"></i>
-          </button>
+
+
           
         </div>
       </div>
@@ -509,103 +507,9 @@
       
     </div>
     
-    <!-- MENU HAMBÚRGUER (mesma estrutura do index.html) -->
-    <div id="hamburger-menu" class="hamburger-menu hidden">
-      <div class="hamburger-overlay" onclick="closeHamburgerMenu()"></div>
-      <div class="hamburger-content">
-        <div class="hamburger-header">
-          <div class="hamburger-logo">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                           <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
-                           <line x1="6" y1="17" x2="18" y2="17"/>
-                        </svg>
-                  <span>Receitafit<span style="color: #16a34a;">.App</span></span>
-               </div>
-          <button class="hamburger-close tap" onclick="closeHamburgerMenu()" aria-label="Fechar menu">
-            <i data-lucide="x"></i>
-          </button>
-        </div>
    
-
-
-
-   
-        <nav class="hamburger-nav">
-  <div class="hamburger-section">
-    <div class="hamburger-section-title">
-      <i data-lucide="calendar-days"></i>
-      <span>Planner</span>
-    </div>
-    <a href="index.html?tool=calculator" class="hamburger-link hamburger-sublink tap">
-      <i data-lucide="calculator"></i>
-      <span>Calculadora de Calorias</span>
-    </a>
-    <a href="index.html?tool=shopping" class="hamburger-link hamburger-sublink tap">
-      <i data-lucide="shopping-cart"></i>
-      <span>Lista de Compras</span>
-    </a>
-    <a href="index.html?tool=planner" class="hamburger-link hamburger-sublink tap">
-      <i data-lucide="calendar-check"></i>
-      <span>Planejador Semanal</span>
-    </a>
-  </div>
-  
-  <div class="hamburger-divider"></div>
-  
-  <a href="quem-somos.html" class="hamburger-link tap">
-    <i data-lucide="users"></i>
-    <span>Quem Somos</span>
-  </a>
-  
-  
-  
-  <a href="index.html?tool=faq" class="hamburger-link tap">
-    <i data-lucide="help-circle"></i>
-    <span>Ajuda</span>
-  </a>
-  
-  
-  
-  <a href="https://instagram.com/receitafit.app" target="_blank" rel="noopener noreferrer" class="hamburger-link tap">
-    <i data-lucide="instagram"></i>
-    <span>Instagram</span>
-  </a>
-  
-  <div class="hamburger-divider"></div>
-  
-  <a href="index.html?tool=premium" class="hamburger-premium-btn tap">
-    <i data-lucide="star"></i>
-    <span>Seja Premium</span>
-  </a>
-</nav>
-
-
-
-      </div>
-    </div>
     
-    <!-- TAB BAR MOBILE (mesma do index.html) -->
-    <nav class="tab-bar">
-      <a href="index.html" class="tab-item">
-        <i data-lucide="home" class="tab-icon"></i>
-        <span class="tab-label">Início</span>
-      </a>
-      
-      <a href="index.html" class="tab-item">
-        <i data-lucide="search" class="tab-icon"></i>
-        <span class="tab-label">Buscar</span>
-      </a>
-      
-      <a href="index.html" class="tab-item">
-        <i data-lucide="calendar-days" class="tab-icon"></i>
-        <span class="tab-label">Planner</span>
-      </a>
-      
-      <a href="index.html" class="tab-item">
-        <i data-lucide="star" class="tab-icon"></i>
-        <span class="tab-label">Premium</span>
-      </a>
-    </nav>
+  
     
     <!-- RODAPÉ DESKTOP (mesmo do index.html) -->
     <footer class="footer">
@@ -695,5 +599,14 @@
     });
   </script>
   
+<!-- Scripts -->
+<script src="js/ui-components.js"></script>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+
+<div id="rf-hamburger-root"></div>
+<div id="rf-tabbar-root"></div>
+ 
 </body>
 </html>
