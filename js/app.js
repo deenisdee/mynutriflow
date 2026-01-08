@@ -2174,6 +2174,7 @@ window.openShoppingList = function() {
 
   closePlannerDropdown();
 
+
   if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
     openPremiumModal('planner');
     return;
