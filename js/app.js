@@ -2148,76 +2148,51 @@ function setActiveTab(index) {
 
 
 
+
+
 // ================================
-// DROPDOWN PLANNER - FUNÇÕES
+// DROPDOWN PLANNER - FUNÇÕES (OFICIAL)
 // ================================
-window.openCalorieCalculator = function() {
-  closePlannerDropdown();
-  haptic(10);
-  
-  // ✅ Chama a função do botão calculadora
-  const calcBtn = document.getElementById('calculator-btn');
-  if (calcBtn) {
-    calcBtn.click();
-  }
-};
-
-window.openShoppingList = function() {
-  closePlannerDropdown();
-  haptic(10);
-  
-  // ✅ Chama a função do botão lista
-  const shoppingBtn = document.getElementById('shopping-btn');
-  if (shoppingBtn) {
-    shoppingBtn.click();
-  }
-};
-
-window.openWeekPlanner = function() {
-  closePlannerDropdown();
-  haptic(10);
-  
-  // ✅ Chama a função do botão planner
-  const plannerBtn = document.getElementById('planner-btn');
-  if (plannerBtn) {
-    plannerBtn.click();
-  }
-};
-
-
 
 window.openCalorieCalculator = function() {
   haptic(10);
-  
+
   const calcBtn = document.getElementById('calculator-btn');
   if (calcBtn) {
     calcBtn.click();
-    // ✅ Fecha dropdown DEPOIS
+    // fecha o dropdown depois
     setTimeout(() => closePlannerDropdown(), 100);
   }
 };
 
 window.openShoppingList = function() {
   haptic(10);
-  
+
   const shoppingBtn = document.getElementById('shopping-btn');
   if (shoppingBtn) {
     shoppingBtn.click();
-    // ✅ Fecha dropdown DEPOIS
+    // fecha o dropdown depois
     setTimeout(() => closePlannerDropdown(), 100);
   }
 };
 
 window.openWeekPlanner = function() {
   haptic(10);
-  
+
   const plannerBtn = document.getElementById('planner-btn');
   if (plannerBtn) {
     plannerBtn.click();
-    // ✅ Fecha dropdown DEPOIS
+    // fecha o dropdown depois
     setTimeout(() => closePlannerDropdown(), 100);
   }
 };
+
+
+
+
+
+
+
 
 // ================================
 // MENU HAMBÚRGUER - FUNÇÕES
@@ -2259,9 +2234,8 @@ window.openFAQModal = function() {
 
 
 
-
 window.openPremiumModal = function(origin) {
-  if (!origin) origin = 'tab'; // fallback seguro (nunca "unknown")
+  if (!origin) origin = 'tab';
 
   haptic(10);
   console.log('[Premium] Aberto por:', origin);
@@ -2272,13 +2246,27 @@ window.openPremiumModal = function(origin) {
   premiumModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  // foco automático no campo do código
-  setTimeout(() => {
+  // ✅ Foco robusto (funciona mesmo com dropdown/overlay fechando)
+  const tryFocus = (attempt = 0) => {
     const input = document.getElementById('premium-code-input');
-    if (input) input.focus();
-  }, 50);
-};
 
+    // precisa existir e estar visível
+    if (input && premiumModal.offsetParent !== null && !premiumModal.classList.contains('hidden')) {
+      input.focus({ preventScroll: true });
+      input.select?.();
+      return;
+    }
+
+    // tenta de novo algumas vezes (timing de animação/fechamento)
+    if (attempt < 12) {
+      requestAnimationFrame(() => tryFocus(attempt + 1));
+    }
+  };
+
+  // tenta agora e depois de um pequeno atraso
+  tryFocus(0);
+  setTimeout(() => tryFocus(0), 120);
+};
 
 
 
