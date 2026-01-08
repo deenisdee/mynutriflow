@@ -2149,42 +2149,52 @@ function setActiveTab(index) {
 
 
 
-
 // ================================
-// DROPDOWN PLANNER - FUNÇÕES (OFICIAL)
+// DROPDOWN PLANNER - FUNÇÕES (VERSÃO FINAL)
 // ================================
-
 window.openCalorieCalculator = function() {
   haptic(10);
 
-  const calcBtn = document.getElementById('calculator-btn');
-  if (calcBtn) {
-    calcBtn.click();
-    // fecha o dropdown depois
-    setTimeout(() => closePlannerDropdown(), 100);
+  // fecha o dropdown primeiro
+  closePlannerDropdown();
+
+  // se for FREE, deve abrir premium com foco
+  if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
+    openPremiumModal('planner');
+    return;
   }
+
+  // se for premium, abre a calculadora normal
+  const calcBtn = document.getElementById('calculator-btn');
+  if (calcBtn) calcBtn.click();
 };
 
 window.openShoppingList = function() {
   haptic(10);
 
-  const shoppingBtn = document.getElementById('shopping-btn');
-  if (shoppingBtn) {
-    shoppingBtn.click();
-    // fecha o dropdown depois
-    setTimeout(() => closePlannerDropdown(), 100);
+  closePlannerDropdown();
+
+  if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
+    openPremiumModal('planner');
+    return;
   }
+
+  const shoppingBtn = document.getElementById('shopping-btn');
+  if (shoppingBtn) shoppingBtn.click();
 };
 
 window.openWeekPlanner = function() {
   haptic(10);
 
-  const plannerBtn = document.getElementById('planner-btn');
-  if (plannerBtn) {
-    plannerBtn.click();
-    // fecha o dropdown depois
-    setTimeout(() => closePlannerDropdown(), 100);
+  closePlannerDropdown();
+
+  if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
+    openPremiumModal('planner');
+    return;
   }
+
+  const plannerBtn = document.getElementById('planner-btn');
+  if (plannerBtn) plannerBtn.click();
 };
 
 
@@ -2233,7 +2243,6 @@ window.openFAQModal = function() {
 
 
 
-
 window.openPremiumModal = function(origin) {
   if (!origin) origin = 'tab';
 
@@ -2246,28 +2255,12 @@ window.openPremiumModal = function(origin) {
   premiumModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  // ✅ Foco robusto (funciona mesmo com dropdown/overlay fechando)
-  const tryFocus = (attempt = 0) => {
+  // foco simples (sem firula)
+  setTimeout(() => {
     const input = document.getElementById('premium-code-input');
-
-    // precisa existir e estar visível
-    if (input && premiumModal.offsetParent !== null && !premiumModal.classList.contains('hidden')) {
-      input.focus({ preventScroll: true });
-      input.select?.();
-      return;
-    }
-
-    // tenta de novo algumas vezes (timing de animação/fechamento)
-    if (attempt < 12) {
-      requestAnimationFrame(() => tryFocus(attempt + 1));
-    }
-  };
-
-  // tenta agora e depois de um pequeno atraso
-  tryFocus(0);
-  setTimeout(() => tryFocus(0), 120);
+    if (input) input.focus();
+  }, 150);
 };
-
 
 
 
