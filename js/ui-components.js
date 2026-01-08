@@ -140,44 +140,95 @@
     });
   }
 
-  // --------- MOUNT ---------
-  function mount() {
-    // 1) Tab bar (se existir placeholder)
-    // Você pode ter um container tipo <div id="tabbar-root"></div>
-    // OU a própria tab bar já no HTML. Aqui tentamos ambos.
-    const root =
-      document.getElementById('tabbar-root') ||
-      document.querySelector('[data-component="tabbar"]') ||
-      document.querySelector('.tabbar-root');
 
-    if (root) renderTabbar(root);
 
-    // 2) Hash actions quando veio de outra página
-    const hash = (location.hash || '').toLowerCase();
+// --------- HAMBURGER MENU RENDER ---------
+function renderHamburger(root) {
+  if (!root) return;
+  if (root.dataset.mounted === '1') return;
+  root.dataset.mounted = '1';
 
-    if (hash === '#rf-search') {
-      // garante que está na index, mas se estiver, foca
-      focusSearch();
-    }
+  root.innerHTML = `
+    <div class="hamburger-menu hidden" id="hamburger-menu">
+      <div class="hamburger-overlay" onclick="closeHamburgerMenu()"></div>
 
-    if (hash === '#rf-planner') {
-      openPlannerDropdown();
-    }
+      <div class="hamburger-content">
+        <div class="hamburger-header">
+          <div class="hamburger-logo">
+            <i data-lucide="leaf" class="hamburger-logo-icon"></i>
+            <span>ReceitaFit.App</span>
+          </div>
 
-    // 3) Se lucide existir, re-render icons
-    if (window.lucide && typeof window.lucide.createIcons === 'function') {
-      window.lucide.createIcons();
-    } else if (typeof window.lucide?.createIcons === 'function') {
-      window.lucide.createIcons();
-    } else if (typeof window.createLucideIcons === 'function') {
-      window.createLucideIcons();
-    }
+          <button class="hamburger-close" onclick="closeHamburgerMenu()" aria-label="Fechar">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <nav class="hamburger-nav">
+          <div class="hamburger-section">
+            <div class="hamburger-section-title">
+              <i data-lucide="sparkles"></i>
+              <span>Premium</span>
+            </div>
+
+            <button class="hamburger-premium-btn tap" onclick="openPremiumModal('hamburger'); closeHamburgerMenu();">
+              <i data-lucide="star"></i>
+              <span>Seja Premium</span>
+            </button>
+          </div>
+
+          <div class="hamburger-divider"></div>
+
+          <div class="hamburger-section">
+            <button class="hamburger-link tap" onclick="goToQuemSomos(); closeHamburgerMenu();">
+              <i data-lucide="info"></i>
+              <span>Quem Somos</span>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </div>
+  `;
+
+  // Recria os ícones lucide (se estiver usando)
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
+
+
+
+
+// --------- MOUNT ---------
+function mount() {
+  // 1) Render da TAB BAR (root oficial)
+  const tabRoot = document.getElementById('rf-tabbar-root');
+  if (tabRoot) {
+    renderTabbar(tabRoot);
   }
 
-  // inicia
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', mount);
-  } else {
-    mount();
+  // 2) Render do MENU HAMBÚRGUER (root oficial)
+  const hamRoot = document.getElementById('rf-hamburger-root');
+  if (hamRoot) {
+    renderHamburger(hamRoot);
   }
-})();
+
+  // 3) Hash actions (quando veio de outra página)
+  const hash = (location.hash || '').toLowerCase();
+
+  if (hash === '#rf-search') {
+    focusSearch();
+  }
+
+  if (hash === '#rf-planner') {
+    openPlannerDropdown();
+  }
+
+  // 4) Re-render dos ícones (lucide)
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', mount);
