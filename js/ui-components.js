@@ -232,3 +232,6 @@ function mount() {
 }
 
 document.addEventListener('DOMContentLoaded', mount);
+document.addEventListener('DOMContentLoaded', mount);
+
+})();
