@@ -2209,21 +2209,6 @@ window.togglePlannerDropdown = function () {
 
 
 
-window.closePlannerDropdown = function () {
-  const dropdown =
-    document.getElementById('planner-dropdown') ||
-    document.querySelector('.planner-dropdown');
-
-  setActiveTab(0);
-
-  if (dropdown) {
-    dropdown.classList.add('hidden');
-  }
-
-  // 👇 FALTAVA ISSO
-  updatePlannerBadge();
-};
-
 
 
 
@@ -2515,36 +2500,59 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
-// ===============================
-// PARTE 9 — DEBUG: QUEM CHAMA openPlannerDropdown()
-// (não altera comportamento)
-(function debugOpenPlannerCalls(){
-  'use strict';
+window.openPlannerDropdown = function () {
+  const dropdown =
+    document.getElementById('planner-dropdown') ||
+    document.querySelector('.planner-dropdown');
 
-  if (window.__debugPlannerPatched) return;
-  window.__debugPlannerPatched = true;
+  // ativa a tab do Planner (verde)
+  if (typeof setActiveTab === 'function') {
+    setActiveTab(2); // ajuste o índice se necessário
+  }
 
-  const originalOpen = window.openPlannerDropdown;
+  // se o dropdown já existe, abre
+  if (dropdown) {
+    dropdown.classList.remove('hidden');
+  } else {
+    // iPhone: às vezes o DOM injeta no próximo tick
+    setTimeout(() => {
+      const dd =
+        document.getElementById('planner-dropdown') ||
+        document.querySelector('.planner-dropdown');
+
+      if (dd) dd.classList.remove('hidden');
+
+      // badge em runtime (depois do tick também)
+      if (typeof updatePlannerBadge === 'function') updatePlannerBadge();
+    }, 0);
+
+    // evita atualizar badge antes do dropdown existir
+    return;
+  }
+
+  // badge em runtime
+  if (typeof updatePlannerBadge === 'function') updatePlannerBadge();
+};
+
 
   
-  
-  
-  
-  window.openPlannerDropdown = function () {
-    console.log('[DEBUG] openPlannerDropdown() em:', location.pathname);
-    console.trace('[DEBUG] stack openPlannerDropdown');
+ window.closePlannerDropdown = function () {
+  const dropdown =
+    document.getElementById('planner-dropdown') ||
+    document.querySelector('.planner-dropdown');
 
-    if (typeof originalOpen === 'function') {
-      return originalOpen.apply(this, arguments);
-    }
-  };
-})();
- 
- 
- 
- 
- 
- 
+  // volta a tabbar pro estado neutro (cinza)
+  if (typeof setActiveTab === 'function') {
+    setActiveTab(0);
+  }
+
+  if (dropdown) {
+    dropdown.classList.add('hidden');
+  }
+
+  // badge em runtime
+  if (typeof updatePlannerBadge === 'function') updatePlannerBadge();
+};
 
 
 
