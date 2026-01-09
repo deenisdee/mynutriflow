@@ -113,82 +113,146 @@
             document.body.classList.add('modal-open');
         }
     };
-	
-	
-	
-	
-	
-// --------- TAB BAR RENDER ---------
-function renderTabbar(root) {
-    if (!root) return;
+
+    // --------- TAB BAR RENDER ---------
+    function renderTabbar(root) {
+        if (!root) return;
+        if (root.dataset.mounted === '1') return;
+        root.dataset.mounted = '1';
+
+        root.innerHTML = `
+            <div class="tab-bar" id="rf-tabbar">
+                <button class="tab-item" type="button" aria-label="Início" data-tab="home">
+                    <i data-lucide="home" class="tab-icon"></i>
+                    <span class="tab-label">Início</span>
+                </button>
+
+                <button class="tab-item" type="button" aria-label="Busca" data-tab="search">
+                    <i data-lucide="search" class="tab-icon"></i>
+                    <span class="tab-label">Busca</span>
+                </button>
+
+                <button class="tab-item" type="button" aria-label="Planner" data-tab="planner">
+                    <i data-lucide="calendar" class="tab-icon"></i>
+                    <span class="tab-label">Planner</span>
+                </button>
+
+                <button class="tab-item tab-premium" type="button" aria-label="Premium" data-tab="premium">
+                    <i data-lucide="star" class="tab-icon"></i>
+                    <span class="tab-label">Premium</span>
+                </button>
+            </div>
+        `;
+
+        // Sistema de active
+        function setActive(tabName) {
+            const items = root.querySelectorAll('.tab-item');
+            items.forEach((b) => b.classList.remove('active'));
+
+            const btn = root.querySelector(`.tab-item[data-tab="${tabName}"]`);
+            if (btn) btn.classList.add('active');
+
+            try { 
+                sessionStorage.setItem('rf_active_tab', tabName); 
+            } catch (_) {}
+        }
+
+        function applyActiveFromStorage() {
+            let saved = 'home';
+            try { 
+                saved = sessionStorage.getItem('rf_active_tab') || 'home'; 
+            } catch (_) {}
+            setActive(saved);
+        }
+
+        applyActiveFromStorage();
+		
+		
+		
+		
+
+       // Click handler (delegação imediata)
+root.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     
-    // Remove qualquer tab bar existente primeiro
-    const existing = document.querySelectorAll('.tab-bar');
-    existing.forEach(el => el.remove());
+    const btn = e.target.closest('button');
+    if (!btn || !root.contains(btn)) return;
+
+    const tab = btn.dataset.tab;
+    if (tab) setActive(tab);
+	
+	
+	
+	
+
+           // 1) Início
+if (tab === 'home') {
+    // Remove hash e força reload completo
+    if (window.location.hash) {
+        window.location.href = 'index.html';
+    } else if (window.location.pathname !== '/index.html' && !window.location.pathname.endsWith('index.html')) {
+        window.location.href = 'index.html';
+    } else {
+        // Já está na index sem hash - scroll pro topo
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    return;
+}
+
+            // 2) Busca
+            if (tab === 'search') {
+                if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') {
+                    window.location.href = 'index.html#rf-search';
+                    return;
+                }
+                focusSearch();
+                return;
+            }
+
+            // 3) Planner
+            if (tab === 'planner') {
+                if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') {
+                    window.location.href = 'index.html#rf-planner';
+                    return;
+                }
+                togglePlannerDropdown();
+                return;
+            }
+			
+			
+			
+			
+
+            // 4) Premium
+if (tab === 'premium') {
+    // Se não está na index, vai pra index e abre premium
+    if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') {
+        window.location.href = 'index.html?open=premium';
+        return;
+    }
     
-    if (root.dataset.mounted === '1') {
-        root.dataset.mounted = '';
+    // Já está na index - abre modal
+    if (typeof window.openPremium === 'function') {
+        window.openPremium('tab');
+    } else if (typeof window.openPremiumModal === 'function') {
+        window.openPremiumModal();
     }
-    root.dataset.mounted = '1';
-
-    root.innerHTML = `
-        <div class="tab-bar" id="rf-tabbar">
-            <button class="tab-item" type="button" aria-label="Início" data-tab="home">
-                <i data-lucide="home" class="tab-icon"></i>
-                <span class="tab-label">Início</span>
-            </button>
-
-            <button class="tab-item" type="button" aria-label="Busca" data-tab="search">
-                <i data-lucide="search" class="tab-icon"></i>
-                <span class="tab-label">Busca</span>
-            </button>
-
-            <button class="tab-item" type="button" aria-label="Planner" data-tab="planner">
-                <i data-lucide="calendar" class="tab-icon"></i>
-                <span class="tab-label">Planner</span>
-            </button>
-
-            <button class="tab-item tab-premium" type="button" aria-label="Premium" data-tab="premium">
-                <i data-lucide="star" class="tab-icon"></i>
-                <span class="tab-label">Premium</span>
-            </button>
-        </div>
-    `;
-
-    // Sistema de active
-    function setActive(tabName) {
-        const items = root.querySelectorAll('.tab-item');
-        items.forEach((b) => b.classList.remove('active'));
-
-        const btn = root.querySelector(`.tab-item[data-tab="${tabName}"]`);
-        if (btn) btn.classList.add('active');
-
-        try { 
-            sessionStorage.setItem('rf_active_tab', tabName); 
-        } catch (_) {}
-    }
-
-    function applyActiveFromStorage() {
-        let saved = 'home';
-        try { 
-            saved = sessionStorage.getItem('rf_active_tab') || 'home'; 
-        } catch (_) {}
-        setActive(saved);
-    }
-
-    applyActiveFromStorage();
-
-    
+    return;
 }
 
 
 
 
+        });
 
-
-
-
-
+        // Atualiza premium após renderizar
+        setTimeout(() => {
+            if (typeof window.updatePremiumButtons === 'function') {
+                window.updatePremiumButtons();
+            }
+        }, 200);
+    }
 
     // --------- HAMBURGER MENU RENDER ---------
     function renderHamburger(root) {
@@ -252,14 +316,8 @@ function renderTabbar(root) {
                         
                         <div class="hamburger-divider"></div>
                         
-						
-						
-						
-                        <button class="hamburger-premium-btn tap" id="hamburger-premium-btn" onclick="if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') { window.location.href = 'index.html?open=premium'; } else { window.openPremiumModal && window.openPremiumModal(); window.closeHamburgerMenu && window.closeHamburgerMenu(); }">
-                            
-							
-							
-							<i data-lucide="star"></i>
+                        <button class="hamburger-premium-btn tap" id="hamburger-premium-btn" onclick="window.openPremiumModal && window.openPremiumModal(); window.closeHamburgerMenu && window.closeHamburgerMenu();">
+                            <i data-lucide="star"></i>
                             <span id="hamburger-premium-text">Seja Premium</span>
                         </button>
                     </nav>
@@ -278,152 +336,34 @@ function renderTabbar(root) {
             }
         }, 200);
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	// --------- ANEXAÇÃO FORÇADA DE LISTENERS (sempre funciona) ---------
-function attachTabbarListeners() {
-    const buttons = document.querySelectorAll('.tab-item');
-    if (buttons.length === 0) {
-        console.warn('[TABBAR] Nenhum botão encontrado, tentando novamente...');
-        setTimeout(attachTabbarListeners, 200);
-        return;
-    }
-    
-    console.log('[TABBAR] Anexando listeners em', buttons.length, 'botões');
-    
-    buttons.forEach((btn) => {
-        btn.onclick = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('[TABBAR] Clique em:', this.dataset.tab);
-            
-            const tab = this.dataset.tab;
-            
-            // Remove active de todos
-            buttons.forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            try { 
-                sessionStorage.setItem('rf_active_tab', tab); 
-            } catch (_) {}
 
-            // 1) Início
-            if (tab === 'home') {
-                if (window.location.hash) {
-                    window.location.href = 'index.html';
-                } else if (window.location.pathname !== '/index.html' && !window.location.pathname.endsWith('index.html')) {
-                    window.location.href = 'index.html';
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-                return;
-            }
+    // --------- MOUNT ---------
+    function mount() {
+        const tabRoot = document.getElementById('rf-tabbar-root');
+        if (tabRoot) {
+            renderTabbar(tabRoot);
+        }
 
-            // 2) Busca
-            if (tab === 'search') {
-                if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') {
-                    window.location.href = 'index.html#rf-search';
-                    return;
-                }
-                const input = document.getElementById('search-input') || document.querySelector('.search-input');
-                if (input) {
-                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    input.focus();
-                }
-                return;
-            }
+        const hamRoot = document.getElementById('rf-hamburger-root');
+        if (hamRoot) {
+            renderHamburger(hamRoot);
+        }
 
-            // 3) Planner
-            if (tab === 'planner') {
-                if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') {
-                    window.location.href = 'index.html#rf-planner';
-                    return;
-                }
-                if (typeof window.togglePlannerDropdown === 'function') {
-                    window.togglePlannerDropdown();
-                }
-                return;
-            }
+        const hash = (location.hash || '').toLowerCase();
 
-            // 4) Premium
-            if (tab === 'premium') {
-                if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') {
-                    window.location.href = 'index.html?open=premium';
-                    return;
-                }
-                
-                if (typeof window.openPremium === 'function') {
-                    window.openPremium('tab');
-                } else if (typeof window.openPremiumModal === 'function') {
-                    window.openPremiumModal();
-                }
-                return;
-            }
-        };
-    });
-    
-    console.log('[TABBAR] ✅ Listeners anexados com sucesso!');
-}
+        if (hash === '#rf-search') {
+            focusSearch();
+        }
 
-// Expõe globalmente
-window.attachTabbarListeners = attachTabbarListeners;
-	
-	
-	
-	
-	
-	
+        if (hash === '#rf-planner') {
+            openPlannerDropdown();
+        }
 
-  // --------- MOUNT ---------
-function mount() {
-    const tabRoot = document.getElementById('rf-tabbar-root');
-    if (tabRoot) {
-        renderTabbar(tabRoot);
-    }
-
-    const hamRoot = document.getElementById('rf-hamburger-root');
-    if (hamRoot) {
-        renderHamburger(hamRoot);
-    }
-
-    const hash = (location.hash || '').toLowerCase();
-
-    if (hash === '#rf-search') {
-        const input = document.getElementById('search-input') || document.querySelector('.search-input');
-        if (input) {
-            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            input.focus();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
         }
     }
 
-    if (hash === '#rf-planner') {
-        if (typeof window.openPlannerDropdown === 'function') {
-            window.openPlannerDropdown();
-        }
-    }
-
-    if (window.lucide && typeof window.lucide.createIcons === 'function') {
-        window.lucide.createIcons();
-    }
-    
-    // ✅ ANEXA LISTENERS DA TAB BAR (força depois de tudo carregar)
-    setTimeout(() => {
-        attachTabbarListeners();
-        
-        // Atualiza premium
-        if (typeof window.updatePremiumButtons === 'function') {
-            window.updatePremiumButtons();
-        }
-    }, 500);
-}
-
-document.addEventListener('DOMContentLoaded', mount);
+    document.addEventListener('DOMContentLoaded', mount);
 
 })();
