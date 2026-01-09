@@ -2215,6 +2215,7 @@ window.closePlannerDropdown = function () {
   const dropdown =
     document.getElementById('planner-dropdown') ||
     document.querySelector('.planner-dropdown');
+	  setActiveTab(0);
 
   if (dropdown) {
     dropdown.classList.add('hidden');
@@ -2571,3 +2572,101 @@ window.addEventListener('DOMContentLoaded', function() {
     }, 0);
   }, false);
 })();
+
+
+// ===============================
+// ESTADO VISUAL DO PLANNER (VERDE ↔ CINZA)
+// - Fica verde quando dropdown abre
+// - Volta ao cinza quando dropdown fecha
+// - Baseado no estado REAL do DOM (hidden/display)
+// ===============================
+(function plannerActiveState() {
+  'use strict';
+
+  function getPlannerButton() {
+    const tabbar = document.querySelector('.tab-bar');
+    if (!tabbar) return null;
+
+    return Array.from(tabbar.querySelectorAll('button')).find(btn =>
+      btn.querySelector('svg.lucide-calendar, svg.lucide.lucide-calendar')
+    );
+  }
+
+  function setActive(active) {
+    const btn = getPlannerButton();
+    if (!btn) return;
+    btn.classList.toggle('is-active', active);
+  }
+
+  function isDropdownOpen() {
+    const el = document.getElementById('planner-dropdown');
+    if (!el) return false;
+
+    // Se estiver explicitamente escondido, está fechado
+    if (el.classList.contains('hidden')) return false;
+
+    const cs = getComputedStyle(el);
+
+    if (cs.display === 'none') return false;
+    if (cs.visibility === 'hidden') return false;
+    if (cs.opacity === '0') return false;
+    if (cs.pointerEvents === 'none') return false;
+
+    return true;
+  }
+
+  // Clique no botão do Planner → avalia após abrir
+  document.addEventListener('click', function (e) {
+    const btn = getPlannerButton();
+    if (!btn) return;
+
+    if (btn.contains(e.target)) {
+      setTimeout(function () {
+        setActive(isDropdownOpen());
+      }, 0);
+    }
+  }, true);
+
+  // Clique fora → avalia após fechar (timing real do seu DOM)
+  document.addEventListener('click', function () {
+    setTimeout(function () {
+      setActive(isDropdownOpen());
+    }, 60);
+  }, false);
+
+})();
+
+
+
+
+// ===============================
+// PARTE 13 — DEBUG ESTADO DO DROPDOWN AO FECHAR
+// ===============================
+(function debugPlannerDropdownState(){
+  'use strict';
+
+  if (window.__debugPlannerDropdownState) return;
+  window.__debugPlannerDropdownState = true;
+
+  function dd() { return document.getElementById('planner-dropdown'); }
+
+  document.addEventListener('click', function(){
+    setTimeout(() => {
+      const el = dd();
+      if (!el) return;
+
+      const cs = getComputedStyle(el);
+      console.log('[DEBUG dropdown]',
+        'display:', cs.display,
+        'visibility:', cs.visibility,
+        'opacity:', cs.opacity,
+        'pointerEvents:', cs.pointerEvents,
+        'class:', el.className
+      );
+    }, 50);
+  }, false);
+})();
+
+
+
+
