@@ -239,11 +239,8 @@ function renderTabbar(root) {
   if (typeof window.updatePremiumButtons === 'function') {
     setTimeout(() => window.updatePremiumButtons(), 100);
   }
+
 }
-}
-
-
-
 
     // --------- HAMBURGER MENU RENDER ---------
     function renderHamburger(root) {
@@ -268,9 +265,8 @@ function renderTabbar(root) {
             <i data-lucide="x"></i>
           </button>
         </div>
-            
-			
-			
+        
+				
 			<nav class="hamburger-nav">
   <div class="hamburger-section">
     <div class="hamburger-section-title">
