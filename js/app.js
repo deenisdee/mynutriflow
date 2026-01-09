@@ -537,6 +537,13 @@ async function saveWeekPlan() {
   } catch (e) {}
 }
 
+
+
+
+
+
+
+
 // ==============================
 // UI (Badge / Premium)
 // ==============================
@@ -594,8 +601,20 @@ function updateUI() {
     creditsBadge.classList.add('ready');
   } catch (error) {
     console.error('Erro em updateUI:', error);
+	
+	
+	// ✅ Atualiza botões premium
+    updatePremiumButtons();
+	
+	
   }
 }
+
+
+
+
+
+
 
 function updateShoppingCounter() {
   if (!shoppingCounter) return;
@@ -1706,6 +1725,7 @@ async function activatePremium() {
 }
 
 
+
 // ==============================
 // SISTEMA HYBRID DE EXPIRAÇÃO PREMIUM
 // ==============================
@@ -1752,6 +1772,58 @@ async function _handlePremiumExpiration() {
   
   _clearPremiumTimers();
 }
+
+// ================================
+// ATUALIZA BOTÕES PREMIUM (TAB BAR + MENU HAMBÚRGUER)
+// ================================
+function updatePremiumButtons() {
+  const tabPremiumBtn = document.querySelector('.tab-premium');
+  const tabPremiumLabel = tabPremiumBtn?.querySelector('.tab-label');
+  
+  const hamburgerPremiumBtn = document.querySelector('.hamburger-premium-btn');
+  const hamburgerPremiumText = hamburgerPremiumBtn?.querySelector('span');
+  
+  if (isPremium && premiumExpires) {
+    const daysLeft = Math.ceil((premiumExpires - Date.now()) / (1000 * 60 * 60 * 24));
+    
+    if (tabPremiumBtn) {
+      tabPremiumBtn.classList.add('has-premium');
+    }
+    if (tabPremiumLabel) {
+      tabPremiumLabel.textContent = 'Premium';
+    }
+    
+    if (hamburgerPremiumBtn) {
+      hamburgerPremiumBtn.classList.add('has-premium');
+    }
+    if (hamburgerPremiumText) {
+      hamburgerPremiumText.textContent = `Premium (${daysLeft}D)`;
+    }
+    
+  } else {
+    if (tabPremiumBtn) {
+      tabPremiumBtn.classList.remove('has-premium');
+    }
+    if (tabPremiumLabel) {
+      tabPremiumLabel.textContent = 'Premium';
+    }
+    
+    if (hamburgerPremiumBtn) {
+      hamburgerPremiumBtn.classList.remove('has-premium');
+    }
+    if (hamburgerPremiumText) {
+      hamburgerPremiumText.textContent = 'Seja Premium';
+    }
+  }
+  
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
+  }
+}
+
+
+
+
 
 function _setupPremiumTimers() {
   // Limpa timers anteriores (se existirem)
@@ -2105,28 +2177,54 @@ window.tabGoSearch = function() {
   setActiveTab(1);
 };
 
-window.togglePlannerDropdown = function() {
+
+
+
+
+window.togglePlannerDropdown = function () {
   haptic(10);
-  const dropdown = document.getElementById('planner-dropdown');
-  if (dropdown) {
-    dropdown.classList.toggle('hidden');
-    
-    // Renderiza ícones Lucide
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
+
+  // pega por id OU por classe (porque às vezes seu dropdown é .planner-dropdown)
+  const dropdown =
+    document.getElementById('planner-dropdown') ||
+    document.querySelector('.planner-dropdown');
+
+  if (!dropdown) return;
+
+  dropdown.classList.toggle('hidden');
+
+  // Renderiza ícones lucide (se estiver usando)
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons();
   }
-  
-  // Atualiza estado ativo
-  setActiveTab(2);
+
+  // Atualiza estado ativo (Planner)
+  if (typeof window.setActiveTab === 'function') {
+    window.setActiveTab(2);
+  }
 };
 
-window.closePlannerDropdown = function() {
-  const dropdown = document.getElementById('planner-dropdown');
+
+
+
+
+
+
+
+window.closePlannerDropdown = function () {
+  const dropdown =
+    document.getElementById('planner-dropdown') ||
+    document.querySelector('.planner-dropdown');
+
   if (dropdown) {
     dropdown.classList.add('hidden');
   }
 };
+
+
+
+
+
 
 window.tabGoPremium = function() {
   haptic(10);
@@ -2144,8 +2242,6 @@ function setActiveTab(index) {
     }
   });
 }
-
-
 
 
 
@@ -2173,7 +2269,6 @@ window.openShoppingList = function() {
   haptic(10);
 
   closePlannerDropdown();
-
 
   if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
     openPremiumModal('planner');
@@ -2208,27 +2303,30 @@ window.openWeekPlanner = function() {
 // ================================
 // MENU HAMBÚRGUER - FUNÇÕES
 // ================================
-window.openHamburgerMenu = function() {
-  haptic(10);
+window.openHamburgerMenu = function () {
   const menu = document.getElementById('hamburger-menu');
-  if (menu) {
-    menu.classList.remove('hidden');
-    document.body.classList.add('modal-open');
-    
-    // Renderiza ícones Lucide
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
-  }
+  if (!menu) return;
+
+  haptic?.(10);
+
+  menu.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 };
 
-window.closeHamburgerMenu = function() {
+window.closeHamburgerMenu = function () {
   const menu = document.getElementById('hamburger-menu');
-  if (menu) {
-    menu.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
+  if (!menu) return;
+
+  menu.classList.add('hidden');
+  document.body.classList.remove('modal-open');
 };
+
+
+
+
+
+
+
 
 // ================================
 // RODAPÉ - FUNÇÕES
