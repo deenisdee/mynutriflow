@@ -2209,17 +2209,19 @@ window.togglePlannerDropdown = function () {
 
 
 
-
-
 window.closePlannerDropdown = function () {
   const dropdown =
     document.getElementById('planner-dropdown') ||
     document.querySelector('.planner-dropdown');
-	  setActiveTab(0);
+
+  setActiveTab(0);
 
   if (dropdown) {
     dropdown.classList.add('hidden');
   }
+
+  // 👇 FALTAVA ISSO
+  updatePlannerBadge();
 };
 
 
@@ -2670,3 +2672,23 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
+
+
+
+function updatePlannerBadge() {
+  const badge = document.querySelector('#planner-badge');
+  if (!badge) return;
+
+  // 👇 ajuste esta condição para a sua regra real
+  const shouldBeYellow = typeof isPlannerActive === 'function'
+    ? isPlannerActive()
+    : false;
+
+  badge.classList.remove('badge-green', 'badge-yellow');
+
+  if (shouldBeYellow) {
+    badge.classList.add('badge-yellow');
+  } else {
+    badge.classList.add('badge-green');
+  }
+}
