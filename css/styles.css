@@ -3118,3 +3118,94 @@ body.premium-modal-open.premium-open--hamburger .badge {
 
 
 
+/* ===============================
+   HERO BANNER (SEM IMAGEM)
+   =============================== */
+.hero-banner {
+  background: #1f2937; /* cinza escuro elegante */
+  color: #ffffff;
+  padding: 40px 20px;
+}
+
+.hero-content {
+  max-width: 520px;
+}
+
+.hero-content h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.hero-content p {
+  font-size: 15px;
+  line-height: 1.5;
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.hero-btn {
+  background: #22c55e;
+  color: #111827;
+  border: none;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  width: 100%;
+}
+
+/* ===============================
+   TOUR MODAL (MOBILE FIRST)
+   =============================== */
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: flex-end;
+  z-index: 999;
+}
+
+.tour-box {
+  background: #ffffff;
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  padding: 20px;
+  position: relative;
+}
+
+.tour-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+}
+
+.tour-text {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #111827;
+  min-height: 90px;
+  margin-bottom: 20px;
+}
+
+.tour-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tour-nav {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  background: #e5e7eb;
+}
+
+.hidden {
+  display: none !important;
+}
