@@ -39,7 +39,7 @@ const RECIPES = [
         'Oleaginosas'
     ],
     
-    image: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=1200&h=740&fit=crop',
+    image: 'https://images.unsplash.com/photo-1768134459263-34278a332e4c?q=80',
     
     // 👇 NOVA ESTRUTURA DE INGREDIENTES COM ÍCONES
     ingredients: [
@@ -114,18 +114,8 @@ const RECIPES = [
     
     // 👇 FOTOS DAS ETAPAS (quando gerar no Leonardo.ai)
     images: {
-        hero: 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=1200&h=740&fit=crop',
-        steps: [
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 1
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 2
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 3
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 4
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 5
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 6
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 7
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop', // passo 8
-            'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=600&h=370&fit=crop'  // passo 9
-        ]
+        hero: 'https://images.unsplash.com/photo-1768134459263-34278a332e4c?q=80',
+        steps: [ ]
     },
     
     macros: {
@@ -159,7 +149,7 @@ const RECIPES = [
                 'Saciedade prolongada por até 4 horas'
             ],
         allergens: [],
-        image: 'https://images.unsplash.com/photo-1647482770207-06bfdc9458a9?q=80',
+        image: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80',
         ingredients: [
                 '300g de peito de frango (aproximadamente 2 filés médios)',
                 '2 batatas doces médias (400g total)',
@@ -231,7 +221,7 @@ const RECIPES = [
                 'Ovos',
                 'Laticínios'
             ],
-        image: 'https://images.unsplash.com/photo-1583427548995-7210c027bd1f?q=80&w=1170',
+        image: 'https://images.unsplash.com/photo-1583427548995-7210c027bd1f?q=80',
         ingredients: [
                 '5 claras de ovo grandes (aproximadamente 150ml)',
                 '1 ovo inteiro caipira',
