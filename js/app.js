@@ -129,90 +129,110 @@
 
 
 
+// ============================================
+// Premium – estado único + sync de UI (Header/Tab/Hamb)
+// ============================================
+window.RF = window.RF || {};
 
-syncUI() {
-  const active = RF.premium.isActive();
+RF.premium = {
+  isActive: function () {
+    return localStorage.getItem('fit_premium') === 'true';
+  },
 
-  // 1) Classe no body
-  document.body.classList.toggle('premium-active', active);
+  // opcional: se você já usa token/prazo, depois a gente liga aqui
+  // isValid: function () { ... }
 
-  // 2) Header: botão "Ativar Premium" (verde)
-  const headerBtn = document.getElementById('premium-btn');
+  setActive: function (active) {
+    localStorage.setItem('fit_premium', active ? 'true' : 'false');
+    RF.premium.syncUI();
+  },
 
-  // 2.1) Header: badge amarelo (se existir)
-  // (vou tentar por ID e por classe; se não existir, não quebra nada)
-  const premiumBadge =
-    document.getElementById('premium-badge') ||
-    document.querySelector('.premium-badge') ||
-    document.querySelector('[data-premium-badge]');
+  syncUI: function () {
+    const active = RF.premium.isActive();
 
-  // Se você quer: Premium => some botão verde e aparece badge amarelo (sem reload)
-  if (headerBtn) {
-    if (active) {
-      headerBtn.classList.add('hidden');
-      headerBtn.style.display = 'none';
-    } else {
-      headerBtn.classList.remove('hidden');
-      headerBtn.style.display = '';
-      headerBtn.disabled = false;
-      headerBtn.style.pointerEvents = 'auto';
-      headerBtn.style.opacity = '1';
-      headerBtn.setAttribute('aria-disabled', 'false');
-    }
-  }
+    // 1) Classe no body
+    document.body.classList.toggle('premium-active', active);
 
-  if (premiumBadge) {
-    if (active) {
-      premiumBadge.classList.remove('hidden');
-      premiumBadge.style.display = '';
-    } else {
-      premiumBadge.classList.add('hidden');
-      premiumBadge.style.display = 'none';
-    }
-  }
+    // 2) Header: botão "Ativar Premium" (verde)
+    const headerBtn = document.getElementById('premium-btn');
 
-  // 3) Tab bar: botão Premium (estrela)
-  const tabPremium = document.querySelectorAll('.tab-bar .tab-premium');
-  tabPremium.forEach((el) => {
-    el.dataset.premiumActive = active ? 'true' : 'false';
-  });
+    // 2.1) Header: badge amarelo (se existir)
+    const premiumBadge =
+      document.getElementById('premium-badge') ||
+      document.querySelector('.premium-badge') ||
+      document.querySelector('[data-premium-badge]');
 
-  // 4) Hambúrguer: botão "Seja Premium"
-  const hambPremium = document.querySelectorAll('.hamburger-premium-btn');
-  hambPremium.forEach((el) => {
-    el.dataset.premiumActive = active ? 'true' : 'false';
-  });
-
-  // 5) HOME: botão "Como funciona o Premium" + card do tour (iPhone-proof)
-  const tourBtn  = document.getElementById('open-tour-btn');
-  const tourCard = document.getElementById('tour-card');
-
-  if (tourBtn) {
-    if (active) {
-      tourBtn.classList.add('hidden');
-      tourBtn.style.display = 'none';   // <- garante no iPhone
-      if (tourCard) {
-        tourCard.classList.add('hidden');
-        tourCard.style.display = 'none';
-      }
-    } else {
-      tourBtn.classList.remove('hidden');
-      tourBtn.style.display = '';
-      if (tourCard) {
-        // card fica fechado por padrão, mas não forçado “pra sempre”
-        tourCard.style.display = '';
+    if (headerBtn) {
+      if (active) {
+        headerBtn.classList.add('hidden');
+        headerBtn.style.display = 'none';
+      } else {
+        headerBtn.classList.remove('hidden');
+        headerBtn.style.display = '';
+        headerBtn.disabled = false;
+        headerBtn.style.pointerEvents = 'auto';
+        headerBtn.style.opacity = '1';
+        headerBtn.setAttribute('aria-disabled', 'false');
       }
     }
-  }
 
-  // 6) Se existir o sync do tour (daquele bloco do card), chama também
-  if (typeof window.syncPremiumTour === 'function') {
-    window.syncPremiumTour();
-  }
+    if (premiumBadge) {
+      if (active) {
+        premiumBadge.classList.remove('hidden');
+        premiumBadge.style.display = '';
+      } else {
+        premiumBadge.classList.add('hidden');
+        premiumBadge.style.display = 'none';
+      }
+    }
 
-  // 7) Evento global (pra outras partes reagirem sem reload)
-  window.dispatchEvent(new CustomEvent('rf:premium-change', { detail: { active } }));
-}
+    // 3) Tab bar: botão Premium (estrela)
+    const tabPremium = document.querySelectorAll('.tab-bar .tab-premium');
+    tabPremium.forEach(function (el) {
+      el.dataset.premiumActive = active ? 'true' : 'false';
+    });
+
+    // 4) Hambúrguer: botão "Seja Premium"
+    const hambPremium = document.querySelectorAll('.hamburger-premium-btn');
+    hambPremium.forEach(function (el) {
+      el.dataset.premiumActive = active ? 'true' : 'false';
+    });
+
+    // 5) HOME: botão "Como funciona o Premium" + card do tour
+    const tourBtn  = document.getElementById('open-tour-btn');
+    const tourCard = document.getElementById('tour-card');
+
+    if (tourBtn) {
+      if (active) {
+        tourBtn.classList.add('hidden');
+        tourBtn.style.display = 'none';
+        if (tourCard) {
+          tourCard.classList.add('hidden');
+          tourCard.style.display = 'none';
+        }
+      } else {
+        tourBtn.classList.remove('hidden');
+        tourBtn.style.display = '';
+      }
+    }
+
+    // 6) Sincroniza o tour (se existir)
+    if (typeof window.syncPremiumTour === 'function') {
+      window.syncPremiumTour();
+    }
+
+    // 7) Evento global
+    window.dispatchEvent(
+      new CustomEvent('rf:premium-change', { detail: { active: active } })
+    );
+  }
+};
+
+// Atalho opcional
+window.rfSyncPremiumUI = RF.premium.syncUI;
+
+// Sync inicial (sem reload)
+RF.premium.syncUI();
 
 
 
