@@ -2712,3 +2712,74 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
+// ===============================
+// TOUR GUIADO — PREMIUM
+// ===============================
+(function premiumTour() {
+  const btn = document.getElementById('open-tour-btn');
+  const modal = document.getElementById('tour-modal');
+  const text = document.getElementById('tour-text');
+  const closeBtn = document.getElementById('tour-close');
+  const prevBtn = document.getElementById('tour-prev');
+  const nextBtn = document.getElementById('tour-next');
+
+  if (!btn || !modal || !text) return;
+
+  const steps = [
+    "Aqui não existe cobrança nem pressão. O site foi criado para te ajudar a decidir com mais leveza.",
+    "Primeiro, você escolhe uma receita simples. Não precisa planejar tudo hoje. Uma escolha já é um avanço.",
+    "No Premium, a Calculadora de Calorias te mostra o que seu corpo precisa — sem paranoia, só clareza.",
+    "Depois, a Lista de Compras organiza os ingredientes para você ir ao mercado sem esquecer nada.",
+    "O Planejador Semanal tira o peso do 'o que vou comer hoje?' e te ajuda a enxergar a semana.",
+    "O Premium não te controla. Ele te apoia. Você continua no comando."
+  ];
+
+  let step = 0;
+
+  function isPremium() {
+    return localStorage.getItem('fit_premium') === 'true';
+  }
+
+  function render() {
+    text.textContent = steps[step];
+    prevBtn.disabled = step === 0;
+    nextBtn.textContent = step === steps.length - 1 ? 'Fechar' : 'Próximo';
+  }
+
+  function open() {
+    modal.classList.remove('hidden');
+    step = 0;
+    render();
+  }
+
+  function close() {
+    modal.classList.add('hidden');
+  }
+
+  btn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+
+  prevBtn.addEventListener('click', () => {
+    if (step > 0) step--;
+    render();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (step < steps.length - 1) {
+      step++;
+      render();
+    } else {
+      close();
+    }
+  });
+
+  // só aparece para Free
+  function sync() {
+    if (isPremium()) btn.classList.add('hidden');
+    else btn.classList.remove('hidden');
+  }
+
+  document.addEventListener('DOMContentLoaded', sync);
+  sync();
+
+})();
