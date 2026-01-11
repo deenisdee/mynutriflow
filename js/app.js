@@ -1125,7 +1125,7 @@ function showRecipeDetail(recipeId) {
     
     // Scroll suave pro topo
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 300);
+  }, 500);
 }
 
 
@@ -1225,7 +1225,7 @@ window.closeRecipeDetailAndFilter = function(category) {
 	
     // Scroll suave pro topo
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 500);
+  }, 300);
 };
 
 
