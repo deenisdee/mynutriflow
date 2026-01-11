@@ -150,30 +150,6 @@
 	
 	
 
-<section class="hero-banner" id="hero-banner">
-  <button id="open-tour-btn" class="hero-btn" type="button">
-    Como funciona o Premium
-  </button>
-
-  <div id="tour-card" class="tour-card hidden" role="dialog" aria-modal="true">
-    <div class="tour-card-inner">
-      <div class="tour-top">
-        <div id="tour-counter" class="tour-counter">1/7</div>
-        <button id="tour-close" class="tour-x" type="button" aria-label="Fechar">X</button>
-      </div>
-
-      <div id="tour-text" class="tour-text"></div>
-
-      <div class="tour-actions">
-        <button id="tour-prev" class="tour-btn ghost" type="button">Voltar</button>
-        <button id="tour-next" class="tour-btn primary" type="button">Avançar</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
 	
 
 
@@ -182,6 +158,31 @@
 		 
          <!-- SLIDER HERO FULL-WIDTH -->
          <div class="hero-slider-fullwidth" id="heroSlider">
+		 
+		 
+<button id="open-tour-btn" class="hero-btn hero-btn--overlay" type="button">
+  Como funciona o Premium
+</button>
+
+<!-- Card do Tour (fica sobre o banner, só aparece quando abrir) -->
+<div id="tour-card" class="tour-card hidden" role="dialog" aria-modal="true">
+  <div class="tour-card-inner">
+    <div class="tour-top">
+      <span id="tour-counter" class="tour-counter">1/7</span>
+      <button id="tour-close" class="tour-x" type="button" aria-label="Fechar">X</button>
+    </div>
+
+    <div id="tour-text" class="tour-text"></div>
+
+    <div class="tour-actions">
+      <button id="tour-prev" class="tour-btn ghost" type="button">Voltar</button>
+      <button id="tour-next" class="tour-btn primary" type="button">Avançar</button>
+    </div>
+  </div>
+</div>
+
+
+		 
             <div class="slider-track-new" id="sliderTrack"></div>
             <button class="slider-arrow-new prev tap" onclick="changeSlideNew(-1)">‹</button>
             <button class="slider-arrow-new next tap" onclick="changeSlideNew(1)">›</button>
