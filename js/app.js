@@ -126,9 +126,15 @@
 
 
 
-// =====================================================
-// Premium — estado único + sync de UI (Header/Tab/Hamb)
-// =====================================================
+
+
+
+
+
+
+// ============================================
+// Premium – estado único + sync de UI (Header/Tab/Hamb)
+// ============================================
 window.RF = window.RF || {};
 
 RF.premium = {
@@ -162,7 +168,7 @@ RF.premium = {
 
     // 3) Tab bar: botão Premium (ícone estrela)
     // (seleciona tanto <button> quanto <a> com .tab-premium)
-    const tabPremium = document.querySelectorAll('.tab-premium');
+    const tabPremium = document.querySelectorAll('.tab-bar .tab-premium');
     tabPremium.forEach((el) => {
       el.dataset.premiumActive = active ? 'true' : 'false';
       el.style.pointerEvents = active ? 'none' : 'auto';
@@ -178,19 +184,38 @@ RF.premium = {
       el.style.opacity = active ? '0.7' : '1';
       el.setAttribute('aria-disabled', active ? 'true' : 'false');
     });
+
+    // =========================================================
+    // 5) ✅ HOME: botão "Como funciona o Premium" + card do tour
+    //    - Free: mostra botão
+    //    - Premium: esconde botão e garante card fechado
+    // =========================================================
+    const tourBtn  = document.getElementById('open-tour-btn');
+    const tourCard = document.getElementById('tour-card');
+
+    if (tourBtn) {
+      if (active) {
+        tourBtn.classList.add('hidden');
+        if (tourCard) tourCard.classList.add('hidden');
+      } else {
+        tourBtn.classList.remove('hidden');
+      }
+    }
   }
 };
 
-// Atalho para chamar de qualquer lugar
+// Atalho para chamar de qualquer lugar (se você já usa)
 window.rfSyncPremiumUI = RF.premium.syncUI;
 
+// ✅ sincroniza o body e UI assim que carregar
+RF.premium.syncUI();
 
 
-// ✅ Mantém o body em sincronia com o status Premium (CSS/UI)
-RF.premium.syncUI = function() {
-  const active = RF.premium.isActive();
-  document.body.classList.toggle('premium-active', !!active);
-};
+
+
+
+
+
 
 
 
