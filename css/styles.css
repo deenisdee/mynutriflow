@@ -3119,69 +3119,41 @@ body.premium-modal-open.premium-open--hamburger .badge {
 
 
 
-/* ===============================
-   HERO BANNER (sem imagem)
-   =============================== */
-.hero-banner{
-    position: relative;
-    /* background: #1f2937; */
-    color: #fff;
-    padding: 0px 18px 0px !important;
-    border-radius: 0;
-}
 
-.hero-content{
-  max-width: 520px;
-}
+.hero-btn--overlay{
+  position: absolute;
+  left: 17px;
+  right: 17px;
+  top: 35px;
+  z-index: 45;
 
-.hero-content h1{
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 10px;
-}
-
-.hero-content p{
-  font-size: 14px;
-  line-height: 1.5;
-  opacity: .92;
-  margin-bottom: 16px;
-}
-
-.hero-btn{
-  width: 100%;
   border: 0;
   border-radius: 14px;
-  padding: 14px 16px;
-  font-weight: 500;
-  background: #16a34a !important;
-  color: #f9fafb !important;
-  
-  font-family: inherit;      /* usa a fonte do site */
-  font-size: 14px;           /* ajuste fino se precisar */
-         /* mesmo “peso” visual do Premium */
-  letter-spacing: 0; 
-  text-transform: none;
-  line-height: 1;
+  padding: 12px 14px;
+
+  background: rgba(255,255,255,0.92);
+  color: #111827;
 }
 
 
 
 
 
-
 /* ===============================
-   TOUR CARD (flutuante sobre banner)
+   TOUR CARD (overlay no banner)
+   - Não define font-size/font-weight (herda do site)
    =============================== */
+
 .tour-card{
   position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: -34px;          /* “flutua” pra fora do banner */
-  z-index: 80;
+  left: 17px;
+  right: 17px;
+  bottom: 97px;
+  z-index: 46; /* acima do botão (45) */
 }
 
 .tour-card-inner{
-  background: #fff;
+  background: rgba(255,255,255,0.98);
   color: #111827;
   border-radius: 16px;
   box-shadow: 0 12px 30px rgba(0,0,0,.22);
@@ -3196,25 +3168,21 @@ body.premium-modal-open.premium-open--hamburger .badge {
 }
 
 .tour-counter{
-  font-weight: 800;
-  color: #111827;
   opacity: .85;
 }
 
 .tour-x{
-	cursor: pointer;
   width: 34px;
   height: 34px;
   border-radius: 999px;
   border: 0;
-  background: #16a34a;
-  color: #fff;
-  font-weight: 900;
+  background: #22c55e;
+  color: #0b1220;
+  font-weight: inherit; /* não força peso */
 }
 
 .tour-text{
   padding: 10px 12px 12px 12px;
-  font-size: 14px;
   line-height: 1.45;
   min-height: 56px;
 }
@@ -3222,108 +3190,23 @@ body.premium-modal-open.premium-open--hamburger .badge {
 .tour-actions{
   display: flex;
   gap: 8px;
-  padding: 0;
 }
 
 .tour-btn{
   flex: 1;
   border: 0;
   padding: 12px 12px;
-  font-weight: 600;
+  background: transparent;
 }
 
 .tour-btn.ghost{
-	 cursor: pointer;
-	font-size: 15px;
-  background: #fff;
-    font-weight: 600;
-    font-family:inherit;
+  background: #ffffff;
   border-top: 1px solid #e5e7eb;
   border-right: 1px solid #e5e7eb;
 }
 
 .tour-btn.primary{
-	 cursor: pointer;
-	font-size: 15px;
   background: #3b82f6;
-    font-weight: 600;
-  font-family:inherit;
   color: #fff;
   border-top: 1px solid rgba(0,0,0,.08);
-}
-
-/* util */
-.hidden{ display:none !important; }
-
-
-
-
-/* ===============================
-   OVERLAY NO BANNER (botão + card)
-   =============================== */
-
-/* o banner/slider precisa ser “a referência” */
-#hero-banner,
-.hero-banner,
-.banner-hero,
-#home-banner,
-.banner-slider,
-.slider,
-.hero {
-  position: relative;
-}
-
-/* BOTÃO flutuante sobre o banner */
-
-
-
-
-.hero-btn,
-#open-tour-btn {
-	
-	 cursor: pointer;
-	opacity: 0.9;
-    position: absolute !important;
-    left: 17px;
-    right: 17px;
-    top: 37px;
-    z-index: 45 !important;
-	font-size: 0.95rem;
-	font-weight:500px!important;
-    width: auto !important;
-    height: 50px;
-    margin: 0 !important;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-/* CARD flutuante sobre o banner */
-#tour-card,
-
-.tour-card {
-	
-  position: absolute !important;
-  left: 17px !important;
-  top: 37px !important;
-  right: 17px !important;
-  bottom: 12px !important;             /* ⬅️ card embaixo do banner */
-  z-index: 45 !important;
-}
-
-/* garante que o card não “empurre” nada */
-#tour-card.hidden,
-.tour-card.hidden {
-  display: none !important;
-}
-
-
-
-
-
-.hero-banner * {
-  pointer-events: auto;
-}
-
-.hero-banner .slider-overlay,
-.hero-banner .slider-layer {
-  pointer-events: none;
 }
