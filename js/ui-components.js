@@ -340,17 +340,22 @@ function attachTabbarListeners() {
                 return;
             }
 
-            // 3) Planner
-            if (tab === 'planner') {
-                if (!/index\.html/i.test(location.pathname) && location.pathname !== '/') {
-                    window.location.href = 'index.html#rf-planner';
-                    return;
-                }
-                if (typeof window.togglePlannerDropdown === 'function') {
-                    window.togglePlannerDropdown();
-                }
-                return;
-            }
+// 3) Planner
+if (tab === 'planner') {
+    const isIndex = /index\.html/i.test(location.pathname) || location.pathname === '/' || location.pathname === '';
+    
+    if (!isIndex) {
+        window.location.href = 'index.html#rf-planner';
+        return;
+    }
+    
+    setTimeout(() => {
+        if (typeof window.togglePlannerDropdown === 'function') {
+            window.togglePlannerDropdown();
+        }
+    }, 100);
+    return;
+}
 
             // 4) Premium
             if (tab === 'premium') {
