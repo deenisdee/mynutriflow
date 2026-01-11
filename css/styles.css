@@ -3152,7 +3152,7 @@ body.premium-modal-open.premium-open--hamburger .badge {
   padding: 14px 16px;
   font-weight: 800;
   background: #16a34a !important;
-  color: #fff !important;
+  color: #f9fafb !important;
 }
 
 /* ===============================
@@ -3251,15 +3251,21 @@ body.premium-modal-open.premium-open--hamburger .badge {
 }
 
 /* BOTÃO flutuante sobre o banner */
+
+
+
+
 .hero-btn,
 #open-tour-btn {
-  position: absolute !important;
-  left: 12px;
-  right: 12px;
-  top: 35px;                /* ⬅️ botão no topo do banner */
-  z-index: 90 !important;
-  width: auto !important;
-  margin: 0 !important;
+    position: absolute !important;
+    left: 17px;
+    right: 17px;
+    top: 37px;
+    z-index: 45 !important;
+    width: auto !important;
+    height: 50px;
+    margin: 0 !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /* CARD flutuante sobre o banner */
