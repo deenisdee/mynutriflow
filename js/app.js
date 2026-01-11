@@ -1802,15 +1802,21 @@ function updatePremiumButtons() {
       tabPremiumLabel.textContent = 'Premium';
     }
     
-    // ✅ MENU HAMBÚRGUER - Fica amarelo + mostra dias + DESABILITA CLIQUE
+    // ✅ MENU HAMBÚRGUER - Fica amarelo + mostra dias
     if (hamburgerPremiumBtn) {
       hamburgerPremiumBtn.classList.add('has-premium');
-      hamburgerPremiumBtn.disabled = true;
       hamburgerPremiumBtn.style.cursor = 'default';
       hamburgerPremiumBtn.style.opacity = '1';
       
-      // Remove onclick
-      hamburgerPremiumBtn.onclick = null;
+      // SÓ desabilita se estiver na index
+      const isIndex = /index\.html/i.test(location.pathname) || location.pathname === '/' || location.pathname === '';
+      if (isIndex) {
+        hamburgerPremiumBtn.disabled = true;
+        hamburgerPremiumBtn.onclick = null;
+      } else {
+        hamburgerPremiumBtn.disabled = false;
+        // Mantém o onclick original do HTML
+      }
     }
     if (hamburgerPremiumText) {
       hamburgerPremiumText.textContent = `Premium (${daysLeft}D)`;
@@ -1830,12 +1836,7 @@ function updatePremiumButtons() {
       hamburgerPremiumBtn.disabled = false;
       hamburgerPremiumBtn.style.cursor = 'pointer';
       hamburgerPremiumBtn.style.opacity = '';
-      
-      // Restaura onclick
-      hamburgerPremiumBtn.onclick = function() {
-        if (window.openPremiumModal) window.openPremiumModal();
-        if (window.closeHamburgerMenu) window.closeHamburgerMenu();
-      };
+      // Mantém o onclick original do HTML
     }
     if (hamburgerPremiumText) {
       hamburgerPremiumText.textContent = 'Seja Premium';
