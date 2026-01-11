@@ -3117,95 +3117,176 @@ body.premium-modal-open.premium-open--hamburger .badge {
 
 
 
-
 /* ===============================
-   HERO BANNER (SEM IMAGEM)
+   HERO BANNER (sem imagem)
    =============================== */
-.hero-banner {
-  background: #1f2937; /* cinza escuro elegante */
-  color: #ffffff;
-  padding: 40px 20px;
+.hero-banner{
+  position: relative;
+  background: #1f2937;
+  color: #fff;
+  padding: 36px 18px 70px; /* espaço embaixo pro card flutuar sem esmagar */
+  border-radius: 0;
 }
 
-.hero-content {
+.hero-content{
   max-width: 520px;
 }
 
-.hero-content h1 {
+.hero-content h1{
   font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 12px;
+  font-weight: 800;
+  margin-bottom: 10px;
 }
 
-.hero-content p {
-  font-size: 15px;
+.hero-content p{
+  font-size: 14px;
   line-height: 1.5;
-  opacity: 0.9;
-  margin-bottom: 20px;
+  opacity: .92;
+  margin-bottom: 16px;
 }
 
-.hero-btn {
-  background: #22c55e;
-  color: #111827;
-  border: none;
-  padding: 14px 16px;
-  border-radius: 12px;
-  font-weight: 700;
+.hero-btn{
   width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-weight: 800;
+  background: #22c55e;
+  color: #0b1220;
 }
 
 /* ===============================
-   TOUR MODAL (MOBILE FIRST)
+   TOUR CARD (flutuante sobre banner)
    =============================== */
-.tour-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: flex-end;
-  z-index: 999;
+.tour-card{
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: -34px;          /* “flutua” pra fora do banner */
+  z-index: 80;
 }
 
-.tour-box {
-  background: #ffffff;
-  width: 100%;
-  border-radius: 16px 16px 0 0;
-  padding: 20px;
+.tour-card-inner{
+  background: #fff;
+  color: #111827;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+  overflow: hidden;
+}
+
+.tour-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px 0 12px;
+}
+
+.tour-counter{
+  font-weight: 800;
+  color: #111827;
+  opacity: .85;
+}
+
+.tour-x{
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 0;
+  background: #22c55e;
+  color: #0b1220;
+  font-weight: 900;
+}
+
+.tour-text{
+  padding: 10px 12px 12px 12px;
+  font-size: 14px;
+  line-height: 1.45;
+  min-height: 56px;
+}
+
+.tour-actions{
+  display: flex;
+  gap: 8px;
+  padding: 0;
+}
+
+.tour-btn{
+  flex: 1;
+  border: 0;
+  padding: 12px 12px;
+  font-weight: 800;
+}
+
+.tour-btn.ghost{
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+}
+
+.tour-btn.primary{
+  background: #3b82f6;
+  color: #fff;
+  border-top: 1px solid rgba(0,0,0,.08);
+}
+
+/* util */
+.hidden{ display:none !important; }
+
+
+
+
+/* ===============================
+   OVERLAY NO BANNER (botão + card)
+   =============================== */
+
+/* o banner/slider precisa ser “a referência” */
+#hero-banner,
+.hero-banner,
+.banner-hero,
+#home-banner,
+.banner-slider,
+.slider,
+.hero {
   position: relative;
 }
 
-.tour-close {
-  position: absolute;
-  top: 12px;
+/* BOTÃO flutuante sobre o banner */
+.hero-btn,
+#open-tour-btn {
+  position: absolute !important;
+  left: 12px;
   right: 12px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
+  top: 12px;                /* ⬅️ botão no topo do banner */
+  z-index: 90 !important;
+  width: auto !important;
+  margin: 0 !important;
 }
 
-.tour-text {
-  font-size: 15px;
-  line-height: 1.5;
-  color: #111827;
-  min-height: 90px;
-  margin-bottom: 20px;
+/* CARD flutuante sobre o banner */
+#tour-card,
+.tour-card {
+  position: absolute !important;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;             /* ⬅️ card embaixo do banner */
+  z-index: 95 !important;
 }
 
-.tour-controls {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.tour-nav {
-  flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  font-weight: 700;
-  background: #e5e7eb;
-}
-
-.hidden {
+/* garante que o card não “empurre” nada */
+#tour-card.hidden,
+.tour-card.hidden {
   display: none !important;
+}
+
+
+
+
+
+.hero-banner * {
+  pointer-events: auto;
+}
+
+.hero-banner .slider-overlay,
+.hero-banner .slider-layer {
+  pointer-events: none;
 }
