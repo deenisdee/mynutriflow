@@ -3296,7 +3296,7 @@ body.premium-modal-open.premium-open--hamburger .badge {
   top: 37px !important;
   right: 17px !important;
   bottom: 12px !important;             /* ⬅️ card embaixo do banner */
-  z-index: 95 !important;
+  z-index: 45 !important;
 }
 
 /* garante que o card não “empurre” nada */
