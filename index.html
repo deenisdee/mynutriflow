@@ -150,37 +150,35 @@
 	
 	
 
-	
- <section class="hero-banner">
+<section class="hero-banner" id="hero-banner">
   <div class="hero-content">
     <h1>Comer bem não precisa ser complicado</h1>
-    <p>
-      Organize suas refeições, entenda seu corpo
-      e tire o peso das decisões do dia a dia.
-    </p>
+    <p>Organize suas refeições, entenda seu corpo e tire o peso das decisões do dia a dia.</p>
 
-    <!-- botão só para usuários Free -->
-    <button id="open-tour-btn" class="hero-btn">
+    <button id="open-tour-btn" class="hero-btn" type="button">
       Como funciona o Premium
     </button>
   </div>
-</section>
 
-<!-- MODAL / TOUR -->
-<div id="tour-modal" class="tour-overlay hidden">
-  <div class="tour-box">
-    <button id="tour-close" class="tour-close">✕</button>
+  <!-- CARD DO TOUR (flutuante no banner) -->
+  <div id="tour-card" class="tour-card hidden" role="dialog" aria-modal="true">
+    <div class="tour-card-inner">
+      <div class="tour-top">
+        <div id="tour-counter" class="tour-counter">1/7</div>
+        <button id="tour-close" class="tour-x" type="button" aria-label="Fechar">X</button>
+      </div>
 
-    <div class="tour-text" id="tour-text"></div>
+      <div id="tour-text" class="tour-text"></div>
 
-    <div class="tour-controls">
-      <button id="tour-prev" class="tour-nav">Voltar</button>
-      <button id="tour-next" class="tour-nav">Próximo</button>
+      <div class="tour-actions">
+        <button id="tour-prev" class="tour-btn ghost" type="button">Voltar</button>
+        <button id="tour-next" class="tour-btn primary" type="button">Avançar</button>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-		 
+
 	
 
 
