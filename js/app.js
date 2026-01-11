@@ -1738,6 +1738,10 @@ async function activatePremium() {
 // SISTEMA HYBRID DE EXPIRAÇÃO PREMIUM
 // ==============================
 
+
+
+
+
 async function _handlePremiumExpiration() {
   console.log('[PREMIUM] Expirado - executando bloqueio');
   
@@ -1779,7 +1783,18 @@ async function _handlePremiumExpiration() {
   }, 2000);
   
   _clearPremiumTimers();
+  
+  // ✅ Força reload para limpar estados dos botões
+  setTimeout(() => {
+    window.location.reload();
+  }, 2500);
 }
+
+
+
+
+
+
 
 // ================================
 // ATUALIZA BOTÕES PREMIUM (TAB BAR + MENU HAMBÚRGUER)
