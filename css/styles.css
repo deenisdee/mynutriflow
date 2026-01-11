@@ -3123,14 +3123,16 @@ body.premium-modal-open.premium-open--hamburger .badge {
 .hero-btn--overlay{
   position: absolute;
   left: 17px;
+  font-size: 16px;
   right: 17px;
   top: 35px;
+  height: 48px;
   z-index: 45;
-
+font-family:inherit;
   border: 0;
   border-radius: 14px;
   padding: 12px 14px;
-
+  font-weight: 700;
   background: rgba(255,255,255,0.92);
   color: #111827;
 }
@@ -3148,7 +3150,7 @@ body.premium-modal-open.premium-open--hamburger .badge {
   position: absolute;
   left: 17px;
   right: 17px;
-  bottom: 97px;
+  bottom: 30px !important;
   z-index: 46; /* acima do botão (45) */
 }
 
@@ -3168,10 +3170,15 @@ body.premium-modal-open.premium-open--hamburger .badge {
 }
 
 .tour-counter{
-  opacity: .85;
+font-size:14px;	
+	font-weight:600;
+  
 }
 
 .tour-x{
+	
+	font-weight:700;
+	font-family:inherit;
   width: 34px;
   height: 34px;
   border-radius: 999px;
@@ -3200,12 +3207,18 @@ body.premium-modal-open.premium-open--hamburger .badge {
 }
 
 .tour-btn.ghost{
+	font-weight: 700;
   background: #ffffff;
+  font-family:inherit;
+  font-size: 16px;
   border-top: 1px solid #e5e7eb;
   border-right: 1px solid #e5e7eb;
 }
 
 .tour-btn.primary{
+	font-weight: 700;
+	font-family:inherit;
+	font-size: 16px;
   background: #3b82f6;
   color: #fff;
   border-top: 1px solid rgba(0,0,0,.08);
