@@ -844,7 +844,6 @@ window.filterByCategory = function(category, element) {
 
 
 
-
 // ================================
 // MAPEAMENTO AUTOMÁTICO DE ÍCONES
 // ================================
@@ -853,62 +852,83 @@ function getIconFromIngredientName(name) {
   
   const nameLower = name.toLowerCase();
   
-  // Proteínas
-  if (nameLower.includes('frango') || nameLower.includes('peito')) return 'drumstick';
-  if (nameLower.includes('carne') || nameLower.includes('boi')) return 'beef';
-  if (nameLower.includes('peixe') || nameLower.includes('salmão') || nameLower.includes('tilápia')) return 'fish';
+  // Proteínas - Carnes
+  if (nameLower.includes('frango') || nameLower.includes('peito') || nameLower.includes('coxa')) return 'drumstick';
+  if (nameLower.includes('carne') || nameLower.includes('boi') || nameLower.includes('patinho') || nameLower.includes('alcatra')) return 'beef';
+  if (nameLower.includes('peixe') || nameLower.includes('salmão') || nameLower.includes('tilápia') || nameLower.includes('atum')) return 'fish';
+  if (nameLower.includes('camarão') || nameLower.includes('frutos do mar')) return 'fish';
   if (nameLower.includes('ovo')) return 'egg';
   if (nameLower.includes('whey') || nameLower.includes('proteína')) return 'dumbbell';
   
   // Frutas
   if (nameLower.includes('banana')) return 'banana';
-  if (nameLower.includes('morango') || nameLower.includes('kiwi') || nameLower.includes('fruta')) return 'apple';
+  if (nameLower.includes('morango') || nameLower.includes('framboesa') || nameLower.includes('amora')) return 'cherry';
+  if (nameLower.includes('maçã')) return 'apple';
   if (nameLower.includes('abacate')) return 'avocado';
+  if (nameLower.includes('kiwi') || nameLower.includes('fruta')) return 'apple';
+  if (nameLower.includes('limão') || nameLower.includes('lima')) return 'citrus';
+  if (nameLower.includes('laranja')) return 'orange';
   
-  // Vegetais
-  if (nameLower.includes('brócolis')) return 'broccoli';
+  // Vegetais e Verduras
+  if (nameLower.includes('brócolis') || nameLower.includes('brocolis')) return 'broccoli';
   if (nameLower.includes('batata')) return 'potato';
   if (nameLower.includes('alho')) return 'garlic';
   if (nameLower.includes('tomate')) return 'tomato';
   if (nameLower.includes('cebola')) return 'onion';
+  if (nameLower.includes('cenoura')) return 'carrot';
+  if (nameLover.includes('alface') || nameLower.includes('rúcula') || nameLower.includes('espinafre')) return 'leaf';
+  if (nameLower.includes('couve') || nameLower.includes('repolho')) return 'leafy-green';
+  if (nameLower.includes('pimentão') || nameLower.includes('pimenta')) return 'pepper-hot';
+  if (nameLower.includes('aspargo') || nameLower.includes('vagem')) return 'carrot';
   
   // Grãos e Cereais
   if (nameLower.includes('aveia') || nameLower.includes('granola')) return 'wheat';
-  if (nameLower.includes('arroz')) return 'rice';
-  if (nameLower.includes('macarrão') || nameLower.includes('massa')) return 'noodles';
+  if (nameLower.includes('arroz')) return 'rice-bowl';
+  if (nameLower.includes('macarrão') || nameLower.includes('massa') || nameLower.includes('espaguete')) return 'noodles';
+  if (nameLower.includes('pão') || nameLower.includes('torrada')) return 'wheat';
+  if (nameLower.includes('quinoa')) return 'wheat';
   
   // Laticínios
   if (nameLower.includes('leite')) return 'milk';
   if (nameLower.includes('queijo')) return 'cheese';
-  if (nameLower.includes('iogurte')) return 'yogurt';
+  if (nameLower.includes('iogurte') || nameLower.includes('yogurt')) return 'milk-off';
+  if (nameLower.includes('requeijão')) return 'cheese';
   
-  // Gorduras
-  if (nameLower.includes('azeite') || nameLower.includes('óleo')) return 'oil';
-  if (nameLower.includes('manteiga')) return 'butter';
-  if (nameLower.includes('amendoim') || nameLower.includes('amêndoa') || nameLower.includes('castanha')) return 'peanut';
+  // Gorduras e Óleos
+  if (nameLower.includes('azeite') || nameLower.includes('óleo') || nameLower.includes('oleo')) return 'droplets';
+  if (nameLower.includes('manteiga')) return 'milk';
+  if (nameLower.includes('amendoim') || nameLower.includes('amêndoa') || nameLower.includes('castanha') || nameLower.includes('nozes')) return 'peanut';
+  if (nameLower.includes('abacate')) return 'avocado';
   
-  // Doces e temperos
-  if (nameLower.includes('mel')) return 'honey';
-  if (nameLower.includes('açúcar')) return 'sugar';
-  if (nameLower.includes('sal')) return 'salt';
-  if (nameLower.includes('pimenta')) return 'pepper';
-  if (nameLower.includes('canela')) return 'cinnamon';
+  // Temperos e Condimentos
+  if (nameLower.includes('sal')) return 'sparkles';
+  if (nameLower.includes('pimenta')) return 'flame';
+  if (nameLower.includes('canela')) return 'wheat';
+  if (nameLower.includes('orégano') || nameLower.includes('tomilho') || nameLower.includes('alecrim') || nameLower.includes('manjericão') || nameLower.includes('erva')) return 'leaf';
+  if (nameLower.includes('tempero') || nameLower.includes('paprica') || nameLower.includes('páprica')) return 'sparkles';
+  if (nameLower.includes('mostarda')) return 'droplet';
+  if (nameLower.includes('molho') || nameLower.includes('shoyu')) return 'droplet';
+  
+  // Doces
+  if (nameLower.includes('mel')) return 'droplet';
+  if (nameLower.includes('açúcar') || nameLower.includes('acucar')) return 'candy';
+  if (nameLower.includes('chocolate')) return 'candy';
   
   // Especiais
-  if (nameLower.includes('pasta de amendoim')) return 'peanut-butter';
-  if (nameLower.includes('açaí') || nameLower.includes('acai')) return 'acai';
-  if (nameLower.includes('polpa')) return 'blender';
-  if (nameLower.includes('coco')) return 'coconut';
+  if (nameLower.includes('pasta de amendoim')) return 'peanut';
+  if (nameLower.includes('açaí') || nameLower.includes('acai')) return 'ice-cream';
+  if (nameLower.includes('polpa')) return 'ice-cream';
+  if (nameLower.includes('coco')) return 'palmtree';
   
   // Bebidas
   if (nameLower.includes('café')) return 'coffee';
-  if (nameLower.includes('chá')) return 'tea';
-  if (nameLower.includes('água')) return 'droplet';
+  if (nameLower.includes('chá') || nameLower.includes('cha')) return 'cup-soda';
+  if (nameLower.includes('água') || nameLower.includes('agua')) return 'droplet';
+  if (nameLower.includes('suco')) return 'glass-water';
   
   // Padrão
   return 'circle';
 }
-
 
 
 
