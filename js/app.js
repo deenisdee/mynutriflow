@@ -848,7 +848,7 @@ window.filterByCategory = function(category, element) {
 // MAPEAMENTO AUTOMÁTICO DE ÍCONES (Lucide + Font Awesome fallback)
 // ================================
 function getIconFromIngredientName(name) {
-  if (!name) return { type: 'lucide', icon: 'circle' };
+  if (!name) return { type: 'lucide', icon: 'chef-hat' };
   
   const nameLower = name.toLowerCase();
   
@@ -936,7 +936,7 @@ function getIconFromIngredientName(name) {
   if (nameLower.includes('suco')) return fa('fa-solid fa-glass-citrus');
   
   // Padrão - ícone genérico bonito
-  return fa('fa-solid fa-utensils');
+  return fa('chef-hat');
 }
 
 
