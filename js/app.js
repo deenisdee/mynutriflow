@@ -876,7 +876,7 @@ function getIconFromIngredientName(name) {
   if (nameLower.includes('tomate')) return 'tomato';
   if (nameLower.includes('cebola')) return 'onion';
   if (nameLower.includes('cenoura')) return 'carrot';
-  if (nameLover.includes('alface') || nameLower.includes('rúcula') || nameLower.includes('espinafre')) return 'leaf';
+  if (nameLower.includes('alface') || nameLower.includes('rúcula') || nameLower.includes('espinafre')) return 'leaf';
   if (nameLower.includes('couve') || nameLower.includes('repolho')) return 'leafy-green';
   if (nameLower.includes('pimentão') || nameLower.includes('pimenta')) return 'pepper-hot';
   if (nameLower.includes('aspargo') || nameLower.includes('vagem')) return 'carrot';
