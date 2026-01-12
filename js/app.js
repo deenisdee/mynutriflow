@@ -249,7 +249,7 @@ let allRecipes = ALL_RECIPES; // compat
 
 
 
-// ============================================
+/* // ============================================
 // Embaralhar receitas a cada carregamento (Fisher–Yates)
 // (compatível iPhone / ES5)
 // ============================================
@@ -268,7 +268,9 @@ if (allRecipes && allRecipes.length > 1) {
   shuffleArray(allRecipes);
 }
 
-
+   */
+  
+  
 
 
 
@@ -2942,30 +2944,3 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
-/* =========================================================
-   SUPORTE A ÍCONES MISTOS
-   - lucide-xxx  → Lucide Icons
-   - fa-xxx      → Font Awesome (fa-solid)
-   ========================================================= */
-
-window.renderIngredientIcon = function (iconName) {
-  if (!iconName || typeof iconName !== 'string') {
-    return '<i data-lucide="circle"></i>';
-  }
-
-  // Font Awesome
-  if (iconName.startsWith('fa-')) {
-    return `<i class="fa-solid ${iconName}" aria-hidden="true"></i>`;
-  }
-
-  // Lucide
-  if (iconName.startsWith('lucide-')) {
-    const lucideName = iconName.replace('lucide-', '');
-    return `<i data-lucide="${lucideName}" aria-hidden="true"></i>`;
-  }
-
-  // fallback seguro
-  return '<i data-lucide="circle"></i>';
-};
