@@ -1711,6 +1711,13 @@ async function redeemPremiumCode(code) {
   return data; // { ok: true } | { ok:false, error }
 }
 
+
+
+
+
+
+
+
 async function activatePremium() {
   const input = document.getElementById('premium-code-input');
   const code = input ? input.value.trim().toUpperCase() : '';
@@ -1728,9 +1735,6 @@ async function activatePremium() {
       return;
     }
 
-
-    
-
     // ✅ DEBUG - MOSTRA O QUE A API RETORNOU
     console.log('[ACTIVATE] API Response:', {
       token: data.token,
@@ -1741,48 +1745,77 @@ async function activatePremium() {
       diff: data.expiresAt - Date.now()
     });
 
-
-
-    
-
-    // ✅ ATIVA PREMIUM COM TOKEN
+    // ✅ ATIVA PREMIUM COM TOKEN (estado interno seu)
     isPremium = true;
     premiumToken = data.token;
     premiumExpires = data.expiresAt;
-    
+
+    // ✅ 1) Persiste no storage (seu padrão)
     await storage.set('fit_premium', 'true');
     await storage.set('fit_premium_token', data.token);
     await storage.set('fit_premium_expires', data.expiresAt.toString());
-    
+
+    // ✅ 2) Também persiste no localStorage (compatibilidade e UI instantânea no iPhone)
+    try {
+      localStorage.setItem('fit_premium', 'true');
+      localStorage.setItem('fit_premium_token', data.token);
+      localStorage.setItem('fit_premium_expires', data.expiresAt.toString());
+    } catch (e) {
+      // se localStorage falhar por algum motivo, não bloqueia a ativação
+      console.warn('[PREMIUM] localStorage falhou:', e);
+    }
+
+    // ✅ 3) Dispara o pipeline oficial de UI (sem reload)
+    if (window.RF && RF.premium && typeof RF.premium.setActive === 'function') {
+      RF.premium.setActive(true); // chama syncUI() dentro
+    } else if (window.RF && RF.premium && typeof RF.premium.syncUI === 'function') {
+      // fallback
+      RF.premium.syncUI();
+    }
+
+    // ✅ Mantém seu fluxo atual de UI (seu app pode depender disso)
     updateUI();
-    
+
     // ✅ Atualiza botões premium (tab bar + menu hambúrguer)
     if (typeof window.updatePremiumButtons === 'function') {
-        window.updatePremiumButtons();
+      window.updatePremiumButtons();
     }
-    
+
     _setupPremiumTimers();
+
     const daysLeft = data.expiresInDays || 30;
+
+    // ✅ Fecha o modal ANTES de notificar (evita “modal por trás” visualmente)
+    if (typeof window.closePremiumModal === 'function') {
+      window.closePremiumModal();
+    }
+
     showNotification(
-      'Premium Ativado! 🎉', 
+      'Premium Ativado! 🎉',
       `Você tem acesso ilimitado por ${daysLeft} dias!`
     );
-    
-    window.closePremiumModal();
 
     console.log('[PREMIUM] Ativado', { expires: new Date(data.expiresAt).toISOString() });
 
   } catch (e) {
     console.error('Erro ao ativar premium:', e);
-    
+
     // ✅ MENSAGEM MAIS ESPECÍFICA
-    if (e.message.includes('fetch')) {
+    if (String(e.message || '').includes('fetch')) {
       showNotification('Erro de Conexão', 'Verifique sua internet e tente novamente.');
     } else {
       showNotification('Erro', 'Erro ao validar código. Tente novamente.');
     }
   }
 }
+
+
+
+
+
+
+
+
 
 
 
