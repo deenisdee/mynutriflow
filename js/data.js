@@ -2857,3 +2857,144 @@ const RECIPES = [
 
 // Código premium válido - ALTERE AQUI PARA MUDAR O CÓDIGO
 //const VALID_PREMIUM_CODE = 'FITPRO2024';
+
+
+
+
+/* =========================================================
+   NORMALIZA INGREDIENTES (baseado no padrão do ID 1)
+   - Converte arrays de string -> [{ icon, quantity, text, optional }]
+   - Mantém receitas que já estão no padrão novo
+   - Ícones: Lucide (minimalistas)
+   ========================================================= */
+
+(function normalizeAllRecipesIngredients() {
+  if (!Array.isArray(RECIPES)) return;
+
+  // Regras de ícone por palavra-chave (ordem importa)
+  // Use nomes que existem no Lucide: https://lucide.dev/icons
+  const ICON_RULES = [
+    // Proteínas
+    { icon: 'drumstick', match: ['frango', 'peito de frango', 'filé de frango'] },
+    { icon: 'beef', match: ['carne', 'patinho', 'mignon', 'carne moída', 'bovino'] },
+    { icon: 'fish', match: ['salmão', 'tilápia', 'atum', 'peixe', 'filé de peixe'] },
+    { icon: 'egg', match: ['ovo', 'ovos', 'clara', 'claras'] },
+    { icon: 'beans', match: ['lentilha', 'grão de bico', 'feijão', 'ervilha'] }, // (se não existir "beans" no seu lucide, cai no fallback)
+
+    // Laticínios / derivados
+    { icon: 'milk', match: ['leite', 'iogurte', 'creme de leite'] },
+    { icon: 'cheese', match: ['queijo', 'cottage', 'ricota', 'parmesão', 'mozzarella', 'mussarela'] },
+
+    // Carbos / bases
+    { icon: 'wheat', match: ['aveia', 'farinha', 'pão', 'tortilha', 'wrap', 'granola', 'polvilho', 'tapioca'] },
+    { icon: 'rice', match: ['arroz', 'arbóreo', 'basmati', 'integral'] }, // (se não existir "rice", cai no fallback)
+    { icon: 'potato', match: ['batata', 'batata doce'] }, // (se não existir "potato", cai no fallback)
+    { icon: 'circle', match: ['macarrão', 'espaguete', 'massa'] },
+
+    // Vegetais / frutas
+    { icon: 'leaf', match: ['couve', 'rúcula', 'espinafre', 'alface', 'manjericão', 'hortelã', 'coentro', 'salsinha', 'ervas'] },
+    { icon: 'carrot', match: ['cenoura'] },
+    { icon: 'apple', match: ['maçã'] },
+    { icon: 'banana', match: ['banana'] },
+    { icon: 'cherry', match: ['morango', 'frutas vermelhas'] }, // (se não existir "cherry", cai no fallback)
+    { icon: 'tomato', match: ['tomate'] }, // (se não existir "tomato", cai no fallback)
+    { icon: 'pepper', match: ['pimentão', 'pimenta'] }, // (se não existir "pepper", cai no fallback)
+    { icon: 'sparkles', match: ['limão', 'siciliano'] }, // (se não existir "sparkles", cai no fallback)
+
+    // Gorduras / temperos / extras
+    { icon: 'droplets', match: ['azeite', 'óleo', 'dendê'] },
+    { icon: 'nut', match: ['castanha', 'castanhas', 'amendoim', 'pasta de amendoim', 'oleaginosa'] },
+    { icon: 'zap', match: ['whey', 'proteína', 'creatina'] },
+    { icon: 'coffee', match: ['café', 'expresso'] },
+    { icon: 'cookie', match: ['chocolate', 'gotas de chocolate', 'cacau'] },
+    { icon: 'flame', match: ['canela', 'páprica', 'cominho', 'curry'] },
+    { icon: 'droplet', match: ['mel', 'xarope'] },
+  ];
+
+  // Alguns ícones citados acima podem não existir no seu build do lucide.
+  // Se não existir, o app só vai render um vazio/placeholder.
+  // Para segurança: fallback fixo
+  const FALLBACK_ICON = 'circle';
+
+  function pickIcon(textRaw) {
+    const text = (textRaw || '').toLowerCase();
+
+    for (const rule of ICON_RULES) {
+      for (const k of rule.match) {
+        if (text.includes(k)) return rule.icon;
+      }
+    }
+    return FALLBACK_ICON;
+  }
+
+  // Tenta separar "quantidade" do começo:
+  // Exemplos:
+  // "300g de peito de frango" -> quantity: "300g", text: "de peito de frango"
+  // "2 batatas doces médias (400g total)" -> quantity: "2", text: "batatas doces médias (400g total)"
+  // "Temperos: sal, pimenta..." -> quantity: "a gosto", text: "Temperos: sal, pimenta..."
+  function splitQuantityAndText(line) {
+    const s = String(line || '').trim();
+    if (!s) return { quantity: 'a gosto', text: '' };
+
+    // Se for claramente "a gosto"/temperos/opcional
+    const lower = s.toLowerCase();
+    const isLoose =
+      lower.includes('a gosto') ||
+      lower.startsWith('temperos') ||
+      lower.startsWith('ervas') ||
+      lower.includes('(opcional)') ||
+      lower.includes('opcional');
+
+    if (isLoose) {
+      return { quantity: 'a gosto', text: s };
+    }
+
+    // Padrões comuns de quantidade no começo
+    // 1) "200g", "50ml", "1/2", "2", "1 colher", "2 colheres", "1 xícara", etc.
+    const m =
+      s.match(/^(\d+(?:[.,]\d+)?\s?(?:g|kg|ml|l|mg))\b\s*(.*)$/i) ||
+      s.match(/^(\d+\/\d+)\b\s*(.*)$/i) ||
+      s.match(/^(\d+(?:[.,]\d+)?)\b\s*(.*)$/i) ||
+      s.match(/^(\d+\s*(?:colher(?:es)?|col(?:es)?|xícara(?:s)?|xicara(?:s)?|scoop(?:s)?|dose(?:s)?|lata(?:s)?|dente(?:s)?|filé(?:s)?|fatia(?:s)?|unidade(?:s)?))\b\s*(.*)$/i);
+
+    if (m) {
+      const q = (m[1] || '').trim();
+      const rest = (m[2] || '').trim();
+      return { quantity: q || 'a gosto', text: rest || s };
+    }
+
+    // fallback
+    return { quantity: 'a gosto', text: s };
+  }
+
+  function normalizeIngredientItem(item) {
+    // Se já é objeto no padrão novo, mantém (só garante campos mínimos)
+    if (item && typeof item === 'object' && !Array.isArray(item)) {
+      return {
+        icon: item.icon || pickIcon(item.text || item.name || ''),
+        quantity: item.quantity || 'a gosto',
+        text: item.text || item.name || '',
+        optional: !!item.optional,
+      };
+    }
+
+    // Se é string (padrão antigo)
+    const { quantity, text } = splitQuantityAndText(item);
+    const icon = pickIcon(text || item);
+
+    // Detecta opcional
+    const optional =
+      String(item).toLowerCase().includes('opcional') ||
+      String(item).toLowerCase().includes('(opcional)');
+
+    return { icon, quantity, text: text || String(item), optional };
+  }
+
+  for (const r of RECIPES) {
+    if (!r || typeof r !== 'object') continue;
+    if (!Array.isArray(r.ingredients)) continue;
+
+    // Normaliza tudo
+    r.ingredients = r.ingredients.map(normalizeIngredientItem);
+  }
+})();
