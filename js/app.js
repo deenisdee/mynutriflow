@@ -1098,7 +1098,7 @@ function showRecipeDetail(recipeId) {
     
 
     <div class="detail-content-wrapper">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+      <div style="align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
 
         <button class="btn-add-shopping" onclick="addToShoppingList(${recipe.id})">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
@@ -1107,7 +1107,8 @@ function showRecipeDetail(recipeId) {
           </svg>
           Adicionar à Lista de compras
         </button>
-		<br><p class="planner-subtitle">Aproveite para adicionar os ingredientes desta receita na Lista de compras (Só para  Usuário Premium)</p>
+		<br>
+		<p class="planner-subtitle" style="display: block; margin-top: -0.5rem; clear: both;">Aproveite para adicionar os ingredientes desta receita na Lista de compras (Só para Usuário Premium)</p>
       </div>
 
       ${recipe.tags && recipe.tags.length > 0 ? `
@@ -1148,7 +1149,7 @@ function showRecipeDetail(recipeId) {
           <i data-lucide="calendar-plus" class="section-icon"></i>
           Adicionar ao Planejamento Semanal
         </h3>
-        <p class="planner-subtitle">Selecione o dia da semana que você quer fazer esta receita</p>
+        <p class="planner-subtitle">Selecione o dia da semana que você quer fazer esta receita (Só para Usuário Premium)</p>
         <div class="planner-days">
           ${['Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'].map(day => `
             <button class="planner-day" onclick="addToWeekPlan('${day}', ${recipe.id})">${day}</button>
