@@ -1209,6 +1209,7 @@ body.premium-active #premium-btn {
 }
 
 .section-title {
+	margin-top: 25px;
   font-size: 1.5rem;
   font-weight: 600;
   color: #1f2937;
