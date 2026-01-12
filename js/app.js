@@ -845,6 +845,76 @@ window.filterByCategory = function(category, element) {
 
 
 
+// ================================
+// MAPEAMENTO AUTOMÁTICO DE ÍCONES
+// ================================
+function getIconFromIngredientName(name) {
+  if (!name) return 'circle';
+  
+  const nameLower = name.toLowerCase();
+  
+  // Proteínas
+  if (nameLower.includes('frango') || nameLower.includes('peito')) return 'drumstick';
+  if (nameLower.includes('carne') || nameLower.includes('boi')) return 'beef';
+  if (nameLower.includes('peixe') || nameLower.includes('salmão') || nameLower.includes('tilápia')) return 'fish';
+  if (nameLower.includes('ovo')) return 'egg';
+  if (nameLower.includes('whey') || nameLower.includes('proteína')) return 'dumbbell';
+  
+  // Frutas
+  if (nameLower.includes('banana')) return 'banana';
+  if (nameLower.includes('morango') || nameLower.includes('kiwi') || nameLower.includes('fruta')) return 'apple';
+  if (nameLower.includes('abacate')) return 'avocado';
+  
+  // Vegetais
+  if (nameLower.includes('brócolis')) return 'broccoli';
+  if (nameLower.includes('batata')) return 'potato';
+  if (nameLower.includes('alho')) return 'garlic';
+  if (nameLower.includes('tomate')) return 'tomato';
+  if (nameLower.includes('cebola')) return 'onion';
+  
+  // Grãos e Cereais
+  if (nameLower.includes('aveia') || nameLower.includes('granola')) return 'wheat';
+  if (nameLower.includes('arroz')) return 'rice';
+  if (nameLower.includes('macarrão') || nameLower.includes('massa')) return 'noodles';
+  
+  // Laticínios
+  if (nameLower.includes('leite')) return 'milk';
+  if (nameLower.includes('queijo')) return 'cheese';
+  if (nameLower.includes('iogurte')) return 'yogurt';
+  
+  // Gorduras
+  if (nameLower.includes('azeite') || nameLower.includes('óleo')) return 'oil';
+  if (nameLower.includes('manteiga')) return 'butter';
+  if (nameLower.includes('amendoim') || nameLower.includes('amêndoa') || nameLower.includes('castanha')) return 'peanut';
+  
+  // Doces e temperos
+  if (nameLower.includes('mel')) return 'honey';
+  if (nameLower.includes('açúcar')) return 'sugar';
+  if (nameLower.includes('sal')) return 'salt';
+  if (nameLower.includes('pimenta')) return 'pepper';
+  if (nameLower.includes('canela')) return 'cinnamon';
+  
+  // Especiais
+  if (nameLower.includes('pasta de amendoim')) return 'peanut-butter';
+  if (nameLower.includes('açaí') || nameLower.includes('acai')) return 'acai';
+  if (nameLower.includes('polpa')) return 'blender';
+  if (nameLower.includes('coco')) return 'coconut';
+  
+  // Bebidas
+  if (nameLower.includes('café')) return 'coffee';
+  if (nameLower.includes('chá')) return 'tea';
+  if (nameLower.includes('água')) return 'droplet';
+  
+  // Padrão
+  return 'circle';
+}
+
+
+
+
+
+
+
 // ==============================
 // RENDER RECEITAS
 // ==============================
@@ -1113,8 +1183,14 @@ function showRecipeDetail(recipeId) {
             return `
               <div class="ingredient-item">
                 <div class="ingredient-icon-wrapper">
-                  <i data-lucide="${ing.icon || 'circle-dot'}" class="ingredient-icon"></i>
-                </div>
+				
+				
+				
+                  <i data-lucide="${ing.icon || getIconFromIngredientName(ing.name || ing.text || ing.quantity) || 'circle-dot'}" class="ingredient-icon"></i>
+               
+
+
+			   </div>
                 <div class="ingredient-content">
                   <span class="ingredient-quantity">${ing.quantity || ''}</span>
                   <span class="ingredient-text">${ing.text || ''}</span>
