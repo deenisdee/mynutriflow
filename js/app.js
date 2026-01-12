@@ -1000,15 +1000,12 @@ function showRecipeDetail(recipeId) {
 
     <div class="breadcrumbs">
       <div class="breadcrumb-item">
-        <span class="breadcrumb-link" onclick="closeRecipeDetailAndFilter('${recipe.category}')">
-          ${recipe.category}
-        </span>
-        <span class="breadcrumb-separator">></span>
-      </div>
-      <div class="breadcrumb-item">
         <span class="breadcrumb-current">${recipe.name}</span>
       </div>
     </div>
+	
+	
+	
   </div>
 
   <img src="${heroImage}" alt="${recipe.name}" class="detail-hero-image">
@@ -1019,13 +1016,13 @@ function showRecipeDetail(recipeId) {
 
     <div class="detail-content-wrapper">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;">
-        <h2 class="detail-title" style="margin:0;">${recipe.name}</h2>
+
         <button class="btn-add-shopping" onclick="addToShoppingList(${recipe.id})">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;">
             <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
           </svg>
-          Adicionar à Lista
+          Adicionar à Lista de compras
         </button>
       </div>
 
@@ -2861,8 +2858,8 @@ window.addEventListener('DOMContentLoaded', function() {
     "2) Escolha uma receita simples. Uma escolha por vez já tira o peso do dia.",
     "3) Calculadora de Calorias: Clareza, não paranoia. Você entende o que seu corpo precisa.",
     "4) Lista de Compras: Você vai ao mercado com mapa na mão, sem esquecer nada.",
-    "5) Planejador Semanal: Organiza sua semana, soma as calorias e te livra do “o que eu como hoje?”.",
-    "6) Mudou o dia? Sem problema. Você ajusta e segue — sem culpa, sem recomeço do zero.",
+    "5) Planejador Semanal: Organiza, soma as calorias e te livra do “o que eu como hoje?”.",
+    "6) Mudou o dia? Sem problema. Você ajusta e segue sem culpa, sem recomeço do zero.",
     "7) Pronto. Se fizer sentido, ative o Premium e use as ferramentas completas."
   ];
 
