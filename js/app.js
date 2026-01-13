@@ -249,7 +249,7 @@ let allRecipes = ALL_RECIPES; // compat
 
 
 
-/* // ============================================
+ // ============================================
 // Embaralhar receitas a cada carregamento (Fisher–Yates)
 // (compatível iPhone / ES5)
 // ============================================
@@ -268,7 +268,7 @@ if (allRecipes && allRecipes.length > 1) {
   shuffleArray(allRecipes);
 }
 
-   */
+   
   
   
 
