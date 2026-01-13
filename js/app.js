@@ -2927,6 +2927,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
   const steps = [
+	"0) Onde acho estas ferramentas? Logo abaixo, ao lado do Buscar, se chama Planner",
     "1) Aqui não existe cobrança. O Premium é um apoio para você decidir com mais leveza.",
     "2) Escolha uma receita simples. Uma escolha por vez já tira o peso do dia.",
     "3) Calculadora de Calorias: Clareza, não paranoia. Você entende o que seu corpo precisa.",
