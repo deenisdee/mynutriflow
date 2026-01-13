@@ -664,6 +664,8 @@ body.modal-open{ overflow:hidden; height:100vh; }
   padding:.75rem;
   background:#16a34a;
   color:#fff;
+  border:none;
+  height:50px;
   border-radius:10px;
   font-weight:600;
   cursor:pointer;
