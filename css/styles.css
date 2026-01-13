@@ -3232,6 +3232,22 @@ font-size:14px;
 }
 
 
+.confirm-actions{
+  display: flex;
+  gap: 12px;
+}
+
+.confirm-actions button{
+  flex: 1;                 /* 👈 força mesma largura */
+  height: 48px;            /* 👈 mesma altura */
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+
 /* =========================================================
    MOBILE - FINALIZA AQUI
    ========================================================= */
