@@ -67,7 +67,7 @@
     if (isOpen && !devtoolsWarned) {
       devtoolsWarned = true;
       console.clear();
-      console.log('%c⚠️ ÁREA TÉCNICA', 'color:red;font-size:30px;font-weight:bold;text-shadow:2px 2px 4px rgba(0,0,0,0.3)');
+      console.log('%c⚠️ ÁREA TÉCNICA', 'color:red;font-size:50px;font-weight:bold;text-shadow:2px 2px 4px rgba(0,0,0,0.3)');
       console.log('%c ', 'font-size:1px');
       console.log('%cEsta é uma área para desenvolvedores.', 'font-size:16px;color:#333');
       console.log('%cModificar o código pode violar os Termos de Uso.', 'font-size:14px;color:orange;font-weight:bold');
@@ -3015,4 +3015,56 @@ window.addEventListener('DOMContentLoaded', function() {
 })();
 
 
+
+
+
+// =========================================================
+// PLANEJADOR — garante wrapper de scroll horizontal (WEB)
+// =========================================================
+(function ensurePlannerHorizontalScroll(){
+  function wrapPlannerTable() {
+    // tenta achar a tabela do planejador no DOM (modal aberto)
+    // ajuste aqui se sua tabela tiver um id/class específico
+    var table =
+      document.querySelector('#week-planner-modal table') ||
+      document.querySelector('.week-planner-modal table') ||
+      document.querySelector('.planner-modal table') ||
+      document.querySelector('#planner-modal table') ||
+      document.querySelector('table.week-planner') ||
+      null;
+
+    if (!table) return;
+
+    // se já estiver envolvida, não faz nada
+    var parent = table.parentElement;
+    if (parent && parent.classList && parent.classList.contains('planner-scroll-x')) return;
+
+    // cria wrapper
+    var wrapper = document.createElement('div');
+    wrapper.className = 'planner-scroll-x';
+
+    // insere wrapper antes da tabela e move tabela pra dentro
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  }
+
+  // 1) roda em load
+  document.addEventListener('DOMContentLoaded', function(){
+    wrapPlannerTable();
+  });
+
+  // 2) roda sempre que abrir o modal (captura cliques nos botões do planner)
+  document.addEventListener('click', function(){
+    // espera um tick caso o modal seja injetado depois do clique
+    setTimeout(wrapPlannerTable, 0);
+  }, true);
+
+  // 3) se o DOM mudar (modal injetado dinamicamente), tenta de novo
+  try {
+    var obs = new MutationObserver(function(){
+      wrapPlannerTable();
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+  } catch (e) {}
+})();
 
