@@ -3461,7 +3461,7 @@ font-size:14px;
 
 /* garante que exista “largura” pra rolar */
 .planner-scroll-x table {
-  min-width: 800px; /* ajuste se quiser mais/menos */
+  min-width: 1100px; /* ajuste se quiser mais/menos */
   width: max-content;
 }
 
@@ -3527,4 +3527,31 @@ font-size:14px;
 .planner-scroll-x{
   scrollbar-color: #cbd5e1 #f3f4f6;
   scrollbar-width: thin;
+}
+
+
+
+
+/* =========================================================
+   ARREDONDANDO OS CANTOS DA TABELA DO PLANEJADOR
+   ========================================================= */
+
+/* canto superior esquerdo */
+.planner-scroll-x table thead tr:first-child th:first-child {
+  border-top-left-radius: 14px;
+}
+
+/* canto superior direito */
+.planner-scroll-x table thead tr:first-child th:last-child {
+  border-top-right-radius: 14px;
+}
+
+/* canto inferior esquerdo */
+.planner-scroll-x table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 14px;
+}
+
+/* canto inferior direito */
+.planner-scroll-x table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 14px;
 }
