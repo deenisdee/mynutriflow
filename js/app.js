@@ -2927,14 +2927,14 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
   const steps = [
-	"0) Onde acho estas ferramentas? Logo abaixo, ao lado do Buscar, se chama Planner",
-    "1) Aqui não existe cobrança. O Premium é um apoio para você decidir com mais leveza.",
-    "2) Escolha uma receita simples. Uma escolha por vez já tira o peso do dia.",
-    "3) Calculadora de Calorias: Clareza, não paranoia. Você entende o que seu corpo precisa.",
-    "4) Lista de Compras: Você vai ao mercado com mapa na mão, sem esquecer nada.",
-    "5) Planejador Semanal: Organiza, soma as calorias e te livra do “o que eu como hoje?”.",
-    "6) Mudou o dia? Sem problema. Você ajusta e segue sem culpa, sem recomeço do zero.",
-    "7) Pronto. Se fizer sentido, ative o Premium e use as ferramentas completas."
+	"1) Onde acho estas ferramentas? Logo abaixo, ao lado do Buscar, se chama Planner",
+    "2) Aqui não existe cobrança. O Premium é um apoio para você decidir com mais leveza.",
+    "3) Escolha uma receita simples. Uma escolha por vez já tira o peso do dia.",
+    "4) Calculadora de Calorias: Clareza, não paranoia. Você entende o que seu corpo precisa.",
+    "5) Lista de Compras: Você vai ao mercado com mapa na mão, sem esquecer nada.",
+    "6) Planejador Semanal: Organiza, soma as calorias e te livra do “o que eu como hoje?”.",
+    "7) Mudou o dia? Sem problema. Você ajusta e segue sem culpa, sem recomeço do zero.",
+    "8) Pronto. Se fizer sentido, ative o Premium e use as ferramentas completas."
   ];
 
   let i = 0;
