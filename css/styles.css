@@ -3287,9 +3287,8 @@ font-size:14px;
   }
 
   #tour-card .tour-card-inner{
-    background: rgba(255,255,255,.94);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255,255,255,.92);
+    color: #111827;
 
     padding: 15px 26px 20px;
   }
@@ -3323,7 +3322,7 @@ font-size:14px;
   #tour-text{
     font-size: 20px;
     line-height: 1.55;
-    font-weight: 500;
+    font-weight: 400;
 
   padding: 10px 12px 12px 12px;
   line-height: 1.45;
@@ -3342,7 +3341,7 @@ font-size:14px;
     height: 50px;
     border-radius: 999px;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 500;
     padding: 0 22px;
     min-width: 240px;
     cursor: pointer;
