@@ -3525,7 +3525,7 @@ font-size:14px;
 
 /* Firefox */
 .planner-scroll-x{
-  scrollbar-color: #cbd5e1 #f3f4f6;
+  scrollbar-color: #cbd5e1 #fff;
   scrollbar-width: thin;
 }
 
