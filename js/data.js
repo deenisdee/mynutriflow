@@ -2852,13 +2852,7 @@ const RECIPES = [
                 'Separe molho/folhas para manter textura',
                 'Reaqueça em fogo baixo ou forno para preservar sabor'
             ]
-    }
-	
-	
-	
-	
-	
-	
+    },		
 	
 	{
     id: 47,
@@ -5017,7 +5011,7 @@ const RECIPES = [
         dessert: '6% proteína, 91% carboidratos, 3% gorduras',
         vegan: '100% vegetal e natural'
     }
-},
+}
 
 
 
