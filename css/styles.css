@@ -3716,3 +3716,65 @@ font-size:14px;
         font-size: 0.95rem;
     }
 }
+
+
+
+
+
+
+/* =========================================================
+   LISTA DE COMPRAS — BLOQUEIO PARCIAL (FREE)
+   - mostra 3 itens, restante blur + overlay
+   ========================================================= */
+
+.shoppinglist-gated {
+  position: relative;
+}
+
+/* itens bloqueados: blur + sem clique */
+.shoppinglist-gated .sl-locked {
+  filter: blur(6px);
+  opacity: .75;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* overlay do bloqueio */
+.shoppinglist-gated .sl-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  padding: 14px 12px;
+  border-radius: 14px;
+
+  background: linear-gradient(to top,
+    rgba(255,255,255,.98) 0%,
+    rgba(255,255,255,.92) 55%,
+    rgba(255,255,255,0) 100%
+  );
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/* botão do overlay */
+.shoppinglist-gated .sl-overlay button {
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 0;
+
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* textinho do overlay */
+.shoppinglist-gated .sl-overlay .sl-overlay-text {
+  font-size: 14px;
+  font-weight: 700;
+  opacity: .9;
+}
