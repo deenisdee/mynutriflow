@@ -1,7 +1,7 @@
 // ============================================
 // ARQUIVO: js/data.js - VERSÃO COMPLETA
 // ============================================
-// 46 RECEITAS TOTAIS (6 originais + 40 novas)
+// 
 
 const RECIPES = [
    {
@@ -394,7 +394,7 @@ const RECIPES = [
     },
     {
         id: 6,
-        name: 'Bowl Veganas de Quinoa',
+        name: 'Bowl vegano de Quinoa',
         category: 'Veganas',
         calories: 420,
         protein: 18,
@@ -2628,62 +2628,6 @@ const RECIPES = [
             ]
     },
     {
-        id: 43,
-        name: 'Buddha Bowl Veganas',
-        category: 'Veganas',
-        calories: 380,
-        protein: 16,
-        carbs: 54,
-        fats: 11,
-        fiber: 8,
-        time: 30,
-        servings: 2,
-        difficulty: 'Médio',
-        featured: false,
-        tags: [
-                'Veganas',
-                'Rico em fibras',
-                'Energia sustentada'
-            ],
-        benefits: [
-                'Equilíbrio de macronutrientes para energia e saciedade',
-                'Rico em fibras: melhora digestão e aumenta saciedade',
-                'Gorduras boas: apoio à saúde cardiovascular e hormonal',
-                'Fonte vegetal de nutrientes e micronutrientes essenciais'
-            ],
-        allergens: [],
-        image: 'https://plus.unsplash.com/premium_photo-1664648005742-0c360f4910b2?q=80',
-        ingredients: [
-                'Arroz integral',
-                'Grão de bico assado',
-                'Batata doce',
-                'Espinafre',
-                'Abacate',
-                'Molho tahine'
-            ],
-        instructions: [
-                'Cozinhe o arroz integral',
-                'Asse batata doce e grão de bico',
-                'Refogue o espinafre',
-                'Monte o bowl em camadas',
-                'Adicione abacate fatiado',
-                'Regue com molho tahine'
-            ],
-        tips: [
-                '🥑 Abacate no ponto: use bem maduro para cremosidade e melhor sabor',
-                '🧂 Temperos: prefira ervas e especiarias para mais sabor com menos calorias'
-            ],
-        macros: {
-            snack: '17% proteína, 57% carboidratos, 26% gorduras'
-        },
-        variations: [],
-        mealPrepTips: [
-                'Armazene em potes bem fechados na geladeira (até 3-4 dias)',
-                'Separe molho/folhas para manter textura',
-                'Reaqueça em fogo baixo ou forno para preservar sabor'
-            ]
-    },
-    {
         id: 44,
         name: 'Hambúrguer de Grão de Bico',
         category: 'Veganas',
@@ -2800,7 +2744,7 @@ const RECIPES = [
     },
     {
         id: 46,
-        name: 'Wrap Veganas de Falafel',
+        name: 'Wrap Vegano de Falafel',
         category: 'Veganas',
         calories: 350,
         protein: 15,
@@ -3387,7 +3331,7 @@ const RECIPES = [
 
 {
     id: 52,
-    name: 'Buddha Bowl Veganas',
+    name: 'Buddha Bowl Vegano',
     category: 'Veganas',
     calories: 420,
     protein: 18,
@@ -3508,7 +3452,7 @@ const RECIPES = [
 
 {
     id: 53,
-    name: 'Estrogonofe de Cogumelos Veganas',
+    name: 'Estrogonofe de Cogumelos Vegano',
     category: 'Veganas',
     calories: 380,
     protein: 14,
@@ -3539,7 +3483,7 @@ const RECIPES = [
         'Castanhas'
     ],
     
-    image: 'https://images.pexels.com/photos/34599525/pexels-photo-34599525.png?_gl=1*t4gysq*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDM4NTQkajgkbDAkaDA.',
+    image: 'https://images.pexels.com/photos/6287494/pexels-photo-6287494.jpeg?_gl=1*yj38uz*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDU3MDUkajgkbDAkaDA.',
     
     ingredients: [
         { 
@@ -3609,7 +3553,7 @@ const RECIPES = [
     ],
     
     images: {
-        hero: 'https://images.pexels.com/photos/34599525/pexels-photo-34599525.png?_gl=1*t4gysq*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDM4NTQkajgkbDAkaDA.',
+        hero: 'https://images.pexels.com/photos/6287494/pexels-photo-6287494.jpeg?_gl=1*yj38uz*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDU3MDUkajgkbDAkaDA.',
         steps: []
     },
     
@@ -3772,7 +3716,7 @@ const RECIPES = [
         'Queijo'
     ],
     
-    image: 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?q=80&w=1200',
+    image: 'https://images.pexels.com/photos/1707917/pexels-photo-1707917.jpeg?_gl=1*bab8cr*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDU1MTUkajQ2JGwwJGgw',
 	
     
     ingredients: [
@@ -3838,7 +3782,7 @@ const RECIPES = [
     ],
     
     images: {
-        hero: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80',
+        hero: 'https://images.pexels.com/photos/1707917/pexels-photo-1707917.jpeg?_gl=1*bab8cr*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDU1MTUkajQ2JGwwJGgw',
         steps: []
     },
     
@@ -4310,7 +4254,7 @@ const RECIPES = [
     
     allergens: [],
     
-    image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80',
+    image: 'https://images.pexels.com/photos/8625813/pexels-photo-8625813.jpeg?_gl=1*1n3r81i*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDU4MTgkajQxJGwwJGgw',
     
     ingredients: [
         { 
@@ -4386,7 +4330,7 @@ const RECIPES = [
     ],
     
     images: {
-        hero: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80',
+        hero: 'https://images.pexels.com/photos/8625813/pexels-photo-8625813.jpeg?_gl=1*1n3r81i*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDU4MTgkajQxJGwwJGgw',
         steps: []
     },
     
