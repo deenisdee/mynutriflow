@@ -3086,3 +3086,109 @@ window.addEventListener('DOMContentLoaded', function() {
   } catch (e) {}
 })();
 
+
+
+
+
+// =========================================================
+// LISTA DE COMPRAS — Gate Free (3 itens) / Premium 100%
+// =========================================================
+
+
+(function shoppingListGateSetup(){
+  var VISIBLE_FREE_COUNT = 3;
+
+  function isPremiumNow() {
+    // prioridade: seu pipeline novo
+    if (window.RF && RF.premium && typeof RF.premium.isActive === 'function') {
+      return RF.premium.isActive();
+    }
+    // fallback: variáveis antigas
+    if (typeof window.isPremium !== 'undefined') return !!window.isPremium;
+
+    // fallback final: storage
+    try { return localStorage.getItem('fit_premium') === 'true'; } catch (e) {}
+    return false;
+  }
+
+  function openPremiumPaywall(origin) {
+    if (typeof window.openPremiumModal === 'function') {
+      window.openPremiumModal(origin || 'shopping_list');
+      return;
+    }
+    // fallback: se existir outro modal/tour
+    if (typeof window.openPremiumTour === 'function') {
+      window.openPremiumTour();
+    }
+  }
+
+  function getShoppingListContainer() {
+    // ✅ coloque aqui o(s) container(s) reais, se você souber:
+    return (
+      document.getElementById('shopping-list-items') ||
+      document.querySelector('.shopping-list-items') ||
+      document.querySelector('.shopping-list') ||
+      document.querySelector('#shopping-list') ||
+      null
+    );
+  }
+
+  function applyGate() {
+    var container = getShoppingListContainer();
+    if (!container) return;
+
+    // identifica itens (li ou .item)
+    var items = container.querySelectorAll('li, .shopping-item, .list-item');
+    if (!items || items.length === 0) return;
+
+    // limpa marcações anteriores
+    container.classList.remove('shoppinglist-gated');
+    var oldOverlay = container.querySelector('.sl-overlay');
+    if (oldOverlay) oldOverlay.remove();
+    for (var k = 0; k < items.length; k++) items[k].classList.remove('sl-locked');
+
+    // premium = sem bloqueio
+    if (isPremiumNow()) return;
+
+    // free: bloqueia do 4º em diante
+    container.classList.add('shoppinglist-gated');
+
+    for (var i = VISIBLE_FREE_COUNT; i < items.length; i++) {
+      items[i].classList.add('sl-locked');
+    }
+
+    // cria overlay só se existir mais do que 3 itens
+    if (items.length > VISIBLE_FREE_COUNT) {
+      var overlay = document.createElement('div');
+      overlay.className = 'sl-overlay';
+      overlay.innerHTML =
+        '<div class="sl-overlay-text">Desbloqueie a lista completa no Premium</div>' +
+        '<button type="button">Desbloquear lista completa</button>';
+
+      // botão chama premium modal
+      overlay.querySelector('button').addEventListener('click', function(){
+        openPremiumPaywall('shopping_list');
+      });
+
+      container.appendChild(overlay);
+    }
+  }
+
+  // 1) aplica quando a página carrega
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(applyGate, 0);
+  });
+
+  // 2) reaplica quando o Premium muda (sem refresh)
+  window.addEventListener('rf:premium-change', function(){
+    setTimeout(applyGate, 0);
+  });
+
+  // 3) reaplica quando você abre a lista (caso ela seja gerada dinamicamente)
+  document.addEventListener('click', function(){
+    setTimeout(applyGate, 0);
+  }, true);
+
+  // deixa disponível pra você testar manualmente no console
+  window.applyShoppingListGate = applyGate;
+})();
