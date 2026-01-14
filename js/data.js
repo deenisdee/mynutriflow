@@ -508,65 +508,7 @@ const RECIPES = [
                 'Versão vegana: substitua proteína animal por tofu/leguminosas quando possível'
             ]
     },
-    {
-        id: 8,
-        name: 'Vitamina Verde Detox',
-        category: 'Café da Manhã',
-        calories: 180,
-        protein: 12,
-        carbs: 22,
-        fats: 5,
-        fiber: 5,
-        time: 5,
-        servings: 1,
-        difficulty: 'Fácil',
-        featured: true,
-        tags: [
-                'Café da manhã',
-                'Baixa caloria',
-                'Low carb',
-                'Rápido',
-                'Energia sustentada',
-                'Proteína'
-            ],
-        benefits: [
-                'Equilíbrio de macronutrientes para energia e saciedade',
-                'Baixa caloria: ajuda em estratégia de emagrecimento',
-                'Rico em fibras: melhora digestão e aumenta saciedade',
-                'Ótimo para começar o dia com energia estável'
-            ],
-        allergens: [
-                'Leite/Laticínios'
-            ],
-        image: 'https://images.pexels.com/photos/12049998/pexels-photo-12049998.jpeg?_gl=1*1lzpj1l*_ga*OTcxMDE3MTI1LjE3Njg0MDIzNTI.*_ga_8JE65Q40S6*czE3Njg0MDIzNTIkbzEkZzEkdDE3Njg0MDQxODEkajckbDAkaDA.',
-        ingredients: [
-                '1 banana',
-                '1 folha de couve',
-                '200ml de leite de coco',
-                '1 scoop de whey baunilha',
-                '1 col de linhaça',
-                'Gelo a gosto'
-            ],
-        instructions: [
-                'Lave bem a couve',
-                'Coloque todos ingredientes no liquidificador',
-                'Bata até ficar homogêneo',
-                'Sirva imediatamente'
-            ],
-        tips: [
-                '💪 Ajuste o whey: use sem sabor para receitas salgadas e baunilha/choco para doces',
-                '⏱️ Versão express: deixe porções medidas para montar em 2-3 minutos',
-                '🧂 Temperos: prefira ervas e especiarias para mais sabor com menos calorias'
-            ],
-        macros: {
-            breakfast: '27% proteína, 49% carboidratos, 25% gorduras'
-        },
-        variations: [
-                'Versão low carb: reduza a banana e use morango ou abacate',
-                'Versão sem lactose: use iogurte/queijos sem lactose e whey isolado',
-                'Versão vegana: substitua proteína animal por tofu/leguminosas quando possível'
-            ]
-    },
+    
     {
         id: 9,
         name: 'Pão de Queijo Proteico',
@@ -579,7 +521,7 @@ const RECIPES = [
         time: 25,
         servings: 6,
         difficulty: 'Médio',
-        featured: false,
+        featured: true,
         tags: [
                 'Emagrecimento',
                 'Definição',
@@ -2811,7 +2753,7 @@ const RECIPES = [
     time: 5,
     servings: 1,
     difficulty: 'Fácil',
-    featured: false,
+    featured: true,
     description: 'Smoothie verde rico em nutrientes para desintoxicar e energizar',
     
     tags: [
@@ -3236,7 +3178,7 @@ const RECIPES = [
     time: 25,
     servings: 1,
     difficulty: 'Médio',
-    featured: true,
+    featured: false,
     description: 'Bowl completo e colorido com proteína vegetal, grãos e vegetais assados',
     
     tags: [
