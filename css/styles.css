@@ -3720,61 +3720,80 @@ font-size:14px;
 
 
 
-
-
 /* =========================================================
-   LISTA DE COMPRAS — BLOQUEIO PARCIAL (FREE)
-   - mostra 3 itens, restante blur + overlay
+   SHOPPING LIST — FREE x PREMIUM
+   Atua apenas dentro de #shopping-list-content
    ========================================================= */
 
-.shoppinglist-gated {
+#shopping-list-content.shoppinglist-gated {
   position: relative;
 }
 
-/* itens bloqueados: blur + sem clique */
-.shoppinglist-gated .sl-locked {
-  filter: blur(6px);
-  opacity: .75;
+/* itens bloqueados */
+#shopping-list-content .sl-locked {
+  filter: blur(4px);
+  opacity: 0.75;
   pointer-events: none;
   user-select: none;
 }
 
 /* overlay do bloqueio */
-.shoppinglist-gated .sl-overlay {
+#shopping-list-content .sl-overlay {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
 
-  padding: 14px 12px;
-  border-radius: 14px;
+  padding: 16px 12px;
+  border-radius: 9px;
 
-  background: linear-gradient(to top,
-    rgba(255,255,255,.98) 0%,
-    rgba(255,255,255,.92) 55%,
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0.98) 0%,
+    rgba(255,255,255,0.92) 55%,
     rgba(255,255,255,0) 100%
   );
 
   display: flex;
   flex-direction: column;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
 }
 
-/* botão do overlay */
-.shoppinglist-gated .sl-overlay button {
-  height: 44px;
-  padding: 0 16px;
-  border-radius: 999px;
-  border: 0;
-
-  font-weight: 800;
-  cursor: pointer;
-}
-
-/* textinho do overlay */
-.shoppinglist-gated .sl-overlay .sl-overlay-text {
+#shopping-list-content .sl-overlay-text {
   font-size: 14px;
   font-weight: 700;
-  opacity: .9;
+  color: #111827;
+}
+
+#shopping-list-content .sl-overlay button {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+
+
+/* locked placeholders (mantém alinhamento sem mostrar controles) */
+.shopping-item .shopping-lock-row {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+}
+
+.shopping-item .shopping-lock-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid rgba(31,41,55,.25);
+  opacity: .35;
+}
+
+.shopping-item .shopping-lock-trash {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
 }
