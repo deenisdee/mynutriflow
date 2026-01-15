@@ -1689,7 +1689,7 @@ function renderWeekPlanner() {
     ${isPremium ? `
       <button class="btn-save-plan" onclick="saveWeekPlanConfirm()">Salvar Planejamento</button>
     ` : `
-      <button class="btn-save-plan" disabled title="Disponível apenas para usuários Premium">Calcula e Planeja sua Semana</button>
+      <button class="btn-save-plan" disabled title="Disponível apenas para usuários Premium">Calcule e Planeje sua Semana</button>
     `}
   `;
 }
@@ -2974,8 +2974,9 @@ window.addEventListener('DOMContentLoaded', function() {
 	"3) Escolha uma receita de seu interesse. Uma escolha por vez já tira o peso do dia.",
 	"4) Em cada receita você pode adicionar os ingredientes na lista de compras e adicionar ao Planejamento Semanal.",
 	"5) No Planejador Semanal você organiza, soma as calorias e te livra do “o que eu como hoje?”.",
-	"6) Pronto. Se fizer sentido, ative o Premium e tenha acesso a todas receitas.",
-	"7) Onde Encontro estas ferramentas? No Planner, na versão Mobile e nos botões acima, na versão Web."
+	"6) Onde Encontro estas ferramentas? No Planner, na versão Mobile e nos botões acima, na versão Web.",
+	"7) Pronto. Se fizer sentido, ative o Premium e tenha acesso a todas receitas."
+	
   
   ];
 
