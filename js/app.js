@@ -1689,7 +1689,7 @@ function renderWeekPlanner() {
     ${isPremium ? `
       <button class="btn-save-plan" onclick="saveWeekPlanConfirm()">Salvar Planejamento</button>
     ` : `
-      <button class="btn-save-plan" disabled title="Disponível apenas para usuários Premium">Salvar Planejamento (Premium)</button>
+      <button class="btn-save-plan" disabled title="Disponível apenas para usuários Premium">Calcula e Planeja sua Semana</button>
     `}
   `;
 }
@@ -1782,40 +1782,46 @@ window.calculateCalories = function() {
   `;
 };
 
-// ==============================
-// MODAIS (controle)
-// ==============================
-window.openCalculator = function() {
-  if (!isPremium) {
-    if (modalMessage) modalMessage.textContent = 'A Calculadora é exclusiva para usuários Premium.';
-    openModal(premiumModal);
-    return;
-  }
+
+
+
+
+
+// =========================================================
+// MODAIS (controle) — WEB SEM GATE DE PREMIUM
+// =========================================================
+
+window.openCalculator = function () {
+  // abre a calculadora para todos
   openModal(calculatorModal);
 };
-window.closeCalculator = function() { closeModal(calculatorModal); };
 
-window.openShoppingList = function() {
-  if (!isPremium) {
-    if (modalMessage) modalMessage.textContent = 'A Lista de Compras é exclusiva para usuários Premium.';
-    openModal(premiumModal);
-    return;
-  }
+window.closeCalculator = function () {
+  closeModal(calculatorModal);
+};
+
+window.openShoppingList = function () {
+  // abre a lista de compras para todos
   renderShoppingList();
   openModal(shoppingModal);
 };
-window.closeShoppingList = function() { closeModal(shoppingModal); };
 
-window.openWeekPlanner = function() {
-  if (!isPremium) {
-    if (modalMessage) modalMessage.textContent = 'O Planejador Semanal é exclusivo para usuários Premium.';
-    openModal(premiumModal);
-    return;
-  }
+window.closeShoppingList = function () {
+  closeModal(shoppingModal);
+};
+
+window.openWeekPlanner = function () {
+  // abre o planejador semanal para todos
   renderWeekPlanner();
   openModal(plannerModal);
 };
-window.closeWeekPlanner = function() { closeModal(plannerModal); };
+
+window.closeWeekPlanner = function () {
+  closeModal(plannerModal);
+};
+
+
+
 
 
 
@@ -2502,38 +2508,68 @@ function setActiveTab(index) {
 
 
 
-// =========================================================
-// MODAIS (controle) — WEB SEM GATE DE PREMIUM
-// =========================================================
 
-window.openCalculator = function () {
-  // abre a calculadora para todos
+// ================================
+// DROPDOWN PLANNER - FUNÇÕES (VERSÃO FINAL)
+// ================================
+window.openCalorieCalculator = function() {
+  haptic(10);
+
+  // fecha o dropdown primeiro
+  closePlannerDropdown();
+
+  /* // se for FREE, deve abrir premium com foco
+  if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
+    openPremiumModal('planner');
+    return;
+  } */
+
+  // se for premium, abre a calculadora normal
+  const calcBtn = document.getElementById('calculator-btn');
+  if (calcBtn) calcBtn.click();
   openModal(calculatorModal);
+  
+  
 };
 
-window.closeCalculator = function () {
-  closeModal(calculatorModal);
-};
+window.openShoppingList = function() {
+  haptic(10);
 
-window.openShoppingList = function () {
-  // abre a lista de compras para todos
-  renderShoppingList();
+  closePlannerDropdown();
+
+/*   if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
+    openPremiumModal('planner');
+    return;
+  } */
+
+  const shoppingBtn = document.getElementById('shopping-btn');
+  if (shoppingBtn) shoppingBtn.click();
+    renderShoppingList();
   openModal(shoppingModal);
+  
+  
 };
 
-window.closeShoppingList = function () {
-  closeModal(shoppingModal);
-};
+window.openWeekPlanner = function() {
+  haptic(10);
 
-window.openWeekPlanner = function () {
-  // abre o planejador semanal para todos
-  renderWeekPlanner();
+  closePlannerDropdown();
+
+/*   if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
+    openPremiumModal('planner');
+    return;
+  } */
+
+  const plannerBtn = document.getElementById('planner-btn');
+  if (plannerBtn) plannerBtn.click();
+    renderWeekPlanner();
   openModal(plannerModal);
+  
+  
 };
 
-window.closeWeekPlanner = function () {
-  closeModal(plannerModal);
-};
+
+
 
 
 
