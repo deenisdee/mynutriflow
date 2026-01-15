@@ -17,7 +17,7 @@
 // ============================================
 
 
-/* 
+
 (function() {
   'use strict';
   
@@ -121,11 +121,8 @@
 })();
 
  
-// ============================================
-// PROTEÇÃO ANTI-BURLA (3 camadas) - V2
-// ============================================
 
- */
+
 
 
 
@@ -1447,25 +1444,17 @@ window.addToShoppingList = function(recipeId) {
   showNotification('Sucesso!', `Ingredientes de "${recipe.name}" adicionados à lista.`);
 };
 
-
-
 function renderShoppingList() {
   const content = document.getElementById('shopping-list-content');
   if (!content) return;
 
- const isPremiumNow = (typeof window.isPremiumNow === 'function') ? window.isPremiumNow() : false;
-
-
-  // ==========================
-  // 1) VAZIO
-  // ==========================
-  if (!shoppingList || shoppingList.length === 0) {
+  if (shoppingList.length === 0) {
     content.innerHTML = `
       <div class="shopping-empty">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
         </svg>
         <p style="font-size:1.125rem;margin-bottom:.5rem;">Sua lista está vazia</p>
         <p style="font-size:.875rem;">Adicione ingredientes das receitas</p>
@@ -1474,140 +1463,61 @@ function renderShoppingList() {
     return;
   }
 
-  // ==========================
-  // 2) FREE: trava por ITEM (não por posição)
-  //    - garante só 3 unlocked
-  // ==========================
-  if (!isPremiumNow) {
-    const FREE_LIMIT = 3;
-
-    // conta os já desbloqueados
-    let unlocked = 0;
-    for (let i = 0; i < shoppingList.length; i++) {
-      const it = shoppingList[i];
-
-      // se não tem flag, inicializa
-      if (typeof it.locked !== 'boolean') {
-        it.locked = unlocked >= FREE_LIMIT;
-        if (!it.locked) unlocked++;
-      } else {
-        if (it.locked === false) unlocked++;
-      }
-    }
-
-    // se por algum motivo houver >3 desbloqueados, corrige (sem promover locked)
-    if (unlocked > FREE_LIMIT) {
-      let keep = 0;
-      for (let i = 0; i < shoppingList.length; i++) {
-        if (shoppingList[i].locked === false) {
-          keep++;
-          if (keep > FREE_LIMIT) shoppingList[i].locked = true;
-        }
-      }
-    }
-  } else {
-    // Premium: opcionalmente "destrava" tudo (visual + não acumula travas antigas)
-    for (let i = 0; i < shoppingList.length; i++) {
-      if (typeof shoppingList[i].locked === 'boolean') shoppingList[i].locked = false;
-    }
-  }
-
-  // ==========================
-  // 3) Render
-  // ==========================
   content.innerHTML = `
-    <div class="shoppinglist-gated" style="max-height: 60vh; overflow-y: auto;">
-      ${shoppingList.map((item, idx) => {
-        const locked = !isPremiumNow && item.locked === true;
-
-        // texto do item (mantém sua lógica)
-        const displayText =
-          item.text
-            ? (typeof item.text === 'string' ? item.text : `${item.quantity || ''} ${item.text || ''}`.trim())
-            : (item.quantity && item.text ? `${item.quantity} ${item.text}` : (item.ingredient || ''));
-
-        const recipeText = item.recipes ? item.recipes.join(', ') : '';
-
-        return `
-          <div class="shopping-item ${locked ? 'sl-locked' : ''}" data-shopping-index="${idx}">
-            ${locked
-              ? `<div class="shopping-lock-row">
-                   <div class="shopping-lock-box"></div>
-                 </div>`
-              : `<input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleShoppingItem(${item.id})">`
-            }
-
+    <div style="max-height: 60vh; overflow-y: auto;">
+      ${shoppingList.map(item => `
+        <div class="shopping-item">
+          <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleShoppingItem('${item.id}')">
+          <div class="shopping-item-content">
             <div class="shopping-item-content">
-              <div class="shopping-item-content">
-                ${displayText || ''}
-              </div>
-              <div class="shopping-item-recipe">${recipeText}</div>
+              ${item.text
+                ? (typeof item.text === 'string' ? item.text : `${item.quantity || ''} ${item.text}`)
+                : (item.quantity && item.text ? `${item.quantity} ${item.text}` : (item.ingredient || item))
+              }
             </div>
-
-            ${locked
-              ? `<div class="shopping-lock-trash"></div>`
-              : `<button class="btn-delete" onclick="removeShoppingItem(${item.id})" aria-label="Remover item">
-                   <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                     <polyline points="3 6 5 6 21 6"></polyline>
-                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                   </svg>
-                 </button>`
-            }
+            <div class="shopping-item-recipe">${item.recipes ? item.recipes.join(', ') : ''}</div>
           </div>
-        `;
-      }).join('')}
+          <button class="btn-delete" onclick="removeShoppingItem('${item.id}')" aria-label="Remover item">
+            <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </button>
+        </div>
+      `).join('')}
     </div>
 
     <button class="btn-clear-list" onclick="clearShoppingList()">Limpar Toda a Lista</button>
   `;
-
-  // ==========================
-  // 4) Overlay CTA (só Free e se tiver itens locked)
-  // ==========================
-  if (!isPremiumNow) {
-    const hasLocked = shoppingList.some(it => it.locked === true);
-    if (hasLocked) {
-      const listWrap = content.querySelector('.shoppinglist-gated');
-      if (listWrap && !content.querySelector('.sl-overlay')) {
-        const overlay = document.createElement('div');
-        overlay.className = 'sl-overlay';
-        overlay.innerHTML = `
-          <div class="sl-overlay-text">Desbloqueie a lista completa no Premium</div>
-          <button type="button">Ativar Premium</button>
-        `;
-        overlay.querySelector('button').addEventListener('click', () => {
-          if (typeof window.openPremiumModal === 'function') {
-            window.openPremiumModal('shopping_list');
-          } else {
-            const btn = document.getElementById('premium-btn');
-            if (btn) btn.click();
-          }
-        });
-
-        // coloca o overlay dentro do próprio content (por cima do final)
-        content.querySelector('.shoppinglist-gated').appendChild(overlay);
-      }
-    }
-  }
-
-  // ==========================
-  // 5) Persistência (pra trava ser "por item" e não burlar apagando)
-  // ==========================
-  try {
-    if (window.storage && typeof storage.set === 'function') {
-      storage.set('fit_shopping', JSON.stringify(shoppingList));
-    } else {
-      localStorage.setItem('fit_shopping', JSON.stringify(shoppingList));
-    }
-  } catch (e) {
-    // silencioso
-  }
 }
 
+window.toggleShoppingItem = function(id) {
+  shoppingList = shoppingList.map(item =>
+    item.id.toString() === id.toString() ? { ...item, checked: !item.checked } : item
+  );
+  saveShoppingList();
+  renderShoppingList();
+};
 
+window.removeShoppingItem = function(id) {
+  shoppingList = shoppingList.filter(item => item.id.toString() !== id.toString());
+  saveShoppingList();
+  renderShoppingList();
+};
 
-
-
+window.clearShoppingList = function() {
+  showConfirm(
+    'Limpar lista',
+    'Tem certeza que deseja limpar toda a lista de compras?',
+    () => {
+      shoppingList = [];
+      saveShoppingList();
+      updateShoppingCounter();
+      closeShoppingList();
+      showNotification('Tudo certo', 'Lista de compras limpa.');
+    }
+  );
+};
 
 // ==============================
 // PLANEJADOR SEMANAL
@@ -1875,39 +1785,37 @@ window.calculateCalories = function() {
 // ==============================
 // MODAIS (controle)
 // ==============================
-// =========================================================
-// MODAIS (controle) — WEB SEM GATE DE PREMIUM
-// =========================================================
-
-window.openCalculator = function () {
-  // abre a calculadora para todos
+window.openCalculator = function() {
+  if (!isPremium) {
+    if (modalMessage) modalMessage.textContent = 'A Calculadora é exclusiva para usuários Premium.';
+    openModal(premiumModal);
+    return;
+  }
   openModal(calculatorModal);
 };
+window.closeCalculator = function() { closeModal(calculatorModal); };
 
-window.closeCalculator = function () {
-  closeModal(calculatorModal);
-};
-
-window.openShoppingList = function () {
-  // abre a lista de compras para todos
+window.openShoppingList = function() {
+  if (!isPremium) {
+    if (modalMessage) modalMessage.textContent = 'A Lista de Compras é exclusiva para usuários Premium.';
+    openModal(premiumModal);
+    return;
+  }
   renderShoppingList();
   openModal(shoppingModal);
 };
+window.closeShoppingList = function() { closeModal(shoppingModal); };
 
-window.closeShoppingList = function () {
-  closeModal(shoppingModal);
-};
-
-window.openWeekPlanner = function () {
-  // abre o planejador semanal para todos
+window.openWeekPlanner = function() {
+  if (!isPremium) {
+    if (modalMessage) modalMessage.textContent = 'O Planejador Semanal é exclusivo para usuários Premium.';
+    openModal(premiumModal);
+    return;
+  }
   renderWeekPlanner();
   openModal(plannerModal);
 };
-
-window.closeWeekPlanner = function () {
-  closeModal(plannerModal);
-};
-
+window.closeWeekPlanner = function() { closeModal(plannerModal); };
 
 
 
@@ -1927,6 +1835,8 @@ async function redeemPremiumCode(code) {
   const data = await res.json();
   return data; // { ok: true } | { ok:false, error }
 }
+
+
 
 
 
@@ -1960,16 +1870,35 @@ async function activatePremium() {
       diff: data.expiresAt - Date.now()
     });
 
-    // ✅ ATIVA PREMIUM COM TOKEN
+    // ✅ ATIVA PREMIUM COM TOKEN (estado interno seu)
     isPremium = true;
     premiumToken = data.token;
     premiumExpires = data.expiresAt;
 
+    // ✅ 1) Persiste no storage (seu padrão)
     await storage.set('fit_premium', 'true');
     await storage.set('fit_premium_token', data.token);
     await storage.set('fit_premium_expires', data.expiresAt.toString());
 
-    // UI geral do seu app
+    // ✅ 2) Também persiste no localStorage (compatibilidade e UI instantânea no iPhone)
+    try {
+      localStorage.setItem('fit_premium', 'true');
+      localStorage.setItem('fit_premium_token', data.token);
+      localStorage.setItem('fit_premium_expires', data.expiresAt.toString());
+    } catch (e) {
+      // se localStorage falhar por algum motivo, não bloqueia a ativação
+      console.warn('[PREMIUM] localStorage falhou:', e);
+    }
+
+    // ✅ 3) Dispara o pipeline oficial de UI (sem reload)
+    if (window.RF && RF.premium && typeof RF.premium.setActive === 'function') {
+      RF.premium.setActive(true); // chama syncUI() dentro
+    } else if (window.RF && RF.premium && typeof RF.premium.syncUI === 'function') {
+      // fallback
+      RF.premium.syncUI();
+    }
+
+    // ✅ Mantém seu fluxo atual de UI (seu app pode depender disso)
     updateUI();
 
     // ✅ Atualiza botões premium (tab bar + menu hambúrguer)
@@ -1977,29 +1906,19 @@ async function activatePremium() {
       window.updatePremiumButtons();
     }
 
-    // ✅ NOVO: força o "estado único" do Premium e sincroniza SEM RELOAD
-    try {
-      if (window.RF?.premium?.setActive) RF.premium.setActive(true);
-      if (window.RF?.premium?.syncUI) RF.premium.syncUI();
-    } catch (e) {}
-
-    // ✅ NOVO: se algum modal dependente estiver aberto, re-renderiza
-    setTimeout(() => {
-      const shoppingModal = document.getElementById('shopping-modal');
-      if (shoppingModal && !shoppingModal.classList.contains('hidden')) {
-        if (typeof renderShoppingList === 'function') renderShoppingList();
-      }
-    }, 0);
-
     _setupPremiumTimers();
 
     const daysLeft = data.expiresInDays || 30;
+
+    // ✅ Fecha o modal ANTES de notificar (evita “modal por trás” visualmente)
+    if (typeof window.closePremiumModal === 'function') {
+      window.closePremiumModal();
+    }
+
     showNotification(
       'Premium Ativado! 🎉',
       `Você tem acesso ilimitado por ${daysLeft} dias!`
     );
-
-    window.closePremiumModal();
 
     console.log('[PREMIUM] Ativado', { expires: new Date(data.expiresAt).toISOString() });
 
@@ -2007,13 +1926,14 @@ async function activatePremium() {
     console.error('Erro ao ativar premium:', e);
 
     // ✅ MENSAGEM MAIS ESPECÍFICA
-    if (e.message && e.message.includes('fetch')) {
+    if (String(e.message || '').includes('fetch')) {
       showNotification('Erro de Conexão', 'Verifique sua internet e tente novamente.');
     } else {
       showNotification('Erro', 'Erro ao validar código. Tente novamente.');
     }
   }
 }
+
 
 
 
@@ -2270,13 +2190,9 @@ if (searchInput) {
   });
 }
 
-
 if (calculatorBtn) calculatorBtn.addEventListener('click', window.openCalculator);
 if (shoppingBtn) shoppingBtn.addEventListener('click', window.openShoppingList);
 if (plannerBtn) plannerBtn.addEventListener('click', window.openWeekPlanner);
-
- 
-
 
 // ==============================
 // FAQ (SEM emoji)
@@ -2602,10 +2518,7 @@ window.openCalorieCalculator = function() {
   if (calcBtn) calcBtn.click();
 };
 
-
-
-
-/* window.openShoppingList = function() {
+window.openShoppingList = function() {
   haptic(10);
 
   closePlannerDropdown();
@@ -2618,30 +2531,6 @@ window.openCalorieCalculator = function() {
   const shoppingBtn = document.getElementById('shopping-btn');
   if (shoppingBtn) shoppingBtn.click();
 };
- */
-
-
-// =========================================================
-// SHOPPING LIST — ABRIR SEM PREMIUM (WEB)
-// (o Premium só abre pelo botão "Ativar Premium")
-// =========================================================
-window.openShoppingList = function () {
-  // abre a lista para todos
-  renderShoppingList();
-  openModal(shoppingModal);
-
-  // aplica o gate FREE (3 itens) depois que renderizar
-  setTimeout(() => {
-    if (typeof window.applyShoppingListGate === 'function') {
-      window.applyShoppingListGate();
-    }
-  }, 0);
-};
-
-
-
-
-
 
 window.openWeekPlanner = function() {
   haptic(10);
@@ -3197,237 +3086,3 @@ window.addEventListener('DOMContentLoaded', function() {
   } catch (e) {}
 })();
 
-
-// =========================================================
-// SHOPPING LIST — Gate FREE (3 itens) / PREMIUM 100%
-// Container real: #shopping-list-content
-// =========================================================
-(function () {
-  const FREE_VISIBLE_ITEMS = 3;
-
-  function isPremiumNow() {
-    if (window.RF?.premium?.isActive) return RF.premium.isActive();
-    if (typeof window.isPremium !== 'undefined') return !!window.isPremium;
-    try { return localStorage.getItem('fit_premium') === 'true'; } catch(e) {}
-    return false;
-  }
-
-  window.applyShoppingListGate = function () {
-    const container = document.getElementById('shopping-list-content');
-    if (!container) return;
-
-    const items = container.querySelectorAll('.shopping-item, li, .item');
-    if (!items.length) return;
-
-    // limpa estado anterior
-    container.classList.remove('shoppinglist-gated');
-    container.querySelectorAll('.sl-overlay').forEach(o => o.remove());
-    items.forEach(el => el.classList.remove('sl-locked'));
-
-    // premium => tudo livre
-    if (isPremiumNow()) return;
-
-    // free => gate
-    container.classList.add('shoppinglist-gated');
-    items.forEach((el, idx) => {
-      if (idx >= FREE_VISIBLE_ITEMS) el.classList.add('sl-locked');
-    });
-
-    if (items.length > FREE_VISIBLE_ITEMS) {
-      const overlay = document.createElement('div');
-      overlay.className = 'sl-overlay';
-      overlay.innerHTML = `
-        <div class="sl-overlay-text">Desbloqueie a lista completa no Premium</div>
-        <button type="button">Ativar Premium</button>
-      `;
-
-      // OBS: clicar aqui abre premium (isso é OK, mas NÃO abre sozinho)
-      overlay.querySelector('button').addEventListener('click', () => {
-        const btn = document.getElementById('premium-btn');
-        if (btn) btn.click();
-        else if (typeof window.openPremiumModal === 'function') window.openPremiumModal('shopping_list');
-      });
-
-      container.appendChild(overlay);
-    }
-  };
-})();
-
-
-// =========================================================
-// SHOPPING LIST — garante gate sempre após renderShoppingList()
-// (funciona para qualquer botão/atalho que abra a lista)
-// =========================================================
-(function () {
-  const _renderShoppingList = window.renderShoppingList;
-
-  window.renderShoppingList = function () {
-    const result = (typeof _renderShoppingList === 'function')
-      ? _renderShoppingList.apply(this, arguments)
-      : undefined;
-
-    // depois de renderizar, aplica o gate (FREE: 3 itens / Premium: tudo)
-    setTimeout(() => {
-      if (typeof window.applyShoppingListGate === 'function') {
-        window.applyShoppingListGate();
-      }
-    }, 0);
-
-    return result;
-  };
-})();
-
-
-
-// =========================================================
-// SHOPPING LIST — trava por ITEM (não por posição)
-// Free: só 3 itens desbloqueados (locked=false)
-// Premium: tudo desbloqueado
-// =========================================================
-(function () {
-  const FREE_LIMIT = 3;
-
-  function isPremiumNow() {
-    if (window.RF?.premium?.isActive) return RF.premium.isActive();
-    try { return localStorage.getItem('fit_premium') === 'true'; } catch (e) {}
-    return false;
-  }
-
-  async function getShopping() {
-    // tenta seu adapter async
-    if (window.storage?.get) {
-      const data = await storage.get('fit_shopping');
-      return Array.isArray(data) ? data : (data?.value || []);
-    }
-    // fallback localStorage
-    try {
-      return JSON.parse(localStorage.getItem('fit_shopping') || '[]');
-    } catch (e) {
-      return [];
-    }
-  }
-
-  async function setShopping(list) {
-    if (window.storage?.set) {
-      await storage.set('fit_shopping', JSON.stringify(list));
-      return;
-    }
-    localStorage.setItem('fit_shopping', JSON.stringify(list));
-  }
-
-  // Garante que o LOCK é por item, e fica estável mesmo se o usuário deletar os de cima
-  async function enforceShoppingLocks() {
-    if (isPremiumNow()) return; // Premium não trava nada
-
-    const list = await getShopping();
-    if (!Array.isArray(list) || !list.length) return;
-
-    // Se já tiver locked definido, respeita.
-    // Se não tiver, define: primeiros 3 unlocked, resto locked.
-    let unlockedCount = 0;
-
-    for (let i = 0; i < list.length; i++) {
-      const item = list[i] || {};
-      const hasLockedFlag = typeof item.locked === 'boolean';
-
-      if (!hasLockedFlag) {
-        if (unlockedCount < FREE_LIMIT) {
-          item.locked = false;
-          unlockedCount++;
-        } else {
-          item.locked = true;
-        }
-        list[i] = item;
-      } else {
-        if (item.locked === false) unlockedCount++;
-      }
-    }
-
-    // Se por algum motivo existirem mais de 3 unlocked, corrige (sem promover itens)
-    if (unlockedCount > FREE_LIMIT) {
-      let keep = 0;
-      for (let i = 0; i < list.length; i++) {
-        if (list[i].locked === false) {
-          keep++;
-          if (keep > FREE_LIMIT) list[i].locked = true;
-        }
-      }
-    }
-
-    await setShopping(list);
-  }
-
-  // Aplica no DOM: blur + desabilita lixeira nos locked
-  async function applyShoppingLocksToDOM() {
-    const container = document.getElementById('shopping-list-content');
-    if (!container) return;
-
-    const list = await getShopping();
-    if (!Array.isArray(list) || !list.length) return;
-
-    // aqui você precisa que cada item renderizado tenha um "data-id" ou índice
-    // se você não tem, dá pra mapear por texto, mas o ideal é data-id.
-    const rows = container.querySelectorAll('[data-shopping-index], .shopping-item, li');
-
-    rows.forEach((row) => {
-      const idxAttr = row.getAttribute('data-shopping-index');
-      const idx = idxAttr != null ? parseInt(idxAttr, 10) : null;
-
-      // fallback: se não tiver índice, não aplica (pra não errar)
-      if (idx == null || Number.isNaN(idx)) return;
-
-      const item = list[idx];
-      if (!item) return;
-
-      const locked = !isPremiumNow() && item.locked === true;
-
-      row.classList.toggle('sl-locked', locked);
-
-      // tenta achar lixeira dentro do item
-      const trashBtn = row.querySelector('.trash-btn, .delete-btn, button[aria-label*="Excluir"], button[title*="Excluir"]');
-      if (trashBtn) {
-        trashBtn.style.display = locked ? 'none' : '';
-      }
-    });
-  }
-
-  // Chame isso sempre que abrir a lista (você já chama renderShoppingList antes)
-  const _openShoppingList = window.openShoppingList;
-  window.openShoppingList = function () {
-    if (typeof _openShoppingList === 'function') _openShoppingList.apply(this, arguments);
-
-    setTimeout(async () => {
-      await enforceShoppingLocks();
-      await applyShoppingLocksToDOM();
-      if (typeof window.applyShoppingListGate === 'function') window.applyShoppingListGate();
-    }, 0);
-  };
-
-})();
-
-
-
-// =========================================================
-// PREMIUM — fonte única (para evitar checker divergente)
-// =========================================================
-window.isPremiumNow = function () {
-  // 1) preferir o estado único RF, se existir
-  if (window.RF?.premium?.isActive) return !!RF.premium.isActive();
-
-  // 2) fallback para variável global
-  if (typeof isPremium !== 'undefined') return !!isPremium;
-
-  // 3) fallback localStorage
-  try { return localStorage.getItem('fit_premium') === 'true'; } catch (e) {}
-  return false;
-};
-
-
-// ✅ Premium: remove qualquer overlay/gate residual
-if (isPremiumNow) {
-  const overlay = content.querySelector('.sl-overlay');
-  if (overlay) overlay.remove();
-
-  // remove classes locked que possam ter sobrado no DOM
-  content.querySelectorAll('.shopping-item.sl-locked').forEach(el => el.classList.remove('sl-locked'));
-}
