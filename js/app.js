@@ -2969,14 +2969,14 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
   const steps = [
-    "1) Aqui não existe cobrança. O Premium é um apoio para você decidir com mais leveza.",
-    "2) Escolha uma receita simples. Uma escolha por vez já tira o peso do dia.",
-    "3) Calculadora de Calorias: Clareza, não paranoia. Você entende o que seu corpo precisa.",
-    "4) Lista de Compras: Você vai ao mercado com mapa na mão, sem esquecer nada.",
-    "5) Planejador Semanal: Organiza, soma as calorias e te livra do “o que eu como hoje?”.",
-    "6) Mudou o dia? Sem problema. Você ajusta e segue sem culpa, sem recomeço do zero.",
-    "7) Pronto. Se fizer sentido, ative o Premium e use as ferramentas completas.",
-	"8) Onde Encontro estas ferramentas? Logo abaixo, ao lado do Buscar, se chama Planner."
+    "1) No plano Gratuito, você tem direito a 3 Créditos e cada um desbloqueia uma receita.",
+    "2) Primeiro acesse a Calculadora de Calorias: Clareza, não paranoia. Você entende o que seu corpo precisa.",
+	"3) Escolha uma receita de seu interesse. Uma escolha por vez já tira o peso do dia.",
+	"4) Em cada receita você pode adicionar os ingredientes na lista de compras e adicionar ao Planejamento Semanal.",
+	"5) No Planejador Semanal você organiza, soma as calorias e te livra do “o que eu como hoje?”.",
+	"6) Pronto. Se fizer sentido, ative o Premium e tenha acesso a todas receitas.",
+	"7) Onde Encontro estas ferramentas? No Planner, na versão Mobile e nos botões acima, na versão Web."
+  
   ];
 
   let i = 0;
