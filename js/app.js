@@ -2498,54 +2498,42 @@ function setActiveTab(index) {
 
 
 
-// ================================
-// DROPDOWN PLANNER - FUNÇÕES (VERSÃO FINAL)
-// ================================
-window.openCalorieCalculator = function() {
-  haptic(10);
 
-  // fecha o dropdown primeiro
-  closePlannerDropdown();
 
-  // se for FREE, deve abrir premium com foco
-  if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
-    openPremiumModal('planner');
-    return;
-  }
 
-  // se for premium, abre a calculadora normal
-  const calcBtn = document.getElementById('calculator-btn');
-  if (calcBtn) calcBtn.click();
+
+// =========================================================
+// MODAIS (controle) — WEB SEM GATE DE PREMIUM
+// =========================================================
+
+window.openCalculator = function () {
+  // abre a calculadora para todos
+  openModal(calculatorModal);
 };
 
-window.openShoppingList = function() {
-  haptic(10);
-
-  closePlannerDropdown();
-
-  if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
-    openPremiumModal('planner');
-    return;
-  }
-
-  const shoppingBtn = document.getElementById('shopping-btn');
-  if (shoppingBtn) shoppingBtn.click();
+window.closeCalculator = function () {
+  closeModal(calculatorModal);
 };
 
-window.openWeekPlanner = function() {
-  haptic(10);
-
-  closePlannerDropdown();
-
-  if (window.RF?.premium?.isActive && !window.RF.premium.isActive()) {
-    openPremiumModal('planner');
-    return;
-  }
-
-  const plannerBtn = document.getElementById('planner-btn');
-  if (plannerBtn) plannerBtn.click();
+window.openShoppingList = function () {
+  // abre a lista de compras para todos
+  renderShoppingList();
+  openModal(shoppingModal);
 };
 
+window.closeShoppingList = function () {
+  closeModal(shoppingModal);
+};
+
+window.openWeekPlanner = function () {
+  // abre o planejador semanal para todos
+  renderWeekPlanner();
+  openModal(plannerModal);
+};
+
+window.closeWeekPlanner = function () {
+  closeModal(plannerModal);
+};
 
 
 
