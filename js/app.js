@@ -3398,7 +3398,12 @@ async function validatePremiumCode() {
   
 
   
-location.reload();
+      alert('✅ Código ativado com sucesso! Recarregando página...');
+      location.reload();
+    } else {
+      alert('❌ ' + result.error);
+    }
+	
 	
 	
 	
