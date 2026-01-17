@@ -3323,7 +3323,7 @@ window.addEventListener('DOMContentLoaded', function() {
 // Inicializa Mercado Pago
 
 /* const mp = new MercadoPago('SUA_PUBLIC_KEY_AQUI'); // Troque pela sua  */
-const mp = new MercadoPago('APP_USR-e59fa87c-726c-4ca3-abe0-c61e62b28b39'); // Troque pela sua
+const mp = new MercadoPago('APP_USR-9e097327-7e68-41b4-be4b-382b6921803f'); // Troque pela sua
 
 async function openPremiumCheckout(plan = 'premium-monthly') {
   try {
