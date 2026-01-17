@@ -1,10 +1,3 @@
-const mercadopago = require('mercadopago');
-  
-// Configura Mercado Pago
-mercadopago.configure({
-  access_token: process.env.MP_ACCESS_TOKEN
-});
- 
 module.exports = async (req, res) => {
   // Permite CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,7 +15,6 @@ module.exports = async (req, res) => {
   try {
     const { plan, email } = req.body;
     
-    // Define preços
     const prices = {
       'premium-monthly': 37,
       'premium-annual': 297
@@ -33,7 +25,6 @@ module.exports = async (req, res) => {
       ? 'ReceitaFit Premium - Anual' 
       : 'ReceitaFit Premium - Mensal';
 
-    // Cria preferência de pagamento
     const preference = {
       items: [{
         title: title,
@@ -45,11 +36,11 @@ module.exports = async (req, res) => {
         email: email
       },
       back_urls: {
-        success: `${process.env.VERCEL_URL || 'https://receitafit.app'}/sucesso`,
-        failure: `${process.env.VERCEL_URL || 'https://receitafit.app'}/falha`,
-        pending: `${process.env.VERCEL_URL || 'https://receitafit.app'}/pendente`
+        success: `https://receitafit-app.vercel.app/sucesso`,
+        failure: `https://receitafit-app.vercel.app/falha`,
+        pending: `https://receitafit-app.vercel.app/pendente`
       },
-      notification_url: `${process.env.VERCEL_URL || 'https://receitafit.app'}/api/webhook`,
+      notification_url: `https://receitafit-app.vercel.app/api/webhook`,
       auto_return: 'approved',
       external_reference: JSON.stringify({
         plan: plan,
@@ -58,15 +49,28 @@ module.exports = async (req, res) => {
       })
     };
 
-    const response = await mercadopago.preferences.create(preference);
+    const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.MP_ACCESS_TOKEN}`
+      },
+      body: JSON.stringify(preference)
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Erro ao criar preferência');
+    }
 
     res.status(200).json({
-      preferenceId: response.body.id,
-      initPoint: response.body.init_point
+      preferenceId: data.id,
+      initPoint: data.init_point
     });
 
   } catch (error) {
-    console.error('Erro ao criar preferência:', error);
+    console.error('Erro:', error);
     res.status(500).json({ 
       error: 'Erro ao processar pagamento',
       details: error.message 
