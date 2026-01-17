@@ -158,10 +158,7 @@ RF.premium = {
     // 2) Header: botão "Ativar Premium" (verde)
     const headerBtn = document.getElementById('premium-btn');
 	
-	// Sincroniza UI com status premium
-if (typeof RF !== 'undefined' && RF.premium && RF.premium.syncUI) {
-  RF.premium.syncUI();
-}
+	
 	
 
     // 2.1) Header: badge amarelo (se existir)
@@ -3409,8 +3406,7 @@ async function validatePremiumCode() {
       alert('❌ ' + result.error);
     }
 	
-	
-	
+
 	
 	
 
