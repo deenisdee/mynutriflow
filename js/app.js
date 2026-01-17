@@ -17,6 +17,7 @@
 // ============================================
 
 
+
 (function() {
   'use strict';
   
@@ -279,7 +280,7 @@ let credits = 3;
 let unlockedRecipes = [];
 
 
-let isPremium = false;
+
 let premiumToken = null;
 let premiumExpires = null;
 
