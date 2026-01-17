@@ -3,7 +3,7 @@ const mercadopago = require('mercadopago');
 mercadopago.configure({
   access_token: process.env.MP_ACCESS_TOKEN
 });
-
+ 
 // Gera código único
 function generateCode() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
