@@ -1,7 +1,4 @@
-const { codes } = require('./webhook');
- 
 module.exports = async (req, res) => {
-  // Permite CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -9,7 +6,7 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
- 
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -24,8 +21,23 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Busca código
-    const subscription = codes.get(code);
+    // CÓDIGOS HARDCODED PRA TESTE
+    const validCodes = {
+      'RFP-BLQS-ZDD8-GJA4': {
+        email: 'de_nisde@hotmail.com',
+        plan: 'premium-monthly',
+        status: 'active',
+        expiresAt: new Date('2026-02-16')
+      },
+      'TESTE-1234': {
+        email: 'teste@teste.com',
+        plan: 'premium-annual',
+        status: 'active',
+        expiresAt: new Date('2027-01-01')
+      }
+    };
+
+    const subscription = validCodes[code];
 
     if (!subscription) {
       return res.status(200).json({ 
@@ -34,7 +46,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Verifica se expirou
     if (new Date() > subscription.expiresAt) {
       return res.status(200).json({ 
         valid: false, 
@@ -42,7 +53,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Verifica status
     if (subscription.status !== 'active') {
       return res.status(200).json({ 
         valid: false, 
@@ -50,7 +60,6 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Código válido!
     res.status(200).json({
       valid: true,
       plan: subscription.plan,
@@ -66,4 +75,3 @@ module.exports = async (req, res) => {
     });
   }
 };
-
