@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vercel dev"
   },
-  "dependencies": {
-    "mercadopago": "^2.0.15"
-  }
+"dependencies": {
+  "mercadopago": "^1.5.15"
+}
 }
  
