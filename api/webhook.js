@@ -15,7 +15,7 @@ function generateCode() {
     }
     if (i < 2) code += '-';
   }
-  
+   
   return code;
 }
 
