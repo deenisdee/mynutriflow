@@ -1,13 +1,8 @@
-
 {
   "name": "receitafit",
   "version": "1.0.0",
-  "description": "ReceitaFit - Receitas Fitness",
-  "scripts": {
-    "dev": "vercel dev"
-  },
-"dependencies": {
-  "mercadopago": "^1.5.15"
+  "description": "ReceitaFit - Receitas Fitness"
 }
-}
- 
+
+
+
