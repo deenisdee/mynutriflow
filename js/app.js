@@ -3313,3 +3313,108 @@ window.addEventListener('DOMContentLoaded', function() {
 
   console.log('[InfiniteScroll] motor carregado (passo 2)');
 })();
+
+
+
+// ===================================
+// SISTEMA DE PAGAMENTO MERCADO PAGO
+// ===================================
+
+// Inicializa Mercado Pago
+const mp = new MercadoPago('SUA_PUBLIC_KEY_AQUI'); // Troque pela sua
+
+async function openPremiumCheckout(plan = 'premium-monthly') {
+  try {
+    // Pega email do usuário (ou pede)
+    const email = prompt('Digite seu email:');
+    
+    if (!email) return;
+
+    // Chama backend para criar preferência
+    const response = await fetch('/api/create-preference', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        plan: plan,
+        email: email
+      })
+    });
+
+    const { preferenceId } = await response.json();
+
+    // Abre checkout
+    mp.checkout({
+      preference: {
+        id: preferenceId
+      },
+      autoOpen: true
+    });
+
+  } catch (error) {
+    console.error('Erro ao abrir checkout:', error);
+    alert('Erro ao processar pagamento. Tente novamente.');
+  }
+}
+
+// Função para validar código
+async function validatePremiumCode() {
+  const code = prompt('Digite seu código premium:');
+  
+  if (!code) return;
+
+  try {
+    const response = await fetch('/api/validate-code', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ code: code })
+    });
+
+    const result = await response.json();
+
+    if (result.valid) {
+      // Salva no localStorage
+      localStorage.setItem('premiumCode', code);
+      localStorage.setItem('premiumExpires', result.expiresAt);
+      localStorage.setItem('premiumPlan', result.plan);
+      
+      alert('✅ Código ativado com sucesso! Recarregando página...');
+      location.reload();
+    } else {
+      alert('❌ ' + result.error);
+    }
+
+  } catch (error) {
+    console.error('Erro ao validar código:', error);
+    alert('Erro ao validar código. Tente novamente.');
+  }
+}
+
+// Verifica se usuário é premium ao carregar página
+function checkPremiumStatus() {
+  const code = localStorage.getItem('premiumCode');
+  const expires = localStorage.getItem('premiumExpires');
+  
+  if (code && expires) {
+    const expiryDate = new Date(expires);
+    
+    if (new Date() < expiryDate) {
+      // Usuário é premium
+      return true;
+    } else {
+      // Expirou
+      localStorage.removeItem('premiumCode');
+      localStorage.removeItem('premiumExpires');
+      localStorage.removeItem('premiumPlan');
+    }
+  }
+  
+  return false;
+}
+
+// Executa ao carregar
+const isPremium = checkPremiumStatus();
+console.log('Status Premium:', isPremium);
