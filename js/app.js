@@ -3373,7 +3373,7 @@ async function openPremiumCheckout(plan = 'premium-monthly') {
   }
 }
 
-/async function validatePremiumCode() {
+async function validatePremiumCode() {
   const code = prompt('Digite seu código premium:');
   
   if (!code) return;
