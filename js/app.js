@@ -3395,8 +3395,10 @@ async function validatePremiumCode() {
       localStorage.setItem('premiumCode', code);
       localStorage.setItem('premiumExpires', result.expiresAt);
       localStorage.setItem('premiumPlan', result.plan);
-      
-     alert('✅ Código ativado com sucesso! Recarregando página...');
+  
+
+  
+alert('✅ Código ativado com sucesso! Recarregando página...');
 
 // Sincroniza UI antes de recarregar
 if (typeof RF !== 'undefined' && RF.premium && RF.premium.syncUI) {
@@ -3404,6 +3406,10 @@ if (typeof RF !== 'undefined' && RF.premium && RF.premium.syncUI) {
 }
 
 location.reload();
+	
+	
+	
+	
 
   } catch (error) {
     console.error('Erro ao validar código:', error);
