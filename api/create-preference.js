@@ -16,8 +16,8 @@ module.exports = async (req, res) => {
     const { plan, email } = req.body;
      
     const prices = {
-      'premium-monthly': 1,
-      'premium-annual': 1
+      'premium-monthly': 5,
+      'premium-annual': 5
     };
     
     const price = prices[plan] || 37;
