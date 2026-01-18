@@ -1,8 +1,8 @@
 {
   "name": "receitafit",
   "version": "1.0.0",
-  "description": "ReceitaFit - Receitas Fitness"
+  "description": "ReceitaFit - Receitas Fitness",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
 }
-
-
-
