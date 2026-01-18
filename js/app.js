@@ -2627,25 +2627,7 @@ window.openFAQModal = function() {
 
 
 
-// Inicializa Mercado Pago SDK
-const mp = new MercadoPago('APP_USR-9e097327-7e68-41b4-be4b-382b6921803f');
 
-// Função para validar código via API
-async function validatePremiumCodeAPI(code) {
-  try {
-    const response = await fetch('/api/validate-code', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: code })
-    });
-
-    return await response.json();
-
-  } catch (error) {
-    console.error('Erro ao validar código:', error);
-    return { valid: false, error: 'Erro ao validar código' };
-  }
-}
 
 
 
@@ -3374,38 +3356,53 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 // ===================================
 // INTEGRAÇÃO MERCADO PAGO
 // ===================================
 
-// Inicializa Mercado Pago SDK
+// Inicializa Mercado Pago SDK (DECLARA APENAS UMA VEZ!)
 const mp = new MercadoPago('APP_USR-9e097327-7e68-41b4-be4b-382b6921803f');
+
+// Função para validar código via API
+async function validatePremiumCodeAPI(code) {
+  try {
+    const response = await fetch('/api/validate-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: code })
+    });
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao validar código:', error);
+    return { valid: false, error: 'Erro ao validar código' };
+  }
+}
 
 // Função para abrir checkout do Mercado Pago
 window.openPremiumCheckout = async function(plan = 'premium-monthly') {
   try {
     const email = prompt('Digite seu email para continuar:');
     if (!email) return;
-
+    
     const response = await fetch('/api/create-preference', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ plan: plan, email: email })
     });
-
+    
     const { preferenceId } = await response.json();
-
+    
     mp.checkout({
       preference: { id: preferenceId },
       autoOpen: true
     });
-
+    
   } catch (error) {
     console.error('Erro ao abrir checkout:', error);
     alert('Erro ao processar pagamento. Tente novamente.');
   }
 };
+
 
 
 
