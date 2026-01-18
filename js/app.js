@@ -3384,22 +3384,35 @@ window.openPremiumCheckout = async function(plan = 'premium-monthly') {
     const email = prompt('Digite seu email para continuar:');
     if (!email) return;
     
+    console.log('1. Enviando requisição...');
+    
     const response = await fetch('/api/create-preference', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ plan: plan, email: email })
     });
     
-    const { preferenceId } = await response.json();
+    console.log('2. Status:', response.status);
+    console.log('3. OK:', response.ok);
+    
+    const data = await response.json();
+    
+    console.log('4. Data recebida:', data);
+    
+    if (!data.preferenceId) {
+      throw new Error('PreferenceId não retornado');
+    }
+    
+    console.log('5. Abrindo checkout com preferenceId:', data.preferenceId);
     
     mp.checkout({
-      preference: { id: preferenceId },
+      preference: { id: data.preferenceId },
       autoOpen: true
     });
     
   } catch (error) {
-    console.error('Erro ao abrir checkout:', error);
-    alert('Erro ao processar pagamento. Tente novamente.');
+    console.error('ERRO DETALHADO:', error);
+    alert('Erro ao processar pagamento: ' + error.message);
   }
 };
 
