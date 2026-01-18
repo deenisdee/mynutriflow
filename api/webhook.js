@@ -1,7 +1,22 @@
+const admin = require('firebase-admin');
+
+// Inicializa Firebase Admin
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+    })
+  });
+}
+
+const db = admin.firestore();
+
 // Gera código único
 function generateCode() {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = 'RFP-';
+  let code = 'VFP-'; // VeganFit Premium
   
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 4; j++) {
@@ -12,9 +27,6 @@ function generateCode() {
   
   return code;
 }
-
-// Salva códigos em memória
-const codes = new Map();
 
 module.exports = async (req, res) => {
   try {
@@ -47,11 +59,12 @@ module.exports = async (req, res) => {
           ? new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
           : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         
-        codes.set(code, {
+        // Salva no Firestore
+        await db.collection('premium_codes').doc(code).set({
           email: email,
           plan: plan,
           status: 'active',
-          createdAt: new Date(),
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
           expiresAt: expiresAt,
           paymentId: payment.id
         });
@@ -75,5 +88,3 @@ Válido até: ${expiresAt.toLocaleDateString('pt-BR')}
     res.status(500).json({ error: error.message });
   }
 };
-
-module.exports.codes = codes;
